@@ -158,5 +158,5 @@ The notebook writes several intermediate and final outputs during execution.
   These summary statistics appear in the final cells of the notebook.
 
   ### Outputs
-  The repository has an outputs folder where I've placed the output files from the most recent local run for reference.
+  The repository has an outputs folder where I've placed some txt output files from the most recent local run for reference. To see all the outputs, run the full notebook and view in google drive.
    
