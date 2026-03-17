@@ -1,0 +1,1000 @@
+return a new {@link buildrequest} with updated bindings.
+return a new {@link buildrequest} with an updated network setting.
+return a new {@link buildrequest} with updated tags.
+return a new {@link buildrequest} with updated tags.
+return a new {@link buildrequest} with an updated build workspace.
+return a new {@link buildrequest} with an updated build cache.
+return a new {@link buildrequest} with an updated launch cache.
+return a new {@link buildrequest} with an updated created date.
+return a new {@link buildrequest} with an updated application directory.
+return a new {@link buildrequest} with an updated security options.
+return a new {@link buildrequest} with an updated image platform.
+return the name of the image that should be created.
+return a {@link tararchive} containing the application content that the buildpack
+return the builder that should be used.
+return whether the builder should be treated as trusted.
+return the run image that should be used, if provided.
+return the {@link creator} the builder should use.
+return any env variable that should be passed to the builder.
+return if caches should be cleaned before packaging.
+return if verbose logging output should be used.
+return if the built image should be pushed to a registry.
+return the image {@link pullpolicy} that the builder should use.
+return the collection of buildpacks to use when building the image, if provided.
+return the collection of bindings to mount to the build container.
+return the network the build container will connect to.
+return the collection of tags that should be created.
+return the build workspace that should be used by the lifecycle.
+return the custom build cache that should be used by the lifecycle.
+return the custom launch cache that should be used by the lifecycle.
+return the custom created date that should be used by the lifecycle.
+return the application directory that should be used by the lifecycle.
+return the security options that should be used by the lifecycle.
+return the platform that should be used when pulling images.
+factory method to create a new {@link buildrequest} from a jar file.
+factory method to create a new {@link buildrequest} from a jar file.
+factory method to create a new {@link buildrequest} with specific content.
+create a new builder instance.
+create a new builder instance.
+create a new builder instance.
+creates {@link dockerlog} instance based on the provided {@link buildlog}.
+a {@link buildpackresolver} compatible method to resolve builder buildpacks.
+{@link builder} configuration options for docker.
+return the builder operation that failed.
+return the status code returned from a builder operation.
+return stack metadata.
+return run images metadata.
+return lifecycle metadata.
+return information about who created the builder.
+return the buildpacks that are bundled in the builder.
+create an updated copy of this metadata.
+attach this metadata to the given update callback.
+factory method to extract {@link buildermetadata} from an image.
+factory method to extract {@link buildermetadata} from image config.
+factory method create {@link buildermetadata} from some json.
+stack metadata.
+create a new {@link mappedobject} instance.
+lifecycle metadata.
+supported api versions.
+return the supported platform api versions.
+created-by metadata.
+update the builder meta-data with a specific created by section.
+a buildpack that should be invoked by the builder during image building.
+return the buildpack id with all "/" replaced by "_".
+create {@link buildpackcoordinates} from a <a href=
+create {@link buildpackcoordinates} by extracting values from
+create {@link buildpackcoordinates} from an id and version.
+return the metadata details of a buildpack with the given id and version.
+create a {@link buildpacklayersmetadata} from an image.
+create a {@link buildpacklayersmetadata} from image config.
+create a {@link buildpacklayersmetadata} from json.
+create a {@link buildpacklayersmetadata} from json.
+return the buildpack name.
+return the buildpack homepage address.
+return the buildpack layer {@code diffid}.
+return the buildpack id.
+return the buildpack version.
+return the buildpack homepage address.
+factory method to extract {@link buildpackmetadata} from an image.
+factory method to extract {@link buildpackmetadata} from image config.
+factory method create {@link buildpackmetadata} from json.
+factory method create {@link buildpackmetadata} from json.
+create a new {@link buildpackreference} from the given value.
+context passed to a {@link buildpackresolver}.
+resolve a collection of {@link buildpackreference buildpackreferences} to a
+return the details of the cache if it is a volume cache.
+return the details of the cache if it is a bind cache.
+create a new {@code cache} that uses a volume with the provided name.
+create a new {@code cache} that uses a volume with the provided name.
+create a new {@code cache} that uses a bind mount with the provided source.
+return the name of the builder creator.
+return the version of the builder creator.
+create a new {@code creator} using the provided version.
+a {@link buildpackresolver} compatible method to resolve directory buildpacks.
+return the name of this archive as tagged in docker.
+return the build owner that should be used for written content.
+return the builder meta-data that was used to create this ephemeral builder.
+return the contents of ephemeral builder for passing to docker.
+a {@link buildpackresolver} compatible method to resolve image buildpacks.
+image types.
+execute this lifecycle by running each phase in turn.
+the directory used by buildpacks for caching. the volume name is based on the
+return if this version is greater than or equal to the specified version.
+return the major version number.
+return the minor version number.
+return the patch version number.
+factory method to parse a string into a {@link lifecycleversion} instance.
+update this phase with docker daemon access.
+update this phase with a debug log level arguments if verbose logging has been
+update this phase with additional run arguments.
+update this phase with an addition volume binding.
+update this phase with an additional environment variable.
+update this phase with the network the build container will connect to.
+update this phase with a security option.
+return the name of the phase.
+apply this phase settings to a {@link containerconfig} update.
+factory method to create a {@link stackid} from an {@link image}.
+factory method to create a {@link stackid} from an {@link imageconfig}.
+factory method to create a {@link stackid} with a given value.
+a {@link buildpackresolver} compatible method to resolve tar-gzip buildpacks.
+return the major version number.
+return the minor version number.
+returns if this api version supports the given version. a {@code 0.x} matches only
+returns if this api version supports any of the given versions.
+factory method to parse a string into an {@link apiversion} instance.
+create a new {@link dockerapi} instance.
+create a new {@link dockerapi} instance backed by a specific {@link httptransport}
+return the docker api for image operations.
+return the docker api for container operations.
+pull an image from a registry.
+pull an image from a registry.
+push an image to a registry.
+load an {@link imagearchive} into docker.
+export the layers of an image as {@link tararchive tararchives}.
+export the layers of an image as {@link tararchive tararchives}.
+remove a specific image.
+inspect an image.
+inspect an image.
+create a new container a {@link containerconfig}.
+start a specific container.
+return and follow logs for a specific container.
+wait for a container to stop and retrieve the status.
+remove a specific container.
+delete a volume.
+get the api version supported by the docker daemon.
+callback interface used to provide {@link dockerapi} output logging.
+factory method that returns a {@link dockerlog} that outputs to a given
+create a new {@link layerarchivefactory} for the given tar file using either
+create a new {@link imageplatform} from the given value in the form
+create a new {@link imageplatform} matching the platform information from the
+return a json-encoded representation of this platform.
+returns the id of the image layer being updated if available.
+return the stream response or {@code null} if no response is available.
+return the error detail or {@code null} if no error occurred.
+returns the message field from the error detail.
+return the status for the update. for example, "extracting" or "downloading".
+return progress details if available.
+return a text based progress bar if progress information is available.
+return the progress as a percentage.
+returns the details of any error encountered during processing.
+returns the message field from the error detail.
+create a new {@link totalprogressbar} instance.
+create a new {@link totalprogressbar} instance.
+return the total progress.
+create a new {@link totalprogresspulllistener} that prints a progress bar to
+create a new {@link totalprogresspulllistener} that sends {@link totalprogressevent
+create a new {@link totalprogresspushlistener} that prints a progress bar to
+create a new {@link totalprogresspushlistener} that sends {@link totalprogressevent
+listener for update events published from the {@link dockerapi}.
+called when the operation starts.
+called when an update event is available.
+a no-op update listener that does nothing.
+configuration for how to connect to docker.
+connect using a specific context reference.
+docker registry authentication configuration.
+returns the auth header that should be used for docker authentication for the given
+returns the auth header that should be used for docker authentication.
+factory method to that returns a new {@link dockerregistryauthentication} instance
+factory method that returns a new {@link dockerregistryauthentication} instance
+factory method that returns a new {@link dockerregistryauthentication} instance
+create a new {@link resolveddockerhost} from the given host configuration.
+create a new {@link keystore} populated with the certificate stored at the
+parse certificates from the specified string.
+parse a private key from the specified string.
+parse a private key from the specified string, using the provided password for
+create an {@link sslcontext} from files in the specified directory. the directory
+return the status code returned by the docker api.
+return the reason phrase returned by the docker api.
+return the errors from the body of the docker api response, or {@code null} if the
+return the message from the body of the docker api response, or {@code null} if the
+returns a sequential {@code stream} of the errors.
+return if there are any contained errors.
+return the error code.
+return the error message.
+perform an http get operation.
+perform an http post operation.
+perform an http post operation.
+perform an http post operation.
+perform an http put operation.
+perform an http delete operation.
+perform an http head operation.
+http transport used for docker access.
+an http operation response.
+return the message contained in the response.
+whether the binding uses a sensitive container path.
+returns the container destination path.
+create a {@link binding} with the specified value containing a host source,
+create a {@link binding} from the specified source and destination.
+create a {@link binding} from the specified source and destination.
+return the digest of the blob.
+return the media type of the blob.
+write this container configuration to the specified {@link outputstream}.
+factory method to create a {@link containerconfig} with specific settings.
+update the container config with a specific user.
+update the container config with a specific command.
+update the container config with additional args.
+update the container config with an additional label.
+update the container config with an additional binding.
+update the container config with an additional environment variable.
+update the container config with the network that the build container will
+update the container config with a security option.
+additional content that can be written to a created container.
+factory method to create a new {@link containercontent} instance.
+factory method to create a {@link containerreference} with a specific value.
+return the container exit status code.
+return a message indicating an error waiting for a container to stop.
+create a new {@link containerstatus} instance from the specified json content
+create a new {@link containerstatus} instance with the specified values.
+return the digests of the image.
+return image config information.
+return the layer ids contained in the image.
+return the os of the image.
+return the architecture of the image.
+return the variant of the image.
+return the created date of the image.
+return the descriptor for this image as reported by docker engine inspect.
+return the primary digest of the image or {@code null}. checks the
+create a new {@link image} instance from the specified json content.
+return the image config for the archive.
+return the create date of the archive.
+return the tag of the archive.
+create a new {@link imagearchive} based on an existing {@link image}.
+create a new {@link imagearchive} based on an existing {@link image}.
+apply updates to the {@link imageconfig}.
+add a new layer to the image archive.
+set the create date for the image archive.
+set the tag for the image archive.
+create an {@link imagearchiveindex} from the provided json input stream.
+return the entries contained in the manifest.
+create an {@link imagearchivemanifest} from the provided json input stream.
+return the collection of layer ids from a section of the manifest.
+return the image labels. if the image has no labels, an empty {@code map} is
+return the image environment variables. if the image has no environment variables,
+create an updated copy of this image config.
+update the image config with an additional label.
+return the domain for this image name.
+return the name of this image.
+create a new {@link imagename} from the given value. the following value forms can
+return the domain for this image name.
+return the name of this image.
+return the tag from the reference or {@code null}.
+return the digest from the reference or {@code null}.
+create a new {@link imagereference} with an updated digest.
+return an {@link imagereference} in the form {@code "imagename:tag"}. if the tag
+return an {@link imagereference} without the tag.
+return an {@link imagereference} containing either a tag or a digest. if neither
+create a new {@link imagereference} instance deduced from a source jar file that
+generate an image name with a random suffix.
+generate an image name with a random suffix.
+create a new {@link imagereference} from the given value. the following value forms
+create a new {@link imagereference} from the given {@link imagename}.
+create a new {@link imagereference} from the given {@link imagename} and tag.
+create a new {@link imagereference} from the given {@link imagename}, tag and
+return the id of the layer.
+factory method to create a new {@link layer} with a specific {@link layout}.
+factory method to create a new {@link layer} from a {@link tararchive}.
+return the algorithm of layer.
+return the hash of the layer.
+create a new {@link layerid} with the specified value.
+create a new {@link layerid} from a sha-256 digest.
+create an {@link manifest} from the provided json input stream.
+create an {@link manifestlist} from the provided json input stream.
+factory method to create a new {@link volumename} with a random name.
+factory method to create a new {@link volumename} with a random name.
+factory method to create a new {@link volumename} based on an object. the resulting
+factory method to create a new {@link volumename} based on an object. the resulting
+factory method to create a {@link volumename} with a specific value.
+content with a known size that can be written to an {@link outputstream}.
+create a new {@link content} from the given input stream.
+create a new {@link content} from the given file.
+create a new {@link content} from the given input stream. the stream will be closed
+return the integer representation of the file permissions for a path, where the
+return the integer representation of a set of posix file permissions, where the
+biconsumer that can safely throw {@link ioexception io exceptions}.
+consumer that can safely throw {@link ioexception io exceptions}.
+supplier that can safely throw {@link ioexception io exceptions}.
+factory method to create an {@link inspectedcontent} instance from a source input
+factory method to create an {@link inspectedcontent} instance from source content.
+factory method to create an {@link inspectedcontent} instance from a source write
+interface that can be used to write a file/directory layout.
+add a directory to the content.
+a user and group id that can be used to indicate file ownership.
+write the tar archive to the given output stream.
+factory method to create a new {@link tararchive} instance with a specific layout.
+factory method to adapt a zip file to {@link tararchive}.
+factory method to adapt a zip file to {@link tararchive}. assumes that
+compression type applied to the archive.
+stream {@link objectnode object nodes} from the content as they become available.
+stream objects from the content as they become available.
+return the source node of the mapped object.
+get the value at the given json path expression as a specific type.
+get a {@link map} at the given json path expression with a value mapped from a
+get children at the given json path expression by constructing them using the given
+factory method to create a new {@link mappedobject} instance.
+factory method to create a new {@link mappedobject} instance.
+factory method to create a new {@link mappedobject} instance.
+acquire an instance of the actual {@link handle}. the caller must
+close the underlying file when all handles have been released.
+return a new {@link namedpipesocket} for the given path.
+creates a new {@code jsonarray} by copying all values from the given collection.
+creates a new {@code jsonarray} with values from the next array in the tokener.
+creates a new {@code jsonarray} with values from the json string.
+creates a new {@code jsonarray} with values from the given primitive array.
+returns the number of values in this array.
+appends {@code value} to the end of this array.
+appends {@code value} to the end of this array.
+appends {@code value} to the end of this array.
+appends {@code value} to the end of this array.
+appends {@code value} to the end of this array.
+sets the value at {@code index} to {@code value}, null padding this array to the
+sets the value at {@code index} to {@code value}, null padding this array to the
+sets the value at {@code index} to {@code value}, null padding this array to the
+sets the value at {@code index} to {@code value}, null padding this array to the
+sets the value at {@code index} to {@code value}, null padding this array to the
+returns true if this array has no value at {@code index}, or if its value is the
+returns the value at {@code index}.
+returns the value at {@code index}, or null if the array has no value at
+removes and returns the value at {@code index}, or null if the array has no value
+returns the value at {@code index} if it exists and is a boolean or can be coerced
+returns the value at {@code index} if it exists and is a boolean or can be coerced
+returns the value at {@code index} if it exists and is a boolean or can be coerced
+returns the value at {@code index} if it exists and is a double or can be coerced
+returns the value at {@code index} if it exists and is a double or can be coerced
+returns the value at {@code index} if it exists and is a double or can be coerced
+returns the value at {@code index} if it exists and is an int or can be coerced to
+returns the value at {@code index} if it exists and is an int or can be coerced to
+returns the value at {@code index} if it exists and is an int or can be coerced to
+returns the value at {@code index} if it exists and is a long or can be coerced to
+returns the value at {@code index} if it exists and is a long or can be coerced to
+returns the value at {@code index} if it exists and is a long or can be coerced to
+returns the value at {@code index} if it exists, coercing it if necessary.
+returns the value at {@code index} if it exists, coercing it if necessary. returns
+returns the value at {@code index} if it exists, coercing it if necessary. returns
+returns the value at {@code index} if it exists and is a {@code
+returns the value at {@code index} if it exists and is a {@code
+returns the value at {@code index} if it exists and is a {@code
+returns the value at {@code index} if it exists and is a {@code
+returns a new object whose values are the values in this array, and whose names are
+returns a new string by alternating this array's values with {@code
+encodes this array as a compact json string, such as: <pre>[94043,90210]</pre>
+encodes this array as a human-readable json string for debugging, such as: <pre>
+creates a {@code jsonobject} with no name/value mappings.
+creates a new {@code jsonobject} by copying all name/value mappings from the given
+creates a new {@code jsonobject} with name/value mappings from the next object in
+creates a new {@code jsonobject} with name/value mappings from the json string.
+creates a new {@code jsonobject} by copying mappings for the listed names from the
+returns the number of name/value mappings in this object.
+maps {@code name} to {@code value}, clobbering any existing name/value mapping with
+maps {@code name} to {@code value}, clobbering any existing name/value mapping with
+maps {@code name} to {@code value}, clobbering any existing name/value mapping with
+maps {@code name} to {@code value}, clobbering any existing name/value mapping with
+maps {@code name} to {@code value}, clobbering any existing name/value mapping with
+equivalent to {@code put(name, value)} when both parameters are non-null; does
+appends {@code value} to the array already mapped to {@code name}. if this object
+removes the named mapping if it exists; does nothing otherwise.
+returns true if this object has no mapping for {@code name} or if it has a mapping
+returns true if this object has a mapping for {@code name}. the mapping may be
+returns the value mapped by {@code name}.
+returns the value mapped by {@code name}, or null if no such mapping exists.
+returns the value mapped by {@code name} if it exists and is a boolean or can be
+returns the value mapped by {@code name} if it exists and is a boolean or can be
+returns the value mapped by {@code name} if it exists and is a boolean or can be
+returns the value mapped by {@code name} if it exists and is a double or can be
+returns the value mapped by {@code name} if it exists and is a double or can be
+returns the value mapped by {@code name} if it exists and is a double or can be
+returns the value mapped by {@code name} if it exists and is an int or can be
+returns the value mapped by {@code name} if it exists and is an int or can be
+returns the value mapped by {@code name} if it exists and is an int or can be
+returns the value mapped by {@code name} if it exists and is a long or can be
+returns the value mapped by {@code name} if it exists and is a long or can be
+returns the value mapped by {@code name} if it exists and is a long or can be
+returns the value mapped by {@code name} if it exists, coercing it if necessary.
+returns the value mapped by {@code name} if it exists, coercing it if necessary.
+returns the value mapped by {@code name} if it exists, coercing it if necessary.
+returns the value mapped by {@code name} if it exists and is a {@code
+returns the value mapped by {@code name} if it exists and is a {@code
+returns the value mapped by {@code name} if it exists and is a {@code
+returns the value mapped by {@code name} if it exists and is a {@code
+returns an array with the values corresponding to {@code names}. the array contains
+returns an iterator of the {@code string} names in this object. the returned
+returns an array containing the string names in this object. this method returns
+encodes this object as a compact json string, such as:
+encodes this object as a human-readable json string for debugging, such as: <pre>
+encodes the number as a json string.
+encodes {@code data} as a json string. this applies quotes and any necessary
+wraps the given object if necessary.
+unlike the original implementation, this stack isn't limited to 20 levels of
+begins encoding a new array. each call to this method must be paired with a call to
+ends encoding the current array.
+begins encoding a new object. each call to this method must be paired with a call
+ends encoding the current object.
+enters a new scope by appending any necessary whitespace and the given bracket.
+closes the current scope by appending any necessary whitespace and the given
+returns the value on the top of the stack.
+replace the value on the top of the stack with the given value.
+encodes {@code value}.
+encodes {@code value} to this stringer.
+encodes {@code value} to this stringer.
+encodes {@code value} to this stringer.
+encodes the key (property name) to this stringer.
+inserts any necessary separators and whitespace before a name. also adjusts the
+inserts any necessary separators and whitespace before a literal value, inline
+returns the encoded json string.
+@param in json encoded string. null is not permitted and will yield a tokener that
+returns the next value from the input.
+advances the position until after the next newline character. if the line is
+returns the string up to but not including {@code quote}, unescaping any character
+unescapes the character identified by the character or characters that immediately
+reads a null, boolean, numeric or unquoted string literal value. numeric values
+returns the string up to but not including any of the given characters or a newline
+reads a sequence of key/value pairs and the trailing closing brace '}' of an
+reads a sequence of values and the trailing closing brace ']' of an array. the
+returns an exception containing the given message plus the current position and the
+returns the current position and the entire input string.
+a single command that can be run from the cli.
+create a new {@link commandexception} with the specified options.
+create a new {@link commandexception} with the specified options.
+create a new {@link commandexception} with the specified options.
+returns a set of options that are understood by the {@link commandrunner}.
+create a new {@link commandrunner} instance.
+return the name of the runner or an empty string. non-empty names will include a
+add the specified commands.
+add the specified command.
+set the command classes which should be considered option commands. an option
+set the command classes which should be hidden (i.e. executed but not displayed in
+returns if the specified command is an option command.
+find a command by name.
+run the appropriate and handle and errors.
+parse the arguments and run a suitable command.
+subclass hook called before a command is run.
+subclass hook called after a command has run.
+generate a project based on the specified {@link projectgenerationrequest}.
+load the {@link initializrservicemetadata} at the specified url.
+loads the service capabilities of the service at the specified url. if the service
+request the creation of the project using the specified url.
+retrieves the meta-data of the service at the specified url.
+return the dependencies supported by the service.
+return the dependency with the specified id or {@code null} if no such dependency
+return the project types supported by the service.
+return the default type to use or {@code null} if the metadata does not define any
+returns the defaults applicable to the service.
+the location of the generated project.
+whether the project archive should be extracted in the output location. if the
+the groupid to use or {@code null} if it should not be customized.
+the artifactid to use or {@code null} if it should not be customized.
+the artifact version to use or {@code null} if it should not be customized.
+the name to use or {@code null} if it should not be customized.
+the description to use or {@code null} if it should not be customized.
+return the package name or {@code null} if it should not be customized.
+the type of project to generate. should match one of the advertised type that the
+the packaging type or {@code null} if it should not be customized.
+the build type to use. ignored if a type is set. can be used alongside the
+the project format to use. ignored if a type is set. can be used alongside the
+whether the type should be detected based on the build and format value.
+the java version to use or {@code null} if it should not be customized.
+the programming language to use or {@code null} if it should not be customized.
+the spring boot version to use or {@code null} if it should not be customized.
+the identifiers of the dependencies to include in the project.
+generates the uri to use to generate a project represented by this request.
+resolve the artifactid to use or {@code null} if it should not be customized.
+return the {@link contenttype} of this instance.
+the generated project archive or file.
+the preferred file name to use to store the entity on disk or {@code null} if no
+detect if the project should be extracted.
+generate a report for the specified service. the report contains the available
+create a new {@link optionhandler} instance with an argument processor.
+run the command using the specified parsed {@link optionset}.
+help for a specific option.
+append text with the given ansi codes.
+create a new {@link shell} instance.
+run the shell until the user exists.
+final handle an interrupt signal (ctrl-c).
+pop a previously pushed prompt, returning to the previous value.
+returns the current prompt.
+generic "not ok" exit status with non-zero exit code and {@literal hangup=true}.
+create a new {@link exitstatus} instance.
+an exit code appropriate for use in {@code system.exit()}.
+a name describing the outcome.
+flag to signal that the caller can (or should) hangup. a server process with
+convert the existing code to a hangup.
+listener that can be attached to the {@link log} to capture calls.
+mock log for testing message output.
+a changelog containing differences computed from two repositories of configuration
+a difference the metadata.
+creates a new {@code jsonarray} by copying all values from the given collection.
+creates a new {@code jsonarray} with values from the next array in the tokener.
+creates a new {@code jsonarray} with values from the json string.
+creates a new {@code jsonarray} with values from the given primitive array.
+returns the number of values in this array.
+appends {@code value} to the end of this array.
+appends {@code value} to the end of this array.
+appends {@code value} to the end of this array.
+appends {@code value} to the end of this array.
+appends {@code value} to the end of this array.
+sets the value at {@code index} to {@code value}, null padding this array to the
+sets the value at {@code index} to {@code value}, null padding this array to the
+sets the value at {@code index} to {@code value}, null padding this array to the
+sets the value at {@code index} to {@code value}, null padding this array to the
+sets the value at {@code index} to {@code value}, null padding this array to the
+returns true if this array has no value at {@code index}, or if its value is the
+returns the value at {@code index}.
+returns the value at {@code index}, or null if the array has no value at
+removes and returns the value at {@code index}, or null if the array has no value
+returns the value at {@code index} if it exists and is a boolean or can be coerced
+returns the value at {@code index} if it exists and is a boolean or can be coerced
+returns the value at {@code index} if it exists and is a boolean or can be coerced
+returns the value at {@code index} if it exists and is a double or can be coerced
+returns the value at {@code index} if it exists and is a double or can be coerced
+returns the value at {@code index} if it exists and is a double or can be coerced
+returns the value at {@code index} if it exists and is an int or can be coerced to
+returns the value at {@code index} if it exists and is an int or can be coerced to
+returns the value at {@code index} if it exists and is an int or can be coerced to
+returns the value at {@code index} if it exists and is a long or can be coerced to
+returns the value at {@code index} if it exists and is a long or can be coerced to
+returns the value at {@code index} if it exists and is a long or can be coerced to
+returns the value at {@code index} if it exists, coercing it if necessary.
+returns the value at {@code index} if it exists, coercing it if necessary. returns
+returns the value at {@code index} if it exists, coercing it if necessary. returns
+returns the value at {@code index} if it exists and is a {@code
+returns the value at {@code index} if it exists and is a {@code
+returns the value at {@code index} if it exists and is a {@code
+returns the value at {@code index} if it exists and is a {@code
+returns a new object whose values are the values in this array, and whose names are
+returns a new string by alternating this array's values with {@code
+encodes this array as a compact json string, such as: <pre>[94043,90210]</pre>
+encodes this array as a human-readable json string for debugging, such as: <pre>
+creates a {@code jsonobject} with no name/value mappings.
+creates a new {@code jsonobject} by copying all name/value mappings from the given
+creates a new {@code jsonobject} with name/value mappings from the next object in
+creates a new {@code jsonobject} with name/value mappings from the json string.
+creates a new {@code jsonobject} by copying mappings for the listed names from the
+returns the number of name/value mappings in this object.
+maps {@code name} to {@code value}, clobbering any existing name/value mapping with
+maps {@code name} to {@code value}, clobbering any existing name/value mapping with
+maps {@code name} to {@code value}, clobbering any existing name/value mapping with
+maps {@code name} to {@code value}, clobbering any existing name/value mapping with
+maps {@code name} to {@code value}, clobbering any existing name/value mapping with
+equivalent to {@code put(name, value)} when both parameters are non-null; does
+appends {@code value} to the array already mapped to {@code name}. if this object
+removes the named mapping if it exists; does nothing otherwise.
+returns true if this object has no mapping for {@code name} or if it has a mapping
+returns true if this object has a mapping for {@code name}. the mapping may be
+returns the value mapped by {@code name}.
+returns the value mapped by {@code name}, or null if no such mapping exists.
+returns the value mapped by {@code name} if it exists and is a boolean or can be
+returns the value mapped by {@code name} if it exists and is a boolean or can be
+returns the value mapped by {@code name} if it exists and is a boolean or can be
+returns the value mapped by {@code name} if it exists and is a double or can be
+returns the value mapped by {@code name} if it exists and is a double or can be
+returns the value mapped by {@code name} if it exists and is a double or can be
+returns the value mapped by {@code name} if it exists and is an int or can be
+returns the value mapped by {@code name} if it exists and is an int or can be
+returns the value mapped by {@code name} if it exists and is an int or can be
+returns the value mapped by {@code name} if it exists and is a long or can be
+returns the value mapped by {@code name} if it exists and is a long or can be
+returns the value mapped by {@code name} if it exists and is a long or can be
+returns the value mapped by {@code name} if it exists, coercing it if necessary.
+returns the value mapped by {@code name} if it exists, coercing it if necessary.
+returns the value mapped by {@code name} if it exists, coercing it if necessary.
+returns the value mapped by {@code name} if it exists and is a {@code
+returns the value mapped by {@code name} if it exists and is a {@code
+returns the value mapped by {@code name} if it exists and is a {@code
+returns the value mapped by {@code name} if it exists and is a {@code
+returns an array with the values corresponding to {@code names}. the array contains
+returns an iterator of the {@code string} names in this object. the returned
+returns an array containing the string names in this object. this method returns
+encodes this object as a compact json string, such as:
+encodes this object as a human-readable json string for debugging, such as: <pre>
+encodes the number as a json string.
+encodes {@code data} as a json string. this applies quotes and any necessary
+wraps the given object if necessary.
+unlike the original implementation, this stack isn't limited to 20 levels of
+begins encoding a new array. each call to this method must be paired with a call to
+ends encoding the current array.
+begins encoding a new object. each call to this method must be paired with a call
+ends encoding the current object.
+enters a new scope by appending any necessary whitespace and the given bracket.
+closes the current scope by appending any necessary whitespace and the given
+returns the value on the top of the stack.
+replace the value on the top of the stack with the given value.
+encodes {@code value}.
+encodes {@code value} to this stringer.
+encodes {@code value} to this stringer.
+encodes {@code value} to this stringer.
+encodes the key (property name) to this stringer.
+inserts any necessary separators and whitespace before a name. also adjusts the
+inserts any necessary separators and whitespace before a literal value, inline
+returns the encoded json string.
+@param in json encoded string. null is not permitted and will yield a tokener that
+returns the next value from the input.
+advances the position until after the next newline character. if the line is
+returns the string up to but not including {@code quote}, unescaping any character
+unescapes the character identified by the character or characters that immediately
+reads a null, boolean, numeric or unquoted string literal value. numeric values
+returns the string up to but not including any of the given characters or a newline
+reads a sequence of key/value pairs and the trailing closing brace '}' of an
+reads a sequence of values and the trailing closing brace ']' of an array. the
+returns an exception containing the given message plus the current position and the
+returns the current position and the entire input string.
+return the id of the group, used as a common prefix for all properties associated
+return the {@link configurationmetadatasource sources} defining the properties of
+return the {@link configurationmetadataproperty properties} defined in this group.
+the full name of the method (including parenthesis and argument types) that
+the name of the property, in lowercase dashed form (e.g. simple-property). if this
+the class name of the data type of the property. for example,
+a description of the property, if any. can be multi-lines.
+a single-line, single-sentence description of this property, if any.
+the default value, if any.
+return the hints of this item.
+the {@link deprecation} for this property, if any.
+specify if the property is deprecated.
+a repository of configuration metadata.
+add the content of a {@link configurationmetadatarepository} defined by the
+add the content of a {@link configurationmetadatarepository} defined by the
+build a {@link configurationmetadatarepository} with the current state of this
+create a new builder instance using {@link standardcharsets#utf_8} as the default
+create a new builder instance using {@link standardcharsets#utf_8} as the default
+create a new builder instance using the specified default {@link charset}.
+the type of the source. usually this is the fully qualified name of a class that
+a description of this source, if any. can be multi-lines.
+a single-line, single-sentence description of this source, if any.
+the type where this source is defined. this can be identical to the
+the method name that defines this source, if any.
+return the properties defined by this source.
+a reason why the related property is deprecated, if any. can be multi-lines.
+a single-line, single-sentence reason why the related property is deprecated, if
+the full name of the property that replaces the related deprecated property, if
+the value providers that are applicable to the keys of this item. only applicable
+the list of well-defined values, if any. if no extra {@link valueprovider provider}
+the value providers that are applicable to this item. only one
+resolve the name of an item against this instance.
+register the specified {@link configurationmetadatasource sources}.
+add a {@link configurationmetadataproperty} with the
+merge the content of the specified repository to this repository.
+a description of this value, if any. can be multi-lines.
+a single-line, single-sentence description of this hint, if any.
+return the parameters.
+creates a new {@code jsonarray} by copying all values from the given collection.
+creates a new {@code jsonarray} with values from the next array in the tokener.
+creates a new {@code jsonarray} with values from the json string.
+creates a new {@code jsonarray} with values from the given primitive array.
+returns the number of values in this array.
+appends {@code value} to the end of this array.
+appends {@code value} to the end of this array.
+appends {@code value} to the end of this array.
+appends {@code value} to the end of this array.
+appends {@code value} to the end of this array.
+sets the value at {@code index} to {@code value}, null padding this array to the
+sets the value at {@code index} to {@code value}, null padding this array to the
+sets the value at {@code index} to {@code value}, null padding this array to the
+sets the value at {@code index} to {@code value}, null padding this array to the
+sets the value at {@code index} to {@code value}, null padding this array to the
+returns true if this array has no value at {@code index}, or if its value is the
+returns the value at {@code index}.
+returns the value at {@code index}, or null if the array has no value at
+removes and returns the value at {@code index}, or null if the array has no value
+returns the value at {@code index} if it exists and is a boolean or can be coerced
+returns the value at {@code index} if it exists and is a boolean or can be coerced
+returns the value at {@code index} if it exists and is a boolean or can be coerced
+returns the value at {@code index} if it exists and is a double or can be coerced
+returns the value at {@code index} if it exists and is a double or can be coerced
+returns the value at {@code index} if it exists and is a double or can be coerced
+returns the value at {@code index} if it exists and is an int or can be coerced to
+returns the value at {@code index} if it exists and is an int or can be coerced to
+returns the value at {@code index} if it exists and is an int or can be coerced to
+returns the value at {@code index} if it exists and is a long or can be coerced to
+returns the value at {@code index} if it exists and is a long or can be coerced to
+returns the value at {@code index} if it exists and is a long or can be coerced to
+returns the value at {@code index} if it exists, coercing it if necessary.
+returns the value at {@code index} if it exists, coercing it if necessary. returns
+returns the value at {@code index} if it exists, coercing it if necessary. returns
+returns the value at {@code index} if it exists and is a {@code
+returns the value at {@code index} if it exists and is a {@code
+returns the value at {@code index} if it exists and is a {@code
+returns the value at {@code index} if it exists and is a {@code
+returns a new object whose values are the values in this array, and whose names are
+returns a new string by alternating this array's values with {@code
+encodes this array as a compact json string, such as: <pre>[94043,90210]</pre>
+encodes this array as a human-readable json string for debugging, such as: <pre>
+creates a {@code jsonobject} with no name/value mappings.
+creates a new {@code jsonobject} by copying all name/value mappings from the given
+creates a new {@code jsonobject} with name/value mappings from the next object in
+creates a new {@code jsonobject} with name/value mappings from the json string.
+creates a new {@code jsonobject} by copying mappings for the listed names from the
+returns the number of name/value mappings in this object.
+maps {@code name} to {@code value}, clobbering any existing name/value mapping with
+maps {@code name} to {@code value}, clobbering any existing name/value mapping with
+maps {@code name} to {@code value}, clobbering any existing name/value mapping with
+maps {@code name} to {@code value}, clobbering any existing name/value mapping with
+maps {@code name} to {@code value}, clobbering any existing name/value mapping with
+equivalent to {@code put(name, value)} when both parameters are non-null; does
+appends {@code value} to the array already mapped to {@code name}. if this object
+removes the named mapping if it exists; does nothing otherwise.
+returns true if this object has no mapping for {@code name} or if it has a mapping
+returns true if this object has a mapping for {@code name}. the mapping may be
+returns the value mapped by {@code name}.
+returns the value mapped by {@code name}, or null if no such mapping exists.
+returns the value mapped by {@code name} if it exists and is a boolean or can be
+returns the value mapped by {@code name} if it exists and is a boolean or can be
+returns the value mapped by {@code name} if it exists and is a boolean or can be
+returns the value mapped by {@code name} if it exists and is a double or can be
+returns the value mapped by {@code name} if it exists and is a double or can be
+returns the value mapped by {@code name} if it exists and is a double or can be
+returns the value mapped by {@code name} if it exists and is an int or can be
+returns the value mapped by {@code name} if it exists and is an int or can be
+returns the value mapped by {@code name} if it exists and is an int or can be
+returns the value mapped by {@code name} if it exists and is a long or can be
+returns the value mapped by {@code name} if it exists and is a long or can be
+returns the value mapped by {@code name} if it exists and is a long or can be
+returns the value mapped by {@code name} if it exists, coercing it if necessary.
+returns the value mapped by {@code name} if it exists, coercing it if necessary.
+returns the value mapped by {@code name} if it exists, coercing it if necessary.
+returns the value mapped by {@code name} if it exists and is a {@code
+returns the value mapped by {@code name} if it exists and is a {@code
+returns the value mapped by {@code name} if it exists and is a {@code
+returns the value mapped by {@code name} if it exists and is a {@code
+returns an array with the values corresponding to {@code names}. the array contains
+returns an iterator of the {@code string} names in this object. the returned
+returns an array containing the string names in this object. this method returns
+encodes this object as a compact json string, such as:
+encodes this object as a human-readable json string for debugging, such as: <pre>
+encodes the number as a json string.
+encodes {@code data} as a json string. this applies quotes and any necessary
+wraps the given object if necessary.
+unlike the original implementation, this stack isn't limited to 20 levels of
+begins encoding a new array. each call to this method must be paired with a call to
+ends encoding the current array.
+begins encoding a new object. each call to this method must be paired with a call
+ends encoding the current object.
+enters a new scope by appending any necessary whitespace and the given bracket.
+closes the current scope by appending any necessary whitespace and the given
+returns the value on the top of the stack.
+replace the value on the top of the stack with the given value.
+encodes {@code value}.
+encodes {@code value} to this stringer.
+encodes {@code value} to this stringer.
+encodes {@code value} to this stringer.
+encodes the key (property name) to this stringer.
+inserts any necessary separators and whitespace before a name. also adjusts the
+inserts any necessary separators and whitespace before a literal value, inline
+returns the encoded json string.
+@param in json encoded string. null is not permitted and will yield a tokener that
+returns the next value from the input.
+advances the position until after the next newline character. if the line is
+returns the string up to but not including {@code quote}, unescaping any character
+unescapes the character identified by the character or characters that immediately
+reads a null, boolean, numeric or unquoted string literal value. numeric values
+returns the string up to but not including any of the given characters or a newline
+reads a sequence of key/value pairs and the trailing closing brace '}' of an
+reads a sequence of values and the trailing closing brace ']' of an array. the
+returns an exception containing the given message plus the current position and the
+returns the current position and the entire input string.
+resolve the {@link sourcemetadata} for the specified type. if the type has no
+create a {@link propertydescriptor} for the given property name.
+create a {@link propertydescriptor} for the given property name.
+determine if the current {@link #getfield() field} defines a public accessor using
+return the default value of the given {@code field}.
+resolve the {@link sourcemetadata} for the specified property.
+collect the annotations that are annotated or meta-annotated with the specified
+read the existing {@link configurationmetadata} of the current module or
+read the existing {@link configurationmetadata} for the specified type or
+write the module {@link configurationmetadata} to the filesystem.
+write the {@link configurationmetadata} for the {@link typeelement} to the
+write the metadata to the {@link fileobject} provided by the given supplier.
+read additional {@link configurationmetadata} for the current module or
+read additional {@link configurationmetadata} for the {@link typeelement} or
+internal callback that can throw an {@link ioexception}.
+return the name of the property.
+return the type of the property.
+return the element that declared the property.
+return the getter for the property.
+resolve the {@link itemmetadata} for this property.
+resolve the {@link itemhint} for this property.
+return if this is a nested property.
+return if this property has been explicitly marked as nested (for example using an
+resolve the property description.
+return the {@link propertydescriptor} instances that are valid candidates for the
+return the qualified name of the specified element.
+return the type of the specified {@link typemirror} including all its generic
+extract the target element type from the specified container type or {@code null}
+return the {@link primitivetype} of the specified type or {@code null} if the type
+reflection base alternative for {@code com.sun.source.tree.treevisitor}.
+add item meta-data.
+add item meta-data if it's not already present.
+add item hint.
+add item ignore.
+remove item meta-data for the given item type and name.
+merge the content from another {@link configurationmetadata}.
+return item meta-data.
+return hint meta-data.
+return ignore meta-data.
+return an {@link itemhint} with the given prefix applied.
+create an ignore for a property with the given name.
+return the idiomatic metadata format for the given {@code value}.
+add source code at the end of file, just before last '}'
+delete source file for given class from project.
+restore source code of given class to its original contents.
+add source code of given class to this project.
+return the root {@link typeelement} for the specified {@code type}.
+alternative to spring boot's {@code @configurationproperties} for testing (removes the
+alternative to spring boot's {@code @controllerendpoint} for testing (removes the need
+alternative to spring boot's {@code @deprecatedconfigurationproperty} for testing
+alternative to spring boot's {@code @endpoint} for testing (removes the need for a
+alternative to spring boot's {@code @jmxendpoint} for testing (removes the need for a
+alternative to spring boot's {@code @readoperation} for testing (removes the need for a
+alternative to spring boot's {@code @restcontrollerendpoint} for testing (removes the
+alternative to spring boot's {@code @servletendpoint} for testing (removes the need for
+alternative to spring boot's {@code @webendpoint} for testing (removes the need for a
+a nice counter description.
+a nice counter description.
+a nice counter description.
+configuration properties using lombok @data on element level and overwriting behaviour
+configuration properties using lombok @getter and @setter with explicitly defining
+record properties making use of {@code @name}.
+example record javadoc sample
+configuration properties as record with deprecated property.
+whether this is enabled.
+description of this simple property.
+whether this is visible.
+description of this simple property.
+another name.
+sample record properties source.
+description of this simple property.
+alternative to spring boot's {@code @autoconfiguration} for testing (removes the need
+alternative to spring boot's {@code @autoconfigureafter} for testing (removes the need
+alternative to spring boot's {@code @autoconfigurebefore} for testing (removes the need
+alternative to spring boot's {@code @autoconfigureorder} for testing (removes the need
+create an instance with target bean, factory bean classes, and dependency types.
+create an instance with target bean class and dependency names.
+create an instance with target bean class and dependency types.
+indicates that a class provides configuration that can be automatically applied by
+the auto-configuration classes that should have not yet been applied.
+the names of the auto-configuration classes that should have not yet been applied.
+the auto-configuration classes that should have already been applied.
+the names of the auto-configuration classes that should have already been applied.
+return the auto-configuration candidate configurations that are going to be
+return the exclusions that were applied.
+listener that can be registered with {@code spring.factories} to receive details of
+return the {@link autoconfigurationentry} based on the {@link annotationmetadata}
+return the appropriate {@link annotationattributes} from the
+return the source annotation class used by the selector.
+return the auto-configuration class names that should be considered. by default,
+handle any invalid excludes that have been specified.
+return any exclusions that limit the candidate configurations.
+returns the auto-configurations excluded by the
+create an entry with the configurations that were contributed and their
+get an {@link integer} value from the meta-data.
+get a {@link set} value from the meta-data.
+get an {@link string} value from the meta-data.
+registers packages with {@link autoconfigurationpackages}. when no {@link #basepackages
+type-safe alternative to {@link #basepackages} for specifying the packages to be
+return the auto-configuration base packages for the given bean factory.
+programmatically registers the auto-configuration package names. subsequent
+loads the relocations from the classpath. relocations are stored in files named
+hint for that an {@link enableautoconfiguration auto-configuration} should be applied
+the auto-configuration classes that should have already been applied.
+the names of the auto-configuration classes that should have already been applied.
+hint that an {@link enableautoconfiguration auto-configuration} should be applied
+the auto-configuration classes that should have not yet been applied.
+the names of the auto-configuration classes that should have not yet been applied.
+auto-configuration specific variant of spring framework's {@link order @order}
+exclude specific auto-configuration class names such that they will never be
+import and apply the specified auto-configuration classes. applies the same ordering
+the auto-configuration classes that should be imported. when empty, the classes are
+exclude specific auto-configuration classes such that they will never be applied.
+indicates a {@link configuration configuration} class that declares one or more
+exclude specific auto-configuration classes such that they will never be applied.
+exclude specific auto-configuration class names such that they will never be
+base packages to scan for annotated components. use {@link #scanbasepackageclasses}
+type-safe alternative to {@link #scanbasepackages} for specifying the packages to
+the {@link beannamegenerator} class to be used for naming detected components
+the default {@code objectname} of the application admin mbean.
+supported cache types (defined in order of precedence).
+record the occurrence of condition evaluation.
+records the names of the classes that have been excluded from condition evaluation.
+records the names of the classes that are candidates for condition evaluation.
+returns condition outcomes from this report, grouped by the source.
+returns the names of the classes that have been excluded from condition evaluation.
+returns the names of the classes that were evaluated but were not conditional.
+the parent report (from a parent beanfactory if there is one).
+attempt to find the {@link conditionevaluationreport} for the specified bean
+obtain a {@link conditionevaluationreport} for the specified bean factory.
+return {@code true} if all outcomes match.
+return a {@link stream} of the {@link conditionandoutcome} items.
+return {@code true} if the message is empty.
+return a new {@link conditionmessage} based on the instance and an appended
+return a new builder to construct a new {@link conditionmessage} based on the
+return a new builder to construct a new {@link conditionmessage} based on the
+factory method to return a new empty {@link conditionmessage}.
+factory method to create a new {@link conditionmessage} with a specific message.
+factory method to create a new {@link conditionmessage} comprised of the specified
+factory method for a builder to construct a new {@link conditionmessage} for a
+factory method for a builder to construct a new {@link conditionmessage} for a
+indicate that an exact result was found. for example
+indicate that one or more results were found. for example
+indicate that one or more results were found. for example
+indicate that one or more results were not found. for example
+indicate that one or more results were found. for example
+indicates a single result. for example {@code resultedin("yes")} results in the
+indicates something is available. for example {@code available("money")}
+indicates something is not available. for example {@code notavailable("time")}
+indicates the reason. for example {@code because("running linux")} results in
+used when no items are available. for example
+indicate the items. for example
+indicate the items. for example
+indicate the items. for example
+indicate the items with a {@link style}. for example
+render styles.
+render with the item surrounded by quotes.
+create a new {@link conditionoutcome} instance.
+create a new {@link conditionoutcome} instance for a 'match'.
+create a new {@link conditionoutcome} instance for 'match'. for more consistent
+create a new {@link conditionoutcome} instance for 'match'.
+create a new {@link conditionoutcome} instance for 'no match'. for more consistent
+create a new {@link conditionoutcome} instance for 'no match'.
+return {@code true} if the outcome was a match.
+return an outcome message or {@code null}.
+return an outcome message.
+the class types of beans that should be checked. the condition matches when beans
+the class type names of beans that should be checked. the condition matches when
+the annotation type decorating a bean that should be checked. the condition matches
+the names of beans to check. the condition matches when all the bean names
+strategy to decide if the application context hierarchy (parent contexts) should be
+container annotation that aggregates several
+{@link conditional @conditional} that checks if the specified properties have a
+alias for {@link #name()}.
+a prefix that should be applied to each property. the prefix automatically ends
+the expected value for the properties. if not specified, the property must be equal
+the classes that must be present.
+the classes names that must be present.
+configuration annotation for a conditional element that depends on the value of a spel
+configures whether the value configured in {@link #value()} shall be considered the
+jndi locations, one of which must exist. if no locations are specific the condition
+the class types of beans that should be checked. the condition matches when no bean
+the class type names of beans that should be checked. the condition matches when no
+the class types of beans that should be ignored when identifying matching beans.
+the class type names of beans that should be ignored when identifying matching
+the annotation type decorating a bean that should be checked. the condition matches
+the names of beans to check. the condition matches when each bean name specified is
+strategy to decide if the application context hierarchy (parent contexts) should be
+the names of the classes that must not be present.
+the filter bean type that must not be present.
+container annotation that aggregates several
+{@link conditional @conditional} that checks if the specified properties have a
+alias for {@link #name()}.
+a prefix that should be applied to each property. the prefix automatically ends
+the string representation of the expected value for the properties. if not
+the resources that must be present.
+the required type of the web application.
+slightly faster variant of {@link classutils#forname(string, classloader)} that
+allow user to provide bare expression with no '#{}' wrapper.
+determines if the {@code runningversion} is within the specified range of versions.
+check if one of the default resource locations actually exists.
+determine the outcome of the match along with suitable log output.
+return true if any of the specified condition matches.
+metadata about a container image that can be added to an {@link attributeaccessor}.
+return {@code true} if {@link containerimagemetadata} has been added to the given
+return {@link containerimagemetadata} from the given attributes or {@code null} if
+the {@link bootstrapmode} for the particular repository support. defaults to
+{@link conditional @conditional} that only matches when a particular type of spring
+{@link enableautoconfiguration auto-configuration} to enable/disable spring's
+set if unique runtime object names should be ensured.
+static factory method that creates a
+interface used to preinitialize in the background code that may otherwise cause a delay
+runner thread to call the {@link backgroundpreinitializer} instances.
+return a {@link map} of {@link connectiondetails} interface type to
+a {@link connectiondetailsfactory} registration.
+helper utility to manage a single bundle content configuration property. may possibly
+return if there is any property value present.
+watch the given files or directories for changes.
+retrieves all {@link path paths} that should be registered for the specified
+an individual watch registration.
+get an {@link sslbundle} for the given {@link pemsslbundleproperties}.
+get an {@link sslbundle} for the given {@link pemsslbundleproperties}.
+get an {@link sslbundle} for the given {@link jkssslbundleproperties}.
+get an {@link sslbundle} for the given {@link jkssslbundleproperties}.
+supported ssl ciphers.
+the password used to access the key in the key store.
+file watching.
+quiet period, after which changes are detected.
+{@link enableautoconfiguration auto-configuration} for {@link taskexecutor}.

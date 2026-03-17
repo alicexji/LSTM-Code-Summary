@@ -1,0 +1,1000 @@
+public BuildRequest withBindings(List<Binding> bindings) { Assert.notNull(bindings, "'bindings' must not be null"); return new BuildRequest(this.name, this.applicationContent, this.builder, this.trustBuilder, this.runImage, this.creator, this.env, this.cleanCache, this.verboseLogging, this.pullPolicy, this.publish, this.buildpacks, bindings, this.network, this.tags, this.buildWorkspace, this.buildCache, this.launchCache, this.createdDate, this.applicationDirectory, this.securityOptions, this.platform); }
+public BuildRequest withNetwork(@Nullable String network) { return new BuildRequest(this.name, this.applicationContent, this.builder, this.trustBuilder, this.runImage, this.creator, this.env, this.cleanCache, this.verboseLogging, this.pullPolicy, this.publish, this.buildpacks, this.bindings, network, this.tags, this.buildWorkspace, this.buildCache, this.launchCache, this.createdDate, this.applicationDirectory, this.securityOptions, this.platform); }
+public BuildRequest withTags(ImageReference... tags) { Assert.notEmpty(tags, "'tags' must not be empty"); return withTags(Arrays.asList(tags)); }
+public BuildRequest withTags(List<ImageReference> tags) { Assert.notNull(tags, "'tags' must not be null"); return new BuildRequest(this.name, this.applicationContent, this.builder, this.trustBuilder, this.runImage, this.creator, this.env, this.cleanCache, this.verboseLogging, this.pullPolicy, this.publish, this.buildpacks, this.bindings, this.network, tags, this.buildWorkspace, this.buildCache, this.launchCache, this.createdDate, this.applicationDirectory, this.securityOptions, this.platform); }
+public BuildRequest withBuildWorkspace(Cache buildWorkspace) { Assert.notNull(buildWorkspace, "'buildWorkspace' must not be null"); return new BuildRequest(this.name, this.applicationContent, this.builder, this.trustBuilder, this.runImage, this.creator, this.env, this.cleanCache, this.verboseLogging, this.pullPolicy, this.publish, this.buildpacks, this.bindings, this.network, this.tags, buildWorkspace, this.buildCache, this.launchCache, this.createdDate, this.applicationDirectory, this.securityOptions, this.platform); }
+public BuildRequest withBuildCache(Cache buildCache) { Assert.notNull(buildCache, "'buildCache' must not be null"); return new BuildRequest(this.name, this.applicationContent, this.builder, this.trustBuilder, this.runImage, this.creator, this.env, this.cleanCache, this.verboseLogging, this.pullPolicy, this.publish, this.buildpacks, this.bindings, this.network, this.tags, this.buildWorkspace, buildCache, this.launchCache, this.createdDate, this.applicationDirectory, this.securityOptions, this.platform); }
+public BuildRequest withLaunchCache(Cache launchCache) { Assert.notNull(launchCache, "'launchCache' must not be null"); return new BuildRequest(this.name, this.applicationContent, this.builder, this.trustBuilder, this.runImage, this.creator, this.env, this.cleanCache, this.verboseLogging, this.pullPolicy, this.publish, this.buildpacks, this.bindings, this.network, this.tags, this.buildWorkspace, this.buildCache, launchCache, this.createdDate, this.applicationDirectory, this.securityOptions, this.platform); }
+public BuildRequest withCreatedDate(String createdDate) { Assert.notNull(createdDate, "'createdDate' must not be null"); return new BuildRequest(this.name, this.applicationContent, this.builder, this.trustBuilder, this.runImage, this.creator, this.env, this.cleanCache, this.verboseLogging, this.pullPolicy, this.publish, this.buildpacks, this.bindings, this.network, this.tags, this.buildWorkspace, this.buildCache, this.launchCache, parseCreatedDate(createdDate), this.applicationDirectory, this.securityOptions, this.platform); }
+public BuildRequest withApplicationDirectory(String applicationDirectory) { Assert.notNull(applicationDirectory, "'applicationDirectory' must not be null"); return new BuildRequest(this.name, this.applicationContent, this.builder, this.trustBuilder, this.runImage, this.creator, this.env, this.cleanCache, this.verboseLogging, this.pullPolicy, this.publish, this.buildpacks, this.bindings, this.network, this.tags, this.buildWorkspace, this.buildCache, this.launchCache, this.createdDate, applicationDirectory, this.securityOptions, this.platform); }
+public BuildRequest withSecurityOptions(List<String> securityOptions) { Assert.notNull(securityOptions, "'securityOptions' must not be null"); return new BuildRequest(this.name, this.applicationContent, this.builder, this.trustBuilder, this.runImage, this.creator, this.env, this.cleanCache, this.verboseLogging, this.pullPolicy, this.publish, this.buildpacks, this.bindings, this.network, this.tags, this.buildWorkspace, this.buildCache, this.launchCache, this.createdDate, this.applicationDirectory, securityOptions, this.platform); }
+public BuildRequest withImagePlatform(String platform) { Assert.notNull(platform, "'platform' must not be null"); return new BuildRequest(this.name, this.applicationContent, this.builder, this.trustBuilder, this.runImage, this.creator, this.env, this.cleanCache, this.verboseLogging, this.pullPolicy, this.publish, this.buildpacks, this.bindings, this.network, this.tags, this.buildWorkspace, this.buildCache, this.launchCache, this.createdDate, this.applicationDirectory, this.securityOptions, ImagePlatform.of(platform)); }
+public ImageReference getName() { return this.name; }
+public TarArchive getApplicationContent(Owner owner) { return this.applicationContent.apply(owner); }
+public ImageReference getBuilder() { return this.builder; }
+public boolean isTrustBuilder() { return (this.trustBuilder != null) ? this.trustBuilder : isBuilderKnownAndTrusted(); }
+public @Nullable ImageReference getRunImage() { return this.runImage; }
+public Creator getCreator() { return this.creator; }
+public Map<String, String> getEnv() { return this.env; }
+public boolean isCleanCache() { return this.cleanCache; }
+public boolean isVerboseLogging() { return this.verboseLogging; }
+public boolean isPublish() { return this.publish; }
+public PullPolicy getPullPolicy() { return this.pullPolicy; }
+public List<BuildpackReference> getBuildpacks() { return this.buildpacks; }
+public List<Binding> getBindings() { return this.bindings; }
+public @Nullable String getNetwork() { return this.network; }
+public List<ImageReference> getTags() { return this.tags; }
+public @Nullable Cache getBuildWorkspace() { return this.buildWorkspace; }
+public @Nullable Cache getBuildCache() { return this.buildCache; }
+public @Nullable Cache getLaunchCache() { return this.launchCache; }
+public @Nullable Instant getCreatedDate() { return this.createdDate; }
+public @Nullable String getApplicationDirectory() { return this.applicationDirectory; }
+public @Nullable List<String> getSecurityOptions() { return this.securityOptions; }
+public @Nullable ImagePlatform getImagePlatform() { return this.platform; }
+public static BuildRequest forJarFile(File jarFile) { assertJarFile(jarFile); return forJarFile(ImageReference.forJarFile(jarFile).inTaggedForm(), jarFile); }
+public static BuildRequest forJarFile(ImageReference name, File jarFile) { assertJarFile(jarFile); return new BuildRequest(name, (owner) -> TarArchive.fromZip(jarFile, owner)); }
+public static BuildRequest of(ImageReference name, Function<Owner, TarArchive> applicationContent) { return new BuildRequest(name, applicationContent); }
+public Builder(BuilderDockerConfiguration dockerConfiguration) { this(BuildLog.toSystemOut(), dockerConfiguration); }
+public Builder(BuildLog log) { this(log, new DockerApi(null, BuildLogAdapter.get(log)), null); }
+public Builder(BuildLog log, @Nullable BuilderDockerConfiguration dockerConfiguration) { this(log, new DockerApi((dockerConfiguration != null) ? dockerConfiguration.connection() : null, BuildLogAdapter.get(log)), dockerConfiguration); }
+static DockerLog get(BuildLog log) { if (log instanceof AbstractBuildLog abstractBuildLog) { return new BuildLogAdapter(abstractBuildLog); }
+static @Nullable Buildpack resolve(BuildpackResolverContext context, BuildpackReference reference) { boolean unambiguous = reference.hasPrefix(PREFIX); BuilderReference builderReference = BuilderReference .of(unambiguous ? getSubReference(reference) : reference.toString()); BuildpackMetadata buildpackMetadata = findBuildpackMetadata(context, builderReference); if (unambiguous) { Assert.state(buildpackMetadata != null, () -> "Buildpack '" + reference + "' not found in builder"); }
+public record BuilderDockerConfiguration(@Nullable DockerConnectionConfiguration connection, boolean bindHostToBuilder, @Nullable DockerRegistryAuthentication builderRegistryAuthentication, @Nullable DockerRegistryAuthentication publishRegistryAuthentication) { public BuilderDockerConfiguration() { this(null, false, null, null); }
+public @Nullable String getOperation() { return this.operation; }
+public int getStatusCode() { return this.statusCode; }
+Stack getStack() { return this.stack; }
+List<RunImage> getRunImages() { return this.runImages; }
+Lifecycle getLifecycle() { return this.lifecycle; }
+CreatedBy getCreatedBy() { return this.createdBy; }
+List<BuildpackMetadata> getBuildpacks() { return this.buildpacks; }
+BuilderMetadata copy(Consumer<Update> update) { return new Update(this).run(update); }
+void attachTo(ImageConfig.Update update) { try { String json = SharedJsonMapper.get().writeValueAsString(getNode()); update.withLabel(LABEL_NAME, json); }
+static BuilderMetadata fromImage(Image image) throws IOException { Assert.notNull(image, "'image' must not be null"); return fromImageConfig(image.getConfig()); }
+static BuilderMetadata fromImageConfig(ImageConfig imageConfig) throws IOException { Assert.notNull(imageConfig, "'imageConfig' must not be null"); String json = imageConfig.getLabels().get(LABEL_NAME); Assert.state(json != null, () -> "No '" + LABEL_NAME + "' label found in image config labels '" + StringUtils.collectionToCommaDelimitedString(imageConfig.getLabels().keySet()) + "'"); return fromJson(json); }
+static BuilderMetadata fromJson(String json) throws IOException { return new BuilderMetadata(SharedJsonMapper.get().readTree(json)); }
+interface Stack { /** * Return run image metadata. * @return the run image metadata */ RunImage getRunImage(); /** * Run image metadata. */ interface RunImage { /** * Return the builder image reference. * @return the image reference */ String getImage(); /** * Return stack mirrors. * @return the stack mirrors */ default String[] getMirrors() { return EMPTY_MIRRORS; }
+RunImage(JsonNode node) { super(node, MethodHandles.lookup()); this.image = extractImage(); this.mirrors = childrenAt("/mirrors", JsonNode::asString); }
+interface Lifecycle { /** * Return the lifecycle version. * @return the lifecycle version */ String getVersion(); /** * Return the default API versions. * @return the API versions */ Api getApi(); /** * Return the supported API versions. * @return the API versions */ Apis getApis(); /** * Default API versions. */ interface Api { /** * Return the default buildpack API version. * @return the buildpack version */ String getBuildpack(); /** * Return the default platform API version. * @return the platform version */ String getPlatform(); }
+interface Apis { /** * Return the supported buildpack API versions. * @return the buildpack versions */ default String @Nullable [] getBuildpack() { return valueAt(this, "/buildpack/supported", String[].class); }
+default String @Nullable [] getPlatform() { return valueAt(this, "/platform/supported", String[].class); }
+interface CreatedBy { /** * Return the name of the creator. * @return the creator name */ String getName(); /** * Return the version of the creator. * @return the creator version */ String getVersion(); }
+void withCreatedBy(String name, String version) { ObjectNode createdBy = (ObjectNode) this.copy.at("/createdBy"); if (createdBy == null) { createdBy = this.copy.putObject("createdBy"); }
+interface Buildpack { /** * Return the coordinates of the builder. * @return the builder coordinates */ BuildpackCoordinates getCoordinates(); /** * Apply the necessary buildpack layers. * @param layers a consumer that should accept the layers * @throws IOException on IO error */ void apply(IOConsumer<Layer> layers) throws IOException; }
+String getSanitizedId() { return this.id.replace("/", "_"); }
+static BuildpackCoordinates fromToml(InputStream inputStream, Path path) throws IOException { return fromToml(Toml.parse(inputStream), path); }
+static BuildpackCoordinates fromBuildpackMetadata(BuildpackMetadata buildpackMetadata) { Assert.notNull(buildpackMetadata, "'buildpackMetadata' must not be null"); return new BuildpackCoordinates(buildpackMetadata.getId(), buildpackMetadata.getVersion()); }
+static BuildpackCoordinates of(String id, @Nullable String version) { return new BuildpackCoordinates(id, version); }
+@Nullable BuildpackLayerDetails getBuildpack(String id, @Nullable String version) { return this.buildpacks.getBuildpack(id, version); }
+static BuildpackLayersMetadata fromImage(Image image) throws IOException { Assert.notNull(image, "'image' must not be null"); return fromImageConfig(image.getConfig()); }
+static BuildpackLayersMetadata fromImageConfig(ImageConfig imageConfig) throws IOException { Assert.notNull(imageConfig, "'imageConfig' must not be null"); String json = imageConfig.getLabels().get(LABEL_NAME); Assert.state(json != null, () -> "No '" + LABEL_NAME + "' label found in image config labels '" + StringUtils.collectionToCommaDelimitedString(imageConfig.getLabels().keySet()) + "'"); return fromJson(json); }
+static BuildpackLayersMetadata fromJson(String json) throws IOException { return fromJson(SharedJsonMapper.get().readTree(json)); }
+static BuildpackLayersMetadata fromJson(JsonNode node) { return new BuildpackLayersMetadata(node); }
+@Nullable String getName() { return this.name; }
+@Nullable String getHomepage() { return this.homepage; }
+@Nullable String getLayerDiffId() { return this.layerDiffId; }
+String getId() { return this.id; }
+@Nullable String getVersion() { return this.version; }
+@Nullable String getHomepage() { return this.homepage; }
+static BuildpackMetadata fromImage(Image image) throws IOException { Assert.notNull(image, "'image' must not be null"); return fromImageConfig(image.getConfig()); }
+static BuildpackMetadata fromImageConfig(ImageConfig imageConfig) throws IOException { Assert.notNull(imageConfig, "'imageConfig' must not be null"); String json = imageConfig.getLabels().get(LABEL_NAME); Assert.state(json != null, () -> "No '" + LABEL_NAME + "' label found in image config labels '" + StringUtils.collectionToCommaDelimitedString(imageConfig.getLabels().keySet()) + "'"); return fromJson(json); }
+static BuildpackMetadata fromJson(String json) throws IOException { return fromJson(SharedJsonMapper.get().readTree(json)); }
+static BuildpackMetadata fromJson(JsonNode node) { return new BuildpackMetadata(node); }
+public static BuildpackReference of(String value) { Assert.hasText(value, "'value' must not be empty"); return new BuildpackReference(value); }
+interface BuildpackResolverContext { List<BuildpackMetadata> getBuildpackMetadata(); BuildpackLayersMetadata getBuildpackLayersMetadata(); /** * Retrieve an image. * @param reference the image reference * @param type the type of image * @return the retrieved image * @throws IOException on IO error */ Image fetchImage(ImageReference reference, ImageType type) throws IOException; /** * Export the layers of an image. * @param reference the reference to export * @param exports a consumer to receive the layers (contents can only be accessed * during the callback) * @throws IOException on IO error */ void exportImageLayers(ImageReference reference, IOBiConsumer<String, TarArchive> exports) throws IOException; }
+static Buildpacks resolveAll(BuildpackResolverContext context, Collection<BuildpackReference> references) { Assert.notNull(context, "'context' must not be null"); if (CollectionUtils.isEmpty(references)) { return Buildpacks.EMPTY; }
+public @Nullable Volume getVolume() { return (this.format.equals(Format.VOLUME)) ? (Volume) this : null; }
+public @Nullable Bind getBind() { return (this.format.equals(Format.BIND)) ? (Bind) this : null; }
+public static Cache volume(String name) { Assert.notNull(name, "'name' must not be null"); return new Volume(VolumeName.of(name)); }
+public static Cache volume(VolumeName name) { Assert.notNull(name, "'name' must not be null"); return new Volume(name); }
+public static Cache bind(String source) { Assert.notNull(source, "'source' must not be null"); return new Bind(source); }
+public String getName() { return "Spring Boot"; }
+public String getVersion() { return this.version; }
+public static Creator withVersion(String version) { Assert.notNull(version, "'version' must not be null"); return new Creator(version); }
+static @Nullable Buildpack resolve(BuildpackResolverContext context, BuildpackReference reference) { Path path = reference.asPath(); if (path != null && Files.exists(path) && Files.isDirectory(path)) { return new DirectoryBuildpack(path); }
+ImageReference getName() { return this.name; }
+Owner getBuildOwner() { return this.buildOwner; }
+BuilderMetadata getBuilderMetadata() { return this.builderMetadata; }
+ImageArchive getArchive(@Nullable String applicationDirectory) throws IOException { return ImageArchive.from(this.builderImage, (update) -> { this.archiveUpdate.accept(update); if (StringUtils.hasLength(applicationDirectory)) { update.withNewLayer(applicationDirectoryLayer(applicationDirectory)); }
+static @Nullable Buildpack resolve(BuildpackResolverContext context, BuildpackReference reference) { boolean unambiguous = reference.hasPrefix(PREFIX); try { ImageReference imageReference; if (unambiguous) { String subReference = reference.getSubReference(PREFIX); Assert.state(subReference != null, "'subReference' must not be null"); imageReference = ImageReference.of(subReference); }
+enum ImageType { /** * Builder image. */ BUILDER("builder image"), /** * Run image. */ RUNNER("run image"), /** * Buildpack image. */ BUILDPACK("buildpack image"); private final String description; ImageType(String description) { this.description = description; }
+void execute() throws IOException { Assert.state(!this.executed, "Lifecycle has already been executed"); this.executed = true; this.log.executingLifecycle(this.request, this.lifecycleVersion, this.buildCache); if (this.request.isCleanCache()) { deleteCache(this.buildCache); }
+static final String CACHE = "/cache"; /** * The directory used by buildpacks for launch related caching. The volume name is * based on the image {@link BuildRequest#getName() name}
+boolean isEqualOrGreaterThan(LifecycleVersion other) { return compareTo(other) >= 0; }
+int getMajor() { return this.major; }
+int getMinor() { return this.minor; }
+int getPatch() { return this.patch; }
+static LifecycleVersion parse(String value) { Assert.hasText(value, "'value' must not be empty"); String withoutPrefix = (value.startsWith("v") || value.startsWith("V")) ? value.substring(1) : value; String[] components = withoutPrefix.split("\\."); Assert.isTrue(components.length <= 3, () -> "'value' [%s] must be a valid version number".formatted(value)); int[] versions = new int[3]; for (int i = 0; i < components.length; i++) { try { versions[i] = Integer.parseInt(components[i]); }
+void withDaemonAccess() { this.withArgs("-daemon"); this.daemonAccess = true; }
+private void withLogLevelArg(boolean verboseLogging) { if (verboseLogging) { this.args.add("-log-level"); this.args.add("debug"); }
+void withArgs(Object... args) { Arrays.stream(args).map(Object::toString).forEach(this.args::add); }
+void withBinding(Binding binding) { this.bindings.add(binding); }
+void withEnv(String name, String value) { this.env.put(name, value); }
+void withNetworkMode(@Nullable String networkMode) { this.networkMode = networkMode; }
+void withSecurityOption(String option) { this.securityOptions.add(option); }
+String getName() { return this.name; }
+void apply(ContainerConfig.Update update) { if (this.daemonAccess) { update.withUser("root"); }
+static StackId fromImage(Image image) { Assert.notNull(image, "'image' must not be null"); return fromImageConfig(image.getConfig()); }
+private static StackId fromImageConfig(ImageConfig imageConfig) { String value = imageConfig.getLabels().get(LABEL_NAME); return new StackId(value); }
+static StackId of(String value) { Assert.hasText(value, "'value' must not be empty"); return new StackId(value); }
+static @Nullable Buildpack resolve(BuildpackResolverContext context, BuildpackReference reference) { Path path = reference.asPath(); if (path != null && Files.exists(path) && Files.isRegularFile(path)) { return new TarGzipBuildpack(path); }
+int getMajor() { return this.major; }
+int getMinor() { return this.minor; }
+public boolean supports(ApiVersion other) { if (equals(other)) { return true; }
+public boolean supportsAny(ApiVersion... others) { for (ApiVersion other : others) { if (supports(other)) { return true; }
+public static ApiVersion parse(String value) { Assert.hasText(value, "'value' must not be empty"); Matcher matcher = PATTERN.matcher(value); Assert.isTrue(matcher.matches(), () -> "'value' [%s] must contain a well formed version number".formatted(value)); try { int major = Integer.parseInt(matcher.group(1)); int minor = Integer.parseInt(matcher.group(2)); return new ApiVersion(major, minor); }
+public DockerApi(@Nullable DockerConnectionConfiguration connectionConfiguration, DockerLog log) { this(HttpTransport.create(connectionConfiguration), log); }
+DockerApi(HttpTransport http, DockerLog log) { Assert.notNull(http, "'http' must not be null"); Assert.notNull(log, "'log' must not be null"); this.http = http; this.jsonStream = new JsonStream(SharedJsonMapper.get()); this.image = new ImageApi(); this.container = new ContainerApi(); this.volume = new VolumeApi(); this.system = new SystemApi(log); }
+public ImageApi image() { return this.image; }
+public ContainerApi container() { return this.container; }
+public Image pull(ImageReference reference, @Nullable ImagePlatform platform, UpdateListener<PullImageUpdateEvent> listener) throws IOException { return pull(reference, platform, listener, null); }
+public Image pull(ImageReference reference, @Nullable ImagePlatform platform, UpdateListener<PullImageUpdateEvent> listener, @Nullable String registryAuth) throws IOException { Assert.notNull(reference, "'reference' must not be null"); Assert.notNull(listener, "'listener' must not be null"); URI createUri = (platform != null) ? buildUrl(Feature.PLATFORM_IMAGE_PULL, "/images/create", "fromImage", reference, "platform", platform) : buildUrl("/images/create", "fromImage", reference); DigestCaptureUpdateListener digestCapture = new DigestCaptureUpdateListener(); listener.onStart(); try { try (Response response = http().post(createUri, registryAuth)) { jsonStream().get(response.getContent(), PullImageUpdateEvent.class, (event) -> { digestCapture.onUpdate(event); listener.onUpdate(event); }
+public void push(ImageReference reference, UpdateListener<PushImageUpdateEvent> listener, @Nullable String registryAuth) throws IOException { Assert.notNull(reference, "'reference' must not be null"); Assert.notNull(listener, "'listener' must not be null"); URI pushUri = buildUrl("/images/" + reference + "/push"); ErrorCaptureUpdateListener errorListener = new ErrorCaptureUpdateListener(); listener.onStart(); try { try (Response response = http().post(pushUri, registryAuth)) { jsonStream().get(response.getContent(), PushImageUpdateEvent.class, (event) -> { errorListener.onUpdate(event); listener.onUpdate(event); }
+public void load(ImageArchive archive, UpdateListener<LoadImageUpdateEvent> listener) throws IOException { Assert.notNull(archive, "'archive' must not be null"); Assert.notNull(listener, "'listener' must not be null"); URI loadUri = buildUrl("/images/load"); LoadImageUpdateListener streamListener = new LoadImageUpdateListener(archive); listener.onStart(); try { try (Response response = http().post(loadUri, "application/x-tar", archive::writeTo)) { InputStream content = response.getContent(); if (content != null) { jsonStream().get(content, LoadImageUpdateEvent.class, (event) -> { streamListener.onUpdate(event); listener.onUpdate(event); }
+public void exportLayers(ImageReference reference, IOBiConsumer<String, TarArchive> exports) throws IOException { exportLayers(reference, null, exports); }
+public void exportLayers(ImageReference reference, @Nullable ImagePlatform platform, IOBiConsumer<String, TarArchive> exports) throws IOException { Assert.notNull(reference, "'reference' must not be null"); Assert.notNull(exports, "'exports' must not be null"); URI uri = buildPlatformJsonUrl(Feature.PLATFORM_IMAGE_EXPORT, platform, "/images/" + reference + "/get"); try (Response response = http().get(uri)) { try (ExportedImageTar exportedImageTar = new ExportedImageTar(reference, response.getContent())) { exportedImageTar.exportLayers(exports); }
+public void remove(ImageReference reference, boolean force) throws IOException { Assert.notNull(reference, "'reference' must not be null"); Collection<String> params = force ? FORCE_PARAMS : Collections.emptySet(); URI uri = buildUrl("/images/" + reference, params); http().delete(uri).close(); }
+public Image inspect(ImageReference reference) throws IOException { return inspect(reference, null); }
+public Image inspect(ImageReference reference, @Nullable ImagePlatform platform) throws IOException { // The Docker documentation is incomplete but platform parameters // are supported since 1.49 (see https://github.com/moby/moby/pull/49586) Assert.notNull(reference, "'reference' must not be null"); URI inspectUrl = buildPlatformJsonUrl(Feature.PLATFORM_IMAGE_INSPECT, platform, "/images/" + reference + "/json"); try (Response response = http().get(inspectUrl)) { return Image.of(response.getContent()); }
+public ContainerReference create(ContainerConfig config, @Nullable ImagePlatform platform, ContainerContent... contents) throws IOException { Assert.notNull(config, "'config' must not be null"); Assert.noNullElements(contents, "'contents' must not contain null elements"); ContainerReference containerReference = createContainer(config, platform); for (ContainerContent content : contents) { uploadContainerContent(containerReference, content); }
+public void start(ContainerReference reference) throws IOException { Assert.notNull(reference, "'reference' must not be null"); URI uri = buildUrl("/containers/" + reference + "/start"); http().post(uri).close(); }
+public void logs(ContainerReference reference, UpdateListener<LogUpdateEvent> listener) throws IOException { Assert.notNull(reference, "'reference' must not be null"); Assert.notNull(listener, "'listener' must not be null"); Object[] params = { "stdout", "1", "stderr", "1", "follow", "1" }
+public ContainerStatus wait(ContainerReference reference) throws IOException { Assert.notNull(reference, "'reference' must not be null"); URI uri = buildUrl("/containers/" + reference + "/wait"); try (Response response = http().post(uri)) { return ContainerStatus.of(response.getContent()); }
+public void remove(ContainerReference reference, boolean force) throws IOException { Assert.notNull(reference, "'reference' must not be null"); Collection<String> params = force ? FORCE_PARAMS : Collections.emptySet(); URI uri = buildUrl("/containers/" + reference, params); http().delete(uri).close(); }
+public void delete(VolumeName name, boolean force) throws IOException { Assert.notNull(name, "'name' must not be null"); Collection<String> params = force ? FORCE_PARAMS : Collections.emptySet(); URI uri = buildUrl("/volumes/" + name, params); http().delete(uri).close(); }
+ApiVersion getApiVersion() { try { URI uri = new URIBuilder("/_ping").build(); try (Response response = http().head(uri)) { Header apiVersionHeader = response.getHeader(API_VERSION_HEADER_NAME); if (apiVersionHeader != null) { return ApiVersion.parse(apiVersionHeader.getValue()); }
+public interface DockerLog { /** * Logs a given message. * @param message the message to log */ void log(String message); /** * Factory method that returns a {@link DockerLog}
+static DockerLog to(PrintStream out) { return out::println; }
+static LayerArchiveFactory create(ImageReference reference, Path tarFile) throws IOException { try (TarArchiveInputStream tar = openTar(tarFile)) { ImageArchiveIndex index = null; ImageArchiveManifest manifest = null; TarArchiveEntry entry = tar.getNextEntry(); while (entry != null) { if ("index.json".equals(entry.getName())) { index = ImageArchiveIndex.of(tar); break; }
+public static ImagePlatform of(String value) { Assert.hasText(value, "'value' must not be empty"); String[] split = value.split("/+"); return switch (split.length) { case 1 -> new ImagePlatform(split[0], null, null); case 2 -> new ImagePlatform(split[0], split[1], null); case 3 -> new ImagePlatform(split[0], split[1], split[2]); default -> throw new IllegalArgumentException( "'value' [" + value + "] must be in the form 'os[/architecture[/variant]]'"); }
+public static ImagePlatform from(Image image) { return new ImagePlatform(image.getOs(), image.getArchitecture(), image.getVariant()); }
+public String toJson() { ObjectNode json = SharedJsonMapper.get().createObjectNode(); json.put("os", this.os); if (StringUtils.hasText(this.architecture)) { json.put("architecture", this.architecture); }
+public @Nullable String getId() { return this.id; }
+public @Nullable String getStream() { return this.stream; }
+public @Nullable ErrorDetail getErrorDetail() { return this.errorDetail; }
+public String getMessage() { return this.message; }
+public @Nullable String getStatus() { return this.status; }
+public @Nullable ProgressDetail getProgressDetail() { return this.progressDetail; }
+public @Nullable String getProgress() { return this.progress; }
+public int asPercentage() { if (this.total == null || this.current == null) { return 0; }
+public @Nullable ErrorDetail getErrorDetail() { return this.errorDetail; }
+public String getMessage() { return this.message; }
+public TotalProgressBar(String prefix, PrintStream out) { this(prefix, '#', true, out); }
+public TotalProgressBar(@Nullable String prefix, char progressChar, boolean bookend, PrintStream out) { this.progressChar = progressChar; this.bookend = bookend; if (StringUtils.hasLength(prefix)) { out.print(prefix); out.print(" "); }
+public int getPercent() { return this.percent; }
+public TotalProgressPullListener(String prefix) { this(new TotalProgressBar(prefix)); }
+public TotalProgressPullListener(Consumer<TotalProgressEvent> consumer) { super(consumer, TRACKED_STATUS_KEYS); }
+public TotalProgressPushListener(String prefix) { this(new TotalProgressBar(prefix)); }
+public TotalProgressPushListener(Consumer<TotalProgressEvent> consumer) { super(consumer, TRACKED_STATUS_KEYS); }
+@FunctionalInterface public interface UpdateListener<E extends UpdateEvent> { /** * A no-op update listener. * @see #none() */ UpdateListener<UpdateEvent> NONE = (event) -> { }
+default void onStart() { }
+void onUpdate(E event); /** * Called when the operation finishes (with or without error). */ default void onFinish() { }
+@SuppressWarnings("unchecked") static <E extends UpdateEvent> UpdateListener<E> none() { return (UpdateListener<E>) NONE; }
+public sealed interface DockerConnectionConfiguration { /** * Connect to specific host. * * @param address the host address * @param secure if connection is secure * @param certificatePath a path to the certificate used for secure connections */ record Host(String address, boolean secure, @Nullable String certificatePath) implements DockerConnectionConfiguration { public Host(String address) { this(address, false, null); }
+record Context(String context) implements DockerConnectionConfiguration { public Context { Assert.hasLength(context, "'context' must not be empty"); }
+@FunctionalInterface public interface DockerRegistryAuthentication { /** * An empty {@link #user(String, String, String, String)}
+default @Nullable String getAuthHeader(@Nullable ImageReference imageReference) { return getAuthHeader(); }
+@Nullable String getAuthHeader(); /** * Factory method to that returns a new {@link DockerRegistryAuthentication}
+static DockerRegistryAuthentication user(String username, String password, @Nullable String serverAddress, @Nullable String email) { return new DockerRegistryUserAuthentication(username, password, serverAddress, email); }
+static DockerRegistryAuthentication configuration(@Nullable DockerRegistryAuthentication fallback) { return configuration(fallback, (message, ex) -> System.out.println(message)); }
+static DockerRegistryAuthentication configuration(@Nullable DockerRegistryAuthentication fallback, BiConsumer<String, Exception> credentialHelperExceptionHandler) { Assert.notNull(credentialHelperExceptionHandler, () -> "'credentialHelperExceptionHandler' must not be null"); return new DockerRegistryConfigAuthentication(fallback, credentialHelperExceptionHandler); }
+public static ResolvedDockerHost from(@Nullable DockerConnectionConfiguration connectionConfiguration) { return from(Environment.SYSTEM, connectionConfiguration); }
+static KeyStore create(Path certPath, @Nullable Path keyPath, String alias) { try { KeyStore keyStore = getKeyStore(); String certificateText = Files.readString(certPath); List<X509Certificate> certificates = PemCertificateParser.parse(certificateText); PrivateKey privateKey = getPrivateKey(keyPath); try { addCertificates(keyStore, certificates.toArray(X509Certificate[]::new), privateKey, alias); }
+@Contract("!null -> !null") static @Nullable List<X509Certificate> parse(@Nullable String text) { if (text == null) { return null; }
+static @Nullable PrivateKey parse(String text) { return parse(text, null); }
+static @Nullable PrivateKey parse(@Nullable String text, @Nullable String password) { if (text == null) { return null; }
+public SSLContext forDirectory(String directory) { try { Path keyPath = Paths.get(directory, "key.pem"); Path certPath = Paths.get(directory, "cert.pem"); Path caPath = Paths.get(directory, "ca.pem"); Path caKeyPath = Paths.get(directory, "ca-key.pem"); verifyCertificateFiles(keyPath, certPath, caPath); KeyManagerFactory keyManagerFactory = getKeyManagerFactory(keyPath, certPath); TrustManagerFactory trustManagerFactory = getTrustManagerFactory(caPath, caKeyPath); SSLContext sslContext = SSLContext.getInstance("TLS"); sslContext.init(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(), null); return sslContext; }
+public int getStatusCode() { return this.statusCode; }
+public @Nullable String getReasonPhrase() { return this.reasonPhrase; }
+public @Nullable Errors getErrors() { return this.errors; }
+public @Nullable Message getResponseMessage() { return this.responseMessage; }
+public Stream<Error> stream() { return this.errors.stream(); }
+public boolean isEmpty() { return this.errors.isEmpty(); }
+public String getCode() { return this.code; }
+public String getMessage() { return this.message; }
+@Override public Response get(URI uri) { return execute(new HttpGet(uri)); }
+@Override public Response post(URI uri) { return execute(new HttpPost(uri)); }
+@Override public Response post(URI uri, @Nullable String registryAuth) { return execute(new HttpPost(uri), registryAuth); }
+@Override public Response post(URI uri, String contentType, IOConsumer<OutputStream> writer) { return execute(new HttpPost(uri), contentType, writer); }
+@Override public Response put(URI uri, String contentType, IOConsumer<OutputStream> writer) { return execute(new HttpPut(uri), contentType, writer); }
+@Override public Response delete(URI uri) { return execute(new HttpDelete(uri)); }
+@Override public Response head(URI uri) { return execute(new HttpHead(uri)); }
+public interface HttpTransport { /** * Perform an HTTP GET operation. * @param uri the destination URI (excluding any host/port) * @return the operation response * @throws IOException on IO error */ Response get(URI uri) throws IOException; /** * Perform an HTTP POST operation. * @param uri the destination URI (excluding any host/port) * @return the operation response * @throws IOException on IO error */ Response post(URI uri) throws IOException; /** * Perform an HTTP POST operation. * @param uri the destination URI (excluding any host/port) * @param registryAuth registry authentication credentials * @return the operation response * @throws IOException on IO error */ Response post(URI uri, @Nullable String registryAuth) throws IOException; /** * Perform an HTTP POST operation. * @param uri the destination URI (excluding any host/port) * @param contentType the content type to write * @param writer a content writer * @return the operation response * @throws IOException on IO error */ Response post(URI uri, String contentType, IOConsumer<OutputStream> writer) throws IOException; /** * Perform an HTTP PUT operation. * @param uri the destination URI (excluding any host/port) * @param contentType the content type to write * @param writer a content writer * @return the operation response * @throws IOException on IO error */ Response put(URI uri, String contentType, IOConsumer<OutputStream> writer) throws IOException; /** * Perform an HTTP DELETE operation. * @param uri the destination URI (excluding any host/port) * @return the operation response * @throws IOException on IO error */ Response delete(URI uri) throws IOException; /** * Perform an HTTP HEAD operation. * @param uri the destination URI (excluding any host/port) * @return the operation response * @throws IOException on IO error */ Response head(URI uri) throws IOException; /** * Create the most suitable {@link HttpTransport}
+interface Response extends Closeable { /** * Return the content of the response. * @return the response content * @throws IOException on IO error */ InputStream getContent() throws IOException; default @Nullable Header getHeader(String name) { throw new UnsupportedOperationException(); }
+public @Nullable String getMessage() { return this.message; }
+public boolean usesSensitiveContainerPath() { return SENSITIVE_CONTAINER_PATHS.contains(getContainerDestinationPath()); }
+String getContainerDestinationPath() { List<String> parts = getParts(); Assert.state(parts.size() >= 2, () -> "Expected 2 or more parts, but found %d".formatted(parts.size())); return parts.get(1); }
+public static Binding of(String value) { Assert.notNull(value, "'value' must not be null"); return new Binding(value); }
+public static Binding from(VolumeName sourceVolume, String destination) { Assert.notNull(sourceVolume, "'sourceVolume' must not be null"); return from(sourceVolume.toString(), destination); }
+public static Binding from(String source, String destination) { Assert.notNull(source, "'source' must not be null"); Assert.notNull(destination, "'destination' must not be null"); return new Binding(source + ":" + destination); }
+public String getDigest() { return this.digest; }
+public String getMediaType() { return this.mediaType; }
+public void writeTo(OutputStream outputStream) throws IOException { StreamUtils.copy(this.json, StandardCharsets.UTF_8, outputStream); }
+public static ContainerConfig of(ImageReference imageReference, Consumer<Update> update) { Assert.notNull(imageReference, "'imageReference' must not be null"); Assert.notNull(update, "'update' must not be null"); return new Update(imageReference).run(update); }
+public void withUser(String user) { this.user = user; }
+public void withCommand(String command, String... args) { this.command = command; withArgs(args); }
+public void withArgs(String... args) { this.args.addAll(Arrays.asList(args)); }
+public void withLabel(String name, String value) { this.labels.put(name, value); }
+public void withBinding(Binding binding) { this.bindings.add(binding); }
+public void withEnv(String name, String value) { this.env.put(name, value); }
+public void withNetworkMode(@Nullable String networkMode) { this.networkMode = networkMode; }
+public void withSecurityOption(String option) { this.securityOptions.add(option); }
+public interface ContainerContent { /** * Return the actual content to be added. * @return the content */ TarArchive getArchive(); /** * Return the destination path where the content should be added. * @return the destination path */ String getDestinationPath(); /** * Factory method to create a new {@link ContainerContent}
+static ContainerContent of(TarArchive archive, String destinationPath) { Assert.notNull(archive, "'archive' must not be null"); Assert.hasText(destinationPath, "'destinationPath' must not be empty"); return new ContainerContent() { @Override public TarArchive getArchive() { return archive; }
+public static ContainerReference of(String value) { return new ContainerReference(value); }
+public int getStatusCode() { return this.statusCode; }
+public @Nullable String getWaitingErrorMessage() { return this.waitingErrorMessage; }
+public static ContainerStatus of(InputStream content) throws IOException { return of(content, ContainerStatus::new); }
+public static ContainerStatus of(int statusCode, @Nullable String errorMessage) { return new ContainerStatus(statusCode, errorMessage); }
+public List<String> getDigests() { return this.digests; }
+public ImageConfig getConfig() { return this.config; }
+public List<LayerId> getLayers() { return this.layers; }
+public String getOs() { return (StringUtils.hasText(this.os)) ? this.os : "linux"; }
+public @Nullable String getArchitecture() { return this.architecture; }
+public @Nullable String getVariant() { return this.variant; }
+public @Nullable String getCreated() { return this.created; }
+public @Nullable Descriptor getDescriptor() { return this.descriptor; }
+public @Nullable String getPrimaryDigest() { if (this.descriptor != null && StringUtils.hasText(this.descriptor.getDigest())) { return this.descriptor.getDigest(); }
+public static Image of(InputStream content) throws IOException { return of(content, Image::new); }
+public ImageConfig getImageConfig() { return this.imageConfig; }
+public Instant getCreateDate() { return this.createDate; }
+public @Nullable ImageReference getTag() { return this.tag; }
+public static ImageArchive from(Image image) throws IOException { return from(image, NO_UPDATES); }
+public static ImageArchive from(Image image, IOConsumer<Update> update) throws IOException { return new Update(image).applyTo(update); }
+public void withUpdatedConfig(Consumer<ImageConfig.Update> update) { this.config = this.config.copy(update); }
+public void withNewLayer(Layer layer) { Assert.notNull(layer, "'layer' must not be null"); this.newLayers.add(layer); }
+public void withCreateDate(Instant createDate) { Assert.notNull(createDate, "'createDate' must not be null"); this.createDate = createDate; }
+public void withTag(ImageReference tag) { Assert.notNull(tag, "'tag' must not be null"); this.tag = tag.inTaggedForm(); }
+public static ImageArchiveIndex of(InputStream content) throws IOException { return of(content, ImageArchiveIndex::new); }
+public List<ManifestEntry> getEntries() { return this.entries; }
+public static ImageArchiveManifest of(InputStream content) throws IOException { return of(content, ImageArchiveManifest::new); }
+public List<String> getLayers() { return this.layers; }
+public Map<String, String> getLabels() { return this.labels; }
+public Map<String, @Nullable String> getEnv() { return this.configEnv; }
+public ImageConfig copy(Consumer<Update> update) { return new Update(this).run(update); }
+public void withLabel(String label, String value) { JsonNode labels = this.copy.at("/Labels"); if (labels.isMissingNode()) { labels = this.copy.putObject("Labels"); }
+public String getDomain() { return this.domain; }
+public String getName() { return this.name; }
+public static ImageName of(String value) { Assert.hasText(value, "'value' must not be empty"); String domain = parseDomain(value); String path = (domain != null) ? value.substring(domain.length() + 1) : value; Assert.isTrue(Regex.PATH.matcher(path).matches(), () -> "'value' [" + value + "] must be a parsable name in the form '[domainHost:port/][path/]name' (" + "with 'path' and 'name' containing only [a-z0-9][.][_][-])"); return new ImageName(domain, path); }
+public String getDomain() { return this.name.getDomain(); }
+public String getName() { return this.name.getName(); }
+public @Nullable String getTag() { return this.tag; }
+public @Nullable String getDigest() { return this.digest; }
+public ImageReference withDigest(String digest) { return new ImageReference(this.name, null, digest); }
+public ImageReference inTaggedForm() { Assert.state(this.digest == null, () -> "Image reference '" + this + "' cannot contain a digest"); return new ImageReference(this.name, (this.tag != null) ? this.tag : LATEST, null); }
+public ImageReference inTaglessForm() { if (this.tag == null) { return this; }
+public ImageReference inTaggedOrDigestForm() { if (this.digest != null) { return this; }
+public static ImageReference forJarFile(File jarFile) { Assert.notNull(jarFile, "'jarFile' must not be null"); String filename = jarFile.getName(); Assert.isTrue(filename.toLowerCase(Locale.ROOT).endsWith(".jar"), () -> "'jarFile' must end with '.jar' [" + jarFile + "]"); filename = filename.substring(0, filename.length() - 4); int firstDot = filename.indexOf('.'); if (firstDot == -1) { return of(filename); }
+public static ImageReference random(String prefix) { return ImageReference.random(prefix, 10); }
+public static ImageReference random(String prefix, int randomLength) { return of(RandomString.generate(prefix, randomLength)); }
+public static ImageReference of(String value) { Assert.hasText(value, "'value' must not be null"); String domain = ImageName.parseDomain(value); String path = (domain != null) ? value.substring(domain.length() + 1) : value; String digest = null; int digestSplit = path.indexOf("@"); if (digestSplit != -1) { String remainder = path.substring(digestSplit + 1); Matcher matcher = Regex.DIGEST.matcher(remainder); if (matcher.find()) { digest = remainder.substring(0, matcher.end()); remainder = remainder.substring(matcher.end()); path = path.substring(0, digestSplit) + remainder; }
+public static ImageReference of(ImageName name) { return new ImageReference(name, null, null); }
+public static ImageReference of(ImageName name, String tag) { return new ImageReference(name, tag, null); }
+public static ImageReference of(ImageName name, String tag, String digest) { return new ImageReference(name, tag, digest); }
+public LayerId getId() { return this.id; }
+public static Layer of(IOConsumer<Layout> layout) throws IOException { Assert.notNull(layout, "'layout' must not be null"); return fromTarArchive(TarArchive.of(layout)); }
+public static Layer fromTarArchive(TarArchive tarArchive) throws IOException { Assert.notNull(tarArchive, "'tarArchive' must not be null"); try { return new Layer(tarArchive); }
+public String getAlgorithm() { return this.algorithm; }
+public String getHash() { return this.hash; }
+public static LayerId of(String value) { Assert.hasText(value, "'value' must not be empty"); int i = value.indexOf(':'); Assert.isTrue(i >= 0, () -> "'value' [%s] must contain a valid layer ID".formatted(value)); return new LayerId(value, value.substring(0, i), value.substring(i + 1)); }
+public static LayerId ofSha256Digest(byte[] digest) { Assert.notNull(digest, "'digest' must not be null"); Assert.isTrue(digest.length == 32, "'digest' must be exactly 32 bytes"); String algorithm = "sha256"; String hash = String.format("%064x", new BigInteger(1, digest)); return new LayerId(algorithm + ":" + hash, algorithm, hash); }
+public static Manifest of(InputStream content) throws IOException { return of(content, Manifest::new); }
+public static ManifestList of(InputStream content) throws IOException { return of(content, ManifestList::new); }
+public static VolumeName random(String prefix) { return random(prefix, 10); }
+public static VolumeName random(String prefix, int randomLength) { return of(RandomString.generate(prefix, randomLength)); }
+public static <S> VolumeName basedOn(S source, String prefix, String suffix, int digestLength) { return basedOn(source, Object::toString, prefix, suffix, digestLength); }
+public static <S> VolumeName basedOn(S source, Function<S, String> nameExtractor, String prefix, String suffix, int digestLength) { Assert.notNull(source, "'source' must not be null"); Assert.notNull(nameExtractor, "'nameExtractor' must not be null"); Assert.notNull(prefix, "'prefix' must not be null"); Assert.notNull(suffix, "'suffix' must not be null"); return of(prefix + getDigest(nameExtractor.apply(source), digestLength) + suffix); }
+public static VolumeName of(String value) { Assert.notNull(value, "'value' must not be null"); return new VolumeName(value); }
+public interface Content { /** * The size of the content in bytes. * @return the content size */ int size(); /** * Write the content to the given output stream. * @param outputStream the output stream to write to * @throws IOException on IO error */ void writeTo(OutputStream outputStream) throws IOException; /** * Create a new {@link Content}
+static Content of(byte[] bytes) { Assert.notNull(bytes, "'bytes' must not be null"); return of(bytes.length, () -> new ByteArrayInputStream(bytes)); }
+static Content of(File file) { Assert.notNull(file, "'file' must not be null"); return of((int) file.length(), () -> new FileInputStream(file)); }
+static Content of(int size, IOSupplier<InputStream> supplier) { Assert.isTrue(size >= 0, "'size' must not be negative"); Assert.notNull(supplier, "'supplier' must not be null"); return new Content() { @Override public int size() { return size; }
+public static int umaskForPath(Path path) throws IOException { Assert.notNull(path, "'path' must not be null"); PosixFileAttributeView attributeView = Files.getFileAttributeView(path, PosixFileAttributeView.class); Assert.state(attributeView != null, "Unsupported file type for retrieving Posix attributes"); return posixPermissionsToUmask(attributeView.readAttributes().permissions()); }
+public static int posixPermissionsToUmask(Collection<PosixFilePermission> permissions) { Assert.notNull(permissions, "'permissions' must not be null"); int owner = permissionToUmask(permissions, PosixFilePermission.OWNER_EXECUTE, PosixFilePermission.OWNER_WRITE, PosixFilePermission.OWNER_READ); int group = permissionToUmask(permissions, PosixFilePermission.GROUP_EXECUTE, PosixFilePermission.GROUP_WRITE, PosixFilePermission.GROUP_READ); int other = permissionToUmask(permissions, PosixFilePermission.OTHERS_EXECUTE, PosixFilePermission.OTHERS_WRITE, PosixFilePermission.OTHERS_READ); return Integer.parseInt("" + owner + group + other, 8); }
+@FunctionalInterface public interface IOBiConsumer<T, U> { /** * Performs this operation on the given argument. * @param t the first instance to consume * @param u the second instance to consumer * @throws IOException on IO error */ void accept(T t, U u) throws IOException; }
+@FunctionalInterface public interface IOConsumer<T> { /** * Performs this operation on the given argument. * @param t the instance to consume * @throws IOException on IO error */ void accept(T t) throws IOException; }
+@FunctionalInterface public interface IOSupplier<T> { /** * Gets the supplied value. * @return the supplied value * @throws IOException on IO error */ T get() throws IOException; }
+public static InspectedContent of(InputStream inputStream, Inspector... inspectors) throws IOException { Assert.notNull(inputStream, "'inputStream' must not be null"); return of((outputStream) -> FileCopyUtils.copy(inputStream, outputStream), inspectors); }
+public static InspectedContent of(Content content, Inspector... inspectors) throws IOException { Assert.notNull(content, "'content' must not be null"); return of(content::writeTo, inspectors); }
+public static InspectedContent of(IOConsumer<OutputStream> writer, Inspector... inspectors) throws IOException { Assert.notNull(writer, "'writer' must not be null"); InspectingOutputStream outputStream = new InspectingOutputStream(inspectors); try (outputStream) { writer.accept(outputStream); }
+public interface Layout { /** * Add a directory to the content. * @param name the full name of the directory to add * @param owner the owner of the directory * @throws IOException on IO error */ default void directory(String name, Owner owner) throws IOException { directory(name, owner, 0755); }
+void directory(String name, Owner owner, int mode) throws IOException; /** * Write a file to the content. * @param name the full name of the file to add * @param owner the owner of the file * @param content the content to add * @throws IOException on IO error */ default void file(String name, Owner owner, Content content) throws IOException { file(name, owner, 0644, content); }
+public interface Owner { /** * Owner for root ownership. */ Owner ROOT = Owner.of(0, 0); /** * Return the user identifier (UID) of the owner. * @return the user identifier */ long getUid(); /** * Return the group identifier (GID) of the owner. * @return the group identifier */ long getGid(); /** * Factory method to create a new {@link Owner}
+void writeTo(OutputStream outputStream) throws IOException; /** * Return the compression being used with the tar archive. * @return the used compression * @since 3.2.6 */ default Compression getCompression() { return Compression.NONE; }
+static TarArchive of(IOConsumer<Layout> layout) { return (outputStream) -> { TarLayoutWriter writer = new TarLayoutWriter(outputStream); layout.accept(writer); writer.finish(); }
+static TarArchive fromZip(File zip, Owner owner) { return new ZipFileTarArchive(zip, owner); }
+static TarArchive fromInputStream(InputStream inputStream, Compression compression) { return new TarArchive() { @Override public void writeTo(OutputStream outputStream) throws IOException { StreamUtils.copy(compression.uncompress(inputStream), outputStream); }
+enum Compression { /** * The tar file is not compressed. */ NONE((inputStream) -> inputStream), /** * The tar file is compressed using gzip. */ GZIP(GZIPInputStream::new), /** * The tar file is compressed using zstd. */ ZSTD("zstd compression is not supported"); private final ThrowingFunction<InputStream, InputStream> uncompressor; Compression(String uncompressError) { this((inputStream) -> { throw new IllegalStateException(uncompressError); }
+public void get(InputStream content, Consumer<ObjectNode> consumer) throws IOException { get(content, ObjectNode.class, consumer); }
+public <T> void get(InputStream content, Class<T> type, Consumer<T> consumer) throws IOException { try (JsonParser parser = this.jsonMapper.createParser(content)) { while (!parser.isClosed()) { JsonToken token = parser.nextToken(); if (token != null && token != JsonToken.END_OBJECT) { T node = read(parser, type); if (node != null) { consumer.accept(node); }
+protected final JsonNode getNode() { return this.node; }
+protected <T> @Nullable T valueAt(String expression, Class<T> type) { return valueAt(this, this.node, this.lookup, expression, type); }
+protected <V> Map<String, V> mapAt(String expression, Function<JsonNode, V> valueMapper) { Map<String, V> map = new LinkedHashMap<>(); getNode().at(expression) .properties() .forEach((entry) -> map.put(entry.getKey(), valueMapper.apply(entry.getValue()))); return Collections.unmodifiableMap(map); }
+protected <T> List<T> childrenAt(@Nullable String expression, Function<JsonNode, T> factory) { JsonNode node = (expression != null) ? this.node.at(expression) : this.node; if (node.isEmpty()) { return Collections.emptyList(); }
+protected static <T extends MappedObject> T of(String content, Function<JsonNode, T> factory) throws IOException { return of(content, JsonMapper::readTree, factory); }
+protected static <T extends MappedObject> T of(InputStream content, Function<JsonNode, T> factory) throws IOException { return of(StreamUtils.nonClosing(content), JsonMapper::readTree, factory); }
+protected static <T extends MappedObject, C> T of(C content, ContentReader<C> reader, Function<JsonNode, T> factory) throws IOException { JsonMapper jsonMapper = SharedJsonMapper.get(); JsonNode node = reader.read(jsonMapper, content); return factory.apply(node); }
+synchronized Handle acquire() { this.referenceCount++; return (this.status != Status.OPEN) ? this.closedHandler : this.openHandle; }
+synchronized void close() { if (this.status == Status.OPEN) { if (this.referenceCount == 0) { this.closer.accept(this.openHandle.value); this.status = Status.CLOSED; }
+public static NamedPipeSocket get(String path) throws IOException { return new NamedPipeSocket(path); }
+/* Accept a raw type for API compatibility */ @SuppressWarnings("rawtypes") public JSONArray(Collection copyFrom) { this(); if (copyFrom != null) { for (Iterator it = copyFrom.iterator(); it.hasNext();) { put(JSONObject.wrap(it.next())); }
+public JSONArray(JSONTokener readFrom) throws JSONException { /* * Getting the parser to populate this could get tricky. Instead, just parse to * temporary JSONArray and then steal the data from that. */ Object object = readFrom.nextValue(); if (object instanceof JSONArray) { this.values = ((JSONArray) object).values; }
+public JSONArray(String json) throws JSONException { this(new JSONTokener(json)); }
+public JSONArray(Object array) throws JSONException { if (!array.getClass().isArray()) { throw new JSONException("Not a primitive array: " + array.getClass()); }
+public int length() { return this.values.size(); }
+public JSONArray put(boolean value) { this.values.add(value); return this; }
+public JSONArray put(double value) throws JSONException { this.values.add(JSON.checkDouble(value)); return this; }
+public JSONArray put(int value) { this.values.add(value); return this; }
+public JSONArray put(long value) { this.values.add(value); return this; }
+public JSONArray put(Object value) { this.values.add(value); return this; }
+public JSONArray put(int index, boolean value) throws JSONException { return put(index, (Boolean) value); }
+public JSONArray put(int index, double value) throws JSONException { return put(index, (Double) value); }
+public JSONArray put(int index, int value) throws JSONException { return put(index, (Integer) value); }
+public JSONArray put(int index, long value) throws JSONException { return put(index, (Long) value); }
+public JSONArray put(int index, Object value) throws JSONException { if (value instanceof Number) { // deviate from the original by checking all Numbers, not just floats & // doubles JSON.checkDouble(((Number) value).doubleValue()); }
+public boolean isNull(int index) { Object value = opt(index); return value == null || value == JSONObject.NULL; }
+public Object get(int index) throws JSONException { try { Object value = this.values.get(index); if (value == null) { throw new JSONException("Value at " + index + " is null."); }
+public Object opt(int index) { if (index < 0 || index >= this.values.size()) { return null; }
+public Object remove(int index) { if (index < 0 || index >= this.values.size()) { return null; }
+public boolean getBoolean(int index) throws JSONException { Object object = get(index); Boolean result = JSON.toBoolean(object); if (result == null) { throw JSON.typeMismatch(index, object, "boolean"); }
+public boolean optBoolean(int index) { return optBoolean(index, false); }
+public boolean optBoolean(int index, boolean fallback) { Object object = opt(index); Boolean result = JSON.toBoolean(object); return result != null ? result : fallback; }
+public double getDouble(int index) throws JSONException { Object object = get(index); Double result = JSON.toDouble(object); if (result == null) { throw JSON.typeMismatch(index, object, "double"); }
+public double optDouble(int index) { return optDouble(index, Double.NaN); }
+public double optDouble(int index, double fallback) { Object object = opt(index); Double result = JSON.toDouble(object); return result != null ? result : fallback; }
+public int getInt(int index) throws JSONException { Object object = get(index); Integer result = JSON.toInteger(object); if (result == null) { throw JSON.typeMismatch(index, object, "int"); }
+public int optInt(int index) { return optInt(index, 0); }
+public int optInt(int index, int fallback) { Object object = opt(index); Integer result = JSON.toInteger(object); return result != null ? result : fallback; }
+public long getLong(int index) throws JSONException { Object object = get(index); Long result = JSON.toLong(object); if (result == null) { throw JSON.typeMismatch(index, object, "long"); }
+public long optLong(int index) { return optLong(index, 0L); }
+public long optLong(int index, long fallback) { Object object = opt(index); Long result = JSON.toLong(object); return result != null ? result : fallback; }
+public String getString(int index) throws JSONException { Object object = get(index); String result = JSON.toString(object); if (result == null) { throw JSON.typeMismatch(index, object, "String"); }
+public String optString(int index) { return optString(index, ""); }
+public String optString(int index, String fallback) { Object object = opt(index); String result = JSON.toString(object); return result != null ? result : fallback; }
+public JSONArray getJSONArray(int index) throws JSONException { Object object = get(index); if (object instanceof JSONArray) { return (JSONArray) object; }
+public JSONArray optJSONArray(int index) { Object object = opt(index); return object instanceof JSONArray ? (JSONArray) object : null; }
+public JSONObject getJSONObject(int index) throws JSONException { Object object = get(index); if (object instanceof JSONObject) { return (JSONObject) object; }
+public JSONObject optJSONObject(int index) { Object object = opt(index); return object instanceof JSONObject ? (JSONObject) object : null; }
+public JSONObject toJSONObject(JSONArray names) throws JSONException { JSONObject result = new JSONObject(); int length = Math.min(names.length(), this.values.size()); if (length == 0) { return null; }
+public String join(String separator) throws JSONException { JSONStringer stringer = new JSONStringer(); stringer.open(JSONStringer.Scope.NULL, ""); for (int i = 0, size = this.values.size(); i < size; i++) { if (i > 0) { stringer.out.append(separator); }
+@Override public String toString() { try { JSONStringer stringer = new JSONStringer(); writeTo(stringer); return stringer.toString(); }
+public String toString(int indentSpaces) throws JSONException { JSONStringer stringer = new JSONStringer(indentSpaces); writeTo(stringer); return stringer.toString(); }
+public JSONObject() { this.nameValuePairs = new LinkedHashMap<>(); }
+/* (accept a raw type for API compatibility) */ @SuppressWarnings("rawtypes") public JSONObject(Map copyFrom) { this(); Map<?, ?> contentsTyped = copyFrom; for (Map.Entry<?, ?> entry : contentsTyped.entrySet()) { /* * Deviate from the original by checking that keys are non-null and of the * proper type. (We still defer validating the values). */ String key = (String) entry.getKey(); if (key == null) { throw new NullPointerException("key == null"); }
+public JSONObject(JSONTokener readFrom) throws JSONException { /* * Getting the parser to populate this could get tricky. Instead, just parse to * temporary JSONObject and then steal the data from that. */ Object object = readFrom.nextValue(); if (object instanceof JSONObject) { this.nameValuePairs = ((JSONObject) object).nameValuePairs; }
+public JSONObject(String json) throws JSONException { this(new JSONTokener(json)); }
+public JSONObject(JSONObject copyFrom, String[] names) throws JSONException { this(); for (String name : names) { Object value = copyFrom.opt(name); if (value != null) { this.nameValuePairs.put(name, value); }
+public int length() { return this.nameValuePairs.size(); }
+public JSONObject put(String name, boolean value) throws JSONException { this.nameValuePairs.put(checkName(name), value); return this; }
+public JSONObject put(String name, double value) throws JSONException { this.nameValuePairs.put(checkName(name), JSON.checkDouble(value)); return this; }
+public JSONObject put(String name, int value) throws JSONException { this.nameValuePairs.put(checkName(name), value); return this; }
+public JSONObject put(String name, long value) throws JSONException { this.nameValuePairs.put(checkName(name), value); return this; }
+public JSONObject put(String name, Object value) throws JSONException { if (value == null) { this.nameValuePairs.remove(name); return this; }
+public JSONObject putOpt(String name, Object value) throws JSONException { if (name == null || value == null) { return this; }
+public JSONObject accumulate(String name, Object value) throws JSONException { Object current = this.nameValuePairs.get(checkName(name)); if (current == null) { return put(name, value); }
+public Object remove(String name) { return this.nameValuePairs.remove(name); }
+public boolean isNull(String name) { Object value = this.nameValuePairs.get(name); return value == null || value == NULL; }
+public boolean has(String name) { return this.nameValuePairs.containsKey(name); }
+public Object get(String name) throws JSONException { Object result = this.nameValuePairs.get(name); if (result == null) { throw new JSONException("No value for " + name); }
+public Object opt(String name) { return this.nameValuePairs.get(name); }
+public boolean getBoolean(String name) throws JSONException { Object object = get(name); Boolean result = JSON.toBoolean(object); if (result == null) { throw JSON.typeMismatch(name, object, "boolean"); }
+public boolean optBoolean(String name) { return optBoolean(name, false); }
+public boolean optBoolean(String name, boolean fallback) { Object object = opt(name); Boolean result = JSON.toBoolean(object); return result != null ? result : fallback; }
+public double getDouble(String name) throws JSONException { Object object = get(name); Double result = JSON.toDouble(object); if (result == null) { throw JSON.typeMismatch(name, object, "double"); }
+public double optDouble(String name) { return optDouble(name, Double.NaN); }
+public double optDouble(String name, double fallback) { Object object = opt(name); Double result = JSON.toDouble(object); return result != null ? result : fallback; }
+public int getInt(String name) throws JSONException { Object object = get(name); Integer result = JSON.toInteger(object); if (result == null) { throw JSON.typeMismatch(name, object, "int"); }
+public int optInt(String name) { return optInt(name, 0); }
+public int optInt(String name, int fallback) { Object object = opt(name); Integer result = JSON.toInteger(object); return result != null ? result : fallback; }
+public long getLong(String name) throws JSONException { Object object = get(name); Long result = JSON.toLong(object); if (result == null) { throw JSON.typeMismatch(name, object, "long"); }
+public long optLong(String name) { return optLong(name, 0L); }
+public long optLong(String name, long fallback) { Object object = opt(name); Long result = JSON.toLong(object); return result != null ? result : fallback; }
+public String getString(String name) throws JSONException { Object object = get(name); String result = JSON.toString(object); if (result == null) { throw JSON.typeMismatch(name, object, "String"); }
+public String optString(String name) { return optString(name, ""); }
+public String optString(String name, String fallback) { Object object = opt(name); String result = JSON.toString(object); return result != null ? result : fallback; }
+public JSONArray getJSONArray(String name) throws JSONException { Object object = get(name); if (object instanceof JSONArray) { return (JSONArray) object; }
+public JSONArray optJSONArray(String name) { Object object = opt(name); return object instanceof JSONArray ? (JSONArray) object : null; }
+public JSONObject getJSONObject(String name) throws JSONException { Object object = get(name); if (object instanceof JSONObject) { return (JSONObject) object; }
+public JSONObject optJSONObject(String name) { Object object = opt(name); return object instanceof JSONObject ? (JSONObject) object : null; }
+public JSONArray toJSONArray(JSONArray names) { JSONArray result = new JSONArray(); if (names == null) { return null; }
+/* Return a raw type for API compatibility */ @SuppressWarnings("rawtypes") public Iterator keys() { return this.nameValuePairs.keySet().iterator(); }
+public JSONArray names() { return this.nameValuePairs.isEmpty() ? null : new JSONArray(new ArrayList<>(this.nameValuePairs.keySet())); }
+@Override public String toString() { try { JSONStringer stringer = new JSONStringer(); writeTo(stringer); return stringer.toString(); }
+public String toString(int indentSpaces) throws JSONException { JSONStringer stringer = new JSONStringer(indentSpaces); writeTo(stringer); return stringer.toString(); }
+public static String numberToString(Number number) throws JSONException { if (number == null) { throw new JSONException("Number must be non-null"); }
+public static String quote(String data) { if (data == null) { return "\"\""; }
+@SuppressWarnings("rawtypes") public static Object wrap(Object o) { if (o == null) { return NULL; }
+private final List<Scope> stack = new ArrayList<>(); /** * A string containing a full set of spaces for a single level of indentation, or null * for no pretty printing. */ private final String indent; public JSONStringer() { this.indent = null; }
+public JSONStringer array() throws JSONException { return open(Scope.EMPTY_ARRAY, "["); }
+public JSONStringer endArray() throws JSONException { return close(Scope.EMPTY_ARRAY, Scope.NONEMPTY_ARRAY, "]"); }
+public JSONStringer object() throws JSONException { return open(Scope.EMPTY_OBJECT, "{"); }
+public JSONStringer endObject() throws JSONException { return close(Scope.EMPTY_OBJECT, Scope.NONEMPTY_OBJECT, "}
+JSONStringer open(Scope empty, String openBracket) throws JSONException { if (this.stack.isEmpty() && !this.out.isEmpty()) { throw new JSONException("Nesting problem: multiple top-level roots"); }
+JSONStringer close(Scope empty, Scope nonempty, String closeBracket) throws JSONException { Scope context = peek(); if (context != nonempty && context != empty) { throw new JSONException("Nesting problem"); }
+private Scope peek() throws JSONException { if (this.stack.isEmpty()) { throw new JSONException("Nesting problem"); }
+private void replaceTop(Scope topOfStack) { this.stack.set(this.stack.size() - 1, topOfStack); }
+public JSONStringer value(Object value) throws JSONException { if (this.stack.isEmpty()) { throw new JSONException("Nesting problem"); }
+public JSONStringer value(boolean value) throws JSONException { if (this.stack.isEmpty()) { throw new JSONException("Nesting problem"); }
+public JSONStringer value(double value) throws JSONException { if (this.stack.isEmpty()) { throw new JSONException("Nesting problem"); }
+public JSONStringer value(long value) throws JSONException { if (this.stack.isEmpty()) { throw new JSONException("Nesting problem"); }
+public JSONStringer key(String name) throws JSONException { if (name == null) { throw new JSONException("Names must be non-null"); }
+private void beforeKey() throws JSONException { Scope context = peek(); if (context == Scope.NONEMPTY_OBJECT) { // first in object this.out.append(','); }
+private void beforeValue() throws JSONException { if (this.stack.isEmpty()) { return; }
+@Override public String toString() { return this.out.isEmpty() ? null : this.out.toString(); }
+public JSONTokener(String in) { // consume an optional byte order mark (BOM) if it exists if (in != null && in.startsWith("\ufeff")) { in = in.substring(1); }
+public Object nextValue() throws JSONException { int c = nextCleanInternal(); switch (c) { case -1: throw syntaxError("End of input"); case '{': return readObject(); case '[': return readArray(); case '\'', '"': return nextString((char) c); default: this.pos--; return readLiteral(); }
+private void skipToEndOfLine() { for (; this.pos < this.in.length(); this.pos++) { char c = this.in.charAt(this.pos); if (c == '\r' || c == '\n') { this.pos++; break; }
+public String nextString(char quote) throws JSONException { /* * For strings that are free of escape sequences, we can just extract the result * as a substring of the input. But if we encounter an escape sequence, we need to * use a StringBuilder to compose the result. */ StringBuilder builder = null; /* the index of the first character not yet appended to the builder. */ int start = this.pos; while (this.pos < this.in.length()) { int c = this.in.charAt(this.pos++); if (c == quote) { if (builder == null) { // a new string avoids leaking memory return new String(this.in.substring(start, this.pos - 1)); }
+private char readEscapeCharacter() throws JSONException { char escaped = this.in.charAt(this.pos++); switch (escaped) { case 'u': if (this.pos + 4 > this.in.length()) { throw syntaxError("Unterminated escape sequence"); }
+private Object readLiteral() throws JSONException { String literal = nextToInternal("{}
+private String nextToInternal(String excluded) { int start = this.pos; for (; this.pos < this.in.length(); this.pos++) { char c = this.in.charAt(this.pos); if (c == '\r' || c == '\n' || excluded.indexOf(c) != -1) { return this.in.substring(start, this.pos); }
+private JSONObject readObject() throws JSONException { JSONObject result = new JSONObject(); /* Peek to see if this is the empty object. */ int first = nextCleanInternal(); if (first == '}
+private JSONArray readArray() throws JSONException { JSONArray result = new JSONArray(); /* to cover input that ends with ",]". */ boolean hasTrailingSeparator = false; while (true) { switch (nextCleanInternal()) { case -1: throw syntaxError("Unterminated array"); case ']': if (hasTrailingSeparator) { result.put(null); }
+public JSONException syntaxError(String message) { return new JSONException(message + this); }
+@Override public String toString() { // consistent with the original implementation return " at character " + this.pos + " of " + this.in; }
+public interface Command { /** * Returns the name of the command. * @return the command's name */ String getName(); /** * Returns a description of the command. * @return the command's description */ String getDescription(); /** * Returns usage help for the command. This should be a simple one-line string * describing basic usage. e.g. '[options] &lt;file&gt;'. Do not include the name of * the command in this string. * @return the command's usage help */ @Nullable String getUsageHelp(); /** * Gets full help text for the command, e.g. a longer description and one line per * option. * @return the command's help text */ @Nullable String getHelp(); /** * Returns help for each supported option. * @return help for each of the command's options */ Collection<OptionHelp> getOptionsHelp(); /** * Return some examples for the command. * @return the command's examples */ @Nullable Collection<HelpExample> getExamples(); /** * Run the command. * @param args command arguments (this will not include the command itself) * @return the outcome of the command * @throws Exception if the command fails */ ExitStatus run(String... args) throws Exception; }
+public CommandException(String message, Option... options) { super(message); this.options = asEnumSet(options); }
+public CommandException(String message, Throwable cause, Option... options) { super(message, cause); this.options = asEnumSet(options); }
+public CommandException(Throwable cause, Option... options) { super(cause); this.options = asEnumSet(options); }
+public Set<Option> getOptions() { return Collections.unmodifiableSet(this.options); }
+public CommandRunner(@Nullable String name) { this.name = StringUtils.hasLength(name) ? name + " " : ""; }
+public String getName() { return this.name; }
+public void addCommands(Iterable<Command> commands) { Assert.notNull(commands, "'commands' must not be null"); for (Command command : commands) { addCommand(command); }
+public void addCommand(Command command) { Assert.notNull(command, "'command' must not be null"); this.commands.add(command); }
+public void setOptionCommands(Class<?>... commandClasses) { Assert.notNull(commandClasses, "'commandClasses' must not be null"); this.optionCommandClasses = commandClasses; }
+public void setHiddenCommands(Class<?>... commandClasses) { Assert.notNull(commandClasses, "'commandClasses' must not be null"); this.hiddenCommandClasses = commandClasses; }
+public boolean isOptionCommand(Command command) { return isCommandInstanceOf(command, this.optionCommandClasses); }
+public @Nullable Command findCommand(String name) { for (Command candidate : this.commands) { String candidateName = candidate.getName(); if (candidateName.equals(name) || (isOptionCommand(candidate) && ("--" + candidateName).equals(name))) { return candidate; }
+public int runAndHandleErrors(String... args) { String[] argsWithoutDebugFlags = removeDebugFlags(args); boolean debug = argsWithoutDebugFlags.length != args.length; if (debug) { System.setProperty("debug", "true"); }
+protected ExitStatus run(String... args) throws Exception { if (args.length == 0) { throw new NoArgumentsException(); }
+protected void beforeRun(Command command) { }
+protected void afterRun(Command command) { }
+ProjectGenerationResponse generate(ProjectGenerationRequest request) throws IOException { Log.info("Using service at " + request.getServiceUrl()); InitializrServiceMetadata metadata = loadMetadata(request.getServiceUrl()); URI url = request.generateUrl(metadata); ClassicHttpResponse httpResponse = executeProjectGenerationRequest(url); HttpEntity httpEntity = httpResponse.getEntity(); validateResponse(httpResponse, request.getServiceUrl()); return createResponse(httpResponse, httpEntity); }
+InitializrServiceMetadata loadMetadata(String serviceUrl) throws IOException { ClassicHttpResponse httpResponse = executeInitializrMetadataRetrieval(serviceUrl); validateResponse(httpResponse, serviceUrl); return parseJsonMetadata(httpResponse.getEntity()); }
+Object loadServiceCapabilities(String serviceUrl) throws IOException { HttpGet request = new HttpGet(serviceUrl); request.setHeader(new BasicHeader(HttpHeaders.ACCEPT, ACCEPT_SERVICE_CAPABILITIES)); ClassicHttpResponse httpResponse = execute(request, URI.create(serviceUrl), "retrieve help"); validateResponse(httpResponse, serviceUrl); HttpEntity httpEntity = httpResponse.getEntity(); ContentType contentType = ContentType.create(httpEntity.getContentType()); if (contentType.getMimeType().equals("text/plain")) { return getContent(httpEntity); }
+private ClassicHttpResponse executeProjectGenerationRequest(URI url) { return execute(new HttpGet(url), url, "generate project"); }
+private ClassicHttpResponse executeInitializrMetadataRetrieval(String url) { HttpGet request = new HttpGet(url); request.setHeader(new BasicHeader(HttpHeaders.ACCEPT, ACCEPT_META_DATA)); return execute(request, URI.create(url), "retrieve metadata"); }
+Collection<Dependency> getDependencies() { return this.dependencies.values(); }
+@Nullable Dependency getDependency(String id) { return this.dependencies.get(id); }
+Map<String, ProjectType> getProjectTypes() { return this.projectTypes.getContent(); }
+@Nullable ProjectType getDefaultType() { if (this.projectTypes.getDefaultItem() != null) { return this.projectTypes.getDefaultItem(); }
+Map<String, String> getDefaults() { return this.defaults; }
+@Nullable String getOutput() { return this.output; }
+boolean isExtract() { return this.extract; }
+@Nullable String getGroupId() { return this.groupId; }
+@Nullable String getArtifactId() { return this.artifactId; }
+@Nullable String getVersion() { return this.version; }
+@Nullable String getName() { return this.name; }
+@Nullable String getDescription() { return this.description; }
+@Nullable String getPackageName() { return this.packageName; }
+@Nullable String getType() { return this.type; }
+@Nullable String getPackaging() { return this.packaging; }
+@Nullable String getBuild() { return this.build; }
+@Nullable String getFormat() { return this.format; }
+boolean isDetectType() { return this.detectType; }
+@Nullable String getJavaVersion() { return this.javaVersion; }
+@Nullable String getLanguage() { return this.language; }
+@Nullable String getBootVersion() { return this.bootVersion; }
+List<String> getDependencies() { return this.dependencies; }
+URI generateUrl(InitializrServiceMetadata metadata) { try { URIBuilder builder = new URIBuilder(this.serviceUrl); StringBuilder sb = new StringBuilder(); if (builder.getPath() != null) { sb.append(builder.getPath()); }
+protected @Nullable String resolveArtifactId() { if (this.artifactId != null) { return this.artifactId; }
+ContentType getContentType() { return this.contentType; }
+byte @Nullable [] getContent() { return this.content; }
+@Nullable String getFileName() { return this.fileName; }
+private boolean shouldExtract(ProjectGenerationRequest request, ProjectGenerationResponse response) { if (request.isExtract()) { return true; }
+String generate(String url) throws IOException { Object content = this.initializrService.loadServiceCapabilities(url); if (content instanceof InitializrServiceMetadata metadata) { return generateHelp(url, metadata); }
+public OptionHandler(Function<String, String> argumentProcessor) { this.argumentProcessor = argumentProcessor; }
+protected ExitStatus run(OptionSet options) throws Exception { return ExitStatus.OK; }
+public interface OptionHelp { /** * Returns the set of options that are mutually synonymous. * @return the options */ Set<String> getOptions(); /** * Returns usage help for the option. * @return the usage help */ String getUsageHelp(); }
+AnsiString append(String text, Code... codes) { if (codes.length == 0 || !isAnsiSupported()) { this.value.append(text); return this; }
+Shell() throws IOException { attachSignalHandler(); this.consoleReader = new ConsoleReader(); this.commandRunner = createCommandRunner(); initializeConsoleReader(); }
+public void run() throws Exception { printBanner(); try { runInputLoop(); }
+protected void handleSigInt() { if (this.commandRunner.handleSigInt()) { return; }
+public void popPrompt() { if (!this.prompts.isEmpty()) { this.prompts.pop(); }
+public String getPrompt() { return this.prompts.isEmpty() ? DEFAULT_PROMPT : this.prompts.peek(); }
+public static final ExitStatus ERROR = new ExitStatus(-1, "ERROR", true); private final int code; private final String name; private final boolean hangup; /** * Create a new {@link ExitStatus}
+public ExitStatus(int code, String name, boolean hangup) { this.code = code; this.name = name; this.hangup = hangup; }
+public int getCode() { return this.code; }
+public String getName() { return this.name; }
+public boolean isHangup() { return this.hangup; }
+public ExitStatus hangup() { return new ExitStatus(this.code, this.name, true); }
+interface LogListener { void info(@Nullable String message); void infoPrint(@Nullable String message); void error(@Nullable String message); void error(Exception ex); }
+public interface MockLog extends LogListener { static MockLog attach() { MockLog log = mock(MockLog.class); Log.setListener(log); return log; }
+record Changelog(String oldVersionNumber, String newVersionNumber, List<Difference> differences) { static Changelog of(String oldVersionNumber, ConfigurationMetadataRepository oldMetadata, String newVersionNumber, ConfigurationMetadataRepository newMetadata) { return new Changelog(oldVersionNumber, newVersionNumber, computeDifferences(oldMetadata, newMetadata)); }
+record Difference(DifferenceType type, ConfigurationMetadataProperty oldProperty, ConfigurationMetadataProperty newProperty) { static Difference compute(ConfigurationMetadataProperty oldProperty, ConfigurationMetadataProperty newProperty) { if (newProperty == null) { if (!(oldProperty.isDeprecated() && oldProperty.getDeprecation().getLevel() == Level.ERROR)) { return new Difference(DifferenceType.DELETED, oldProperty, null); }
+/* Accept a raw type for API compatibility */ @SuppressWarnings("rawtypes") public JSONArray(Collection copyFrom) { this(); if (copyFrom != null) { for (Iterator it = copyFrom.iterator(); it.hasNext();) { put(JSONObject.wrap(it.next())); }
+public JSONArray(JSONTokener readFrom) throws JSONException { /* * Getting the parser to populate this could get tricky. Instead, just parse to * temporary JSONArray and then steal the data from that. */ Object object = readFrom.nextValue(); if (object instanceof JSONArray) { this.values = ((JSONArray) object).values; }
+public JSONArray(String json) throws JSONException { this(new JSONTokener(json)); }
+public JSONArray(Object array) throws JSONException { if (!array.getClass().isArray()) { throw new JSONException("Not a primitive array: " + array.getClass()); }
+public int length() { return this.values.size(); }
+public JSONArray put(boolean value) { this.values.add(value); return this; }
+public JSONArray put(double value) throws JSONException { this.values.add(JSON.checkDouble(value)); return this; }
+public JSONArray put(int value) { this.values.add(value); return this; }
+public JSONArray put(long value) { this.values.add(value); return this; }
+public JSONArray put(Object value) { this.values.add(value); return this; }
+public JSONArray put(int index, boolean value) throws JSONException { return put(index, (Boolean) value); }
+public JSONArray put(int index, double value) throws JSONException { return put(index, (Double) value); }
+public JSONArray put(int index, int value) throws JSONException { return put(index, (Integer) value); }
+public JSONArray put(int index, long value) throws JSONException { return put(index, (Long) value); }
+public JSONArray put(int index, Object value) throws JSONException { if (value instanceof Number) { // deviate from the original by checking all Numbers, not just floats & // doubles JSON.checkDouble(((Number) value).doubleValue()); }
+public boolean isNull(int index) { Object value = opt(index); return value == null || value == JSONObject.NULL; }
+public Object get(int index) throws JSONException { try { Object value = this.values.get(index); if (value == null) { throw new JSONException("Value at " + index + " is null."); }
+public Object opt(int index) { if (index < 0 || index >= this.values.size()) { return null; }
+public Object remove(int index) { if (index < 0 || index >= this.values.size()) { return null; }
+public boolean getBoolean(int index) throws JSONException { Object object = get(index); Boolean result = JSON.toBoolean(object); if (result == null) { throw JSON.typeMismatch(index, object, "boolean"); }
+public boolean optBoolean(int index) { return optBoolean(index, false); }
+public boolean optBoolean(int index, boolean fallback) { Object object = opt(index); Boolean result = JSON.toBoolean(object); return result != null ? result : fallback; }
+public double getDouble(int index) throws JSONException { Object object = get(index); Double result = JSON.toDouble(object); if (result == null) { throw JSON.typeMismatch(index, object, "double"); }
+public double optDouble(int index) { return optDouble(index, Double.NaN); }
+public double optDouble(int index, double fallback) { Object object = opt(index); Double result = JSON.toDouble(object); return result != null ? result : fallback; }
+public int getInt(int index) throws JSONException { Object object = get(index); Integer result = JSON.toInteger(object); if (result == null) { throw JSON.typeMismatch(index, object, "int"); }
+public int optInt(int index) { return optInt(index, 0); }
+public int optInt(int index, int fallback) { Object object = opt(index); Integer result = JSON.toInteger(object); return result != null ? result : fallback; }
+public long getLong(int index) throws JSONException { Object object = get(index); Long result = JSON.toLong(object); if (result == null) { throw JSON.typeMismatch(index, object, "long"); }
+public long optLong(int index) { return optLong(index, 0L); }
+public long optLong(int index, long fallback) { Object object = opt(index); Long result = JSON.toLong(object); return result != null ? result : fallback; }
+public String getString(int index) throws JSONException { Object object = get(index); String result = JSON.toString(object); if (result == null) { throw JSON.typeMismatch(index, object, "String"); }
+public String optString(int index) { return optString(index, ""); }
+public String optString(int index, String fallback) { Object object = opt(index); String result = JSON.toString(object); return result != null ? result : fallback; }
+public JSONArray getJSONArray(int index) throws JSONException { Object object = get(index); if (object instanceof JSONArray) { return (JSONArray) object; }
+public JSONArray optJSONArray(int index) { Object object = opt(index); return object instanceof JSONArray ? (JSONArray) object : null; }
+public JSONObject getJSONObject(int index) throws JSONException { Object object = get(index); if (object instanceof JSONObject) { return (JSONObject) object; }
+public JSONObject optJSONObject(int index) { Object object = opt(index); return object instanceof JSONObject ? (JSONObject) object : null; }
+public JSONObject toJSONObject(JSONArray names) throws JSONException { JSONObject result = new JSONObject(); int length = Math.min(names.length(), this.values.size()); if (length == 0) { return null; }
+public String join(String separator) throws JSONException { JSONStringer stringer = new JSONStringer(); stringer.open(JSONStringer.Scope.NULL, ""); for (int i = 0, size = this.values.size(); i < size; i++) { if (i > 0) { stringer.out.append(separator); }
+@Override public String toString() { try { JSONStringer stringer = new JSONStringer(); writeTo(stringer); return stringer.toString(); }
+public String toString(int indentSpaces) throws JSONException { JSONStringer stringer = new JSONStringer(indentSpaces); writeTo(stringer); return stringer.toString(); }
+public JSONObject() { this.nameValuePairs = new LinkedHashMap<>(); }
+/* (accept a raw type for API compatibility) */ @SuppressWarnings("rawtypes") public JSONObject(Map copyFrom) { this(); Map<?, ?> contentsTyped = copyFrom; for (Map.Entry<?, ?> entry : contentsTyped.entrySet()) { /* * Deviate from the original by checking that keys are non-null and of the * proper type. (We still defer validating the values). */ String key = (String) entry.getKey(); if (key == null) { throw new NullPointerException("key == null"); }
+public JSONObject(JSONTokener readFrom) throws JSONException { /* * Getting the parser to populate this could get tricky. Instead, just parse to * temporary JSONObject and then steal the data from that. */ Object object = readFrom.nextValue(); if (object instanceof JSONObject) { this.nameValuePairs = ((JSONObject) object).nameValuePairs; }
+public JSONObject(String json) throws JSONException { this(new JSONTokener(json)); }
+public JSONObject(JSONObject copyFrom, String[] names) throws JSONException { this(); for (String name : names) { Object value = copyFrom.opt(name); if (value != null) { this.nameValuePairs.put(name, value); }
+public int length() { return this.nameValuePairs.size(); }
+public JSONObject put(String name, boolean value) throws JSONException { this.nameValuePairs.put(checkName(name), value); return this; }
+public JSONObject put(String name, double value) throws JSONException { this.nameValuePairs.put(checkName(name), JSON.checkDouble(value)); return this; }
+public JSONObject put(String name, int value) throws JSONException { this.nameValuePairs.put(checkName(name), value); return this; }
+public JSONObject put(String name, long value) throws JSONException { this.nameValuePairs.put(checkName(name), value); return this; }
+public JSONObject put(String name, Object value) throws JSONException { if (value == null) { this.nameValuePairs.remove(name); return this; }
+public JSONObject putOpt(String name, Object value) throws JSONException { if (name == null || value == null) { return this; }
+public JSONObject accumulate(String name, Object value) throws JSONException { Object current = this.nameValuePairs.get(checkName(name)); if (current == null) { return put(name, value); }
+public Object remove(String name) { return this.nameValuePairs.remove(name); }
+public boolean isNull(String name) { Object value = this.nameValuePairs.get(name); return value == null || value == NULL; }
+public boolean has(String name) { return this.nameValuePairs.containsKey(name); }
+public Object get(String name) throws JSONException { Object result = this.nameValuePairs.get(name); if (result == null) { throw new JSONException("No value for " + name); }
+public Object opt(String name) { return this.nameValuePairs.get(name); }
+public boolean getBoolean(String name) throws JSONException { Object object = get(name); Boolean result = JSON.toBoolean(object); if (result == null) { throw JSON.typeMismatch(name, object, "boolean"); }
+public boolean optBoolean(String name) { return optBoolean(name, false); }
+public boolean optBoolean(String name, boolean fallback) { Object object = opt(name); Boolean result = JSON.toBoolean(object); return result != null ? result : fallback; }
+public double getDouble(String name) throws JSONException { Object object = get(name); Double result = JSON.toDouble(object); if (result == null) { throw JSON.typeMismatch(name, object, "double"); }
+public double optDouble(String name) { return optDouble(name, Double.NaN); }
+public double optDouble(String name, double fallback) { Object object = opt(name); Double result = JSON.toDouble(object); return result != null ? result : fallback; }
+public int getInt(String name) throws JSONException { Object object = get(name); Integer result = JSON.toInteger(object); if (result == null) { throw JSON.typeMismatch(name, object, "int"); }
+public int optInt(String name) { return optInt(name, 0); }
+public int optInt(String name, int fallback) { Object object = opt(name); Integer result = JSON.toInteger(object); return result != null ? result : fallback; }
+public long getLong(String name) throws JSONException { Object object = get(name); Long result = JSON.toLong(object); if (result == null) { throw JSON.typeMismatch(name, object, "long"); }
+public long optLong(String name) { return optLong(name, 0L); }
+public long optLong(String name, long fallback) { Object object = opt(name); Long result = JSON.toLong(object); return result != null ? result : fallback; }
+public String getString(String name) throws JSONException { Object object = get(name); String result = JSON.toString(object); if (result == null) { throw JSON.typeMismatch(name, object, "String"); }
+public String optString(String name) { return optString(name, ""); }
+public String optString(String name, String fallback) { Object object = opt(name); String result = JSON.toString(object); return result != null ? result : fallback; }
+public JSONArray getJSONArray(String name) throws JSONException { Object object = get(name); if (object instanceof JSONArray) { return (JSONArray) object; }
+public JSONArray optJSONArray(String name) { Object object = opt(name); return object instanceof JSONArray ? (JSONArray) object : null; }
+public JSONObject getJSONObject(String name) throws JSONException { Object object = get(name); if (object instanceof JSONObject) { return (JSONObject) object; }
+public JSONObject optJSONObject(String name) { Object object = opt(name); return object instanceof JSONObject ? (JSONObject) object : null; }
+public JSONArray toJSONArray(JSONArray names) { JSONArray result = new JSONArray(); if (names == null) { return null; }
+/* Return a raw type for API compatibility */ @SuppressWarnings("rawtypes") public Iterator keys() { return this.nameValuePairs.keySet().iterator(); }
+public JSONArray names() { return this.nameValuePairs.isEmpty() ? null : new JSONArray(new ArrayList<>(this.nameValuePairs.keySet())); }
+@Override public String toString() { try { JSONStringer stringer = new JSONStringer(); writeTo(stringer); return stringer.toString(); }
+public String toString(int indentSpaces) throws JSONException { JSONStringer stringer = new JSONStringer(indentSpaces); writeTo(stringer); return stringer.toString(); }
+public static String numberToString(Number number) throws JSONException { if (number == null) { throw new JSONException("Number must be non-null"); }
+public static String quote(String data) { if (data == null) { return "\"\""; }
+@SuppressWarnings("rawtypes") public static Object wrap(Object o) { if (o == null) { return NULL; }
+private final List<Scope> stack = new ArrayList<>(); /** * A string containing a full set of spaces for a single level of indentation, or null * for no pretty printing. */ private final String indent; public JSONStringer() { this.indent = null; }
+public JSONStringer array() throws JSONException { return open(Scope.EMPTY_ARRAY, "["); }
+public JSONStringer endArray() throws JSONException { return close(Scope.EMPTY_ARRAY, Scope.NONEMPTY_ARRAY, "]"); }
+public JSONStringer object() throws JSONException { return open(Scope.EMPTY_OBJECT, "{"); }
+public JSONStringer endObject() throws JSONException { return close(Scope.EMPTY_OBJECT, Scope.NONEMPTY_OBJECT, "}
+JSONStringer open(Scope empty, String openBracket) throws JSONException { if (this.stack.isEmpty() && !this.out.isEmpty()) { throw new JSONException("Nesting problem: multiple top-level roots"); }
+JSONStringer close(Scope empty, Scope nonempty, String closeBracket) throws JSONException { Scope context = peek(); if (context != nonempty && context != empty) { throw new JSONException("Nesting problem"); }
+private Scope peek() throws JSONException { if (this.stack.isEmpty()) { throw new JSONException("Nesting problem"); }
+private void replaceTop(Scope topOfStack) { this.stack.set(this.stack.size() - 1, topOfStack); }
+public JSONStringer value(Object value) throws JSONException { if (this.stack.isEmpty()) { throw new JSONException("Nesting problem"); }
+public JSONStringer value(boolean value) throws JSONException { if (this.stack.isEmpty()) { throw new JSONException("Nesting problem"); }
+public JSONStringer value(double value) throws JSONException { if (this.stack.isEmpty()) { throw new JSONException("Nesting problem"); }
+public JSONStringer value(long value) throws JSONException { if (this.stack.isEmpty()) { throw new JSONException("Nesting problem"); }
+public JSONStringer key(String name) throws JSONException { if (name == null) { throw new JSONException("Names must be non-null"); }
+private void beforeKey() throws JSONException { Scope context = peek(); if (context == Scope.NONEMPTY_OBJECT) { // first in object this.out.append(','); }
+private void beforeValue() throws JSONException { if (this.stack.isEmpty()) { return; }
+@Override public String toString() { return this.out.isEmpty() ? null : this.out.toString(); }
+public JSONTokener(String in) { // consume an optional byte order mark (BOM) if it exists if (in != null && in.startsWith("\ufeff")) { in = in.substring(1); }
+public Object nextValue() throws JSONException { int c = nextCleanInternal(); switch (c) { case -1: throw syntaxError("End of input"); case '{': return readObject(); case '[': return readArray(); case '\'', '"': return nextString((char) c); default: this.pos--; return readLiteral(); }
+private void skipToEndOfLine() { for (; this.pos < this.in.length(); this.pos++) { char c = this.in.charAt(this.pos); if (c == '\r' || c == '\n') { this.pos++; break; }
+public String nextString(char quote) throws JSONException { /* * For strings that are free of escape sequences, we can just extract the result * as a substring of the input. But if we encounter an escape sequence, we need to * use a StringBuilder to compose the result. */ StringBuilder builder = null; /* the index of the first character not yet appended to the builder. */ int start = this.pos; while (this.pos < this.in.length()) { int c = this.in.charAt(this.pos++); if (c == quote) { if (builder == null) { // a new string avoids leaking memory return new String(this.in.substring(start, this.pos - 1)); }
+private char readEscapeCharacter() throws JSONException { char escaped = this.in.charAt(this.pos++); switch (escaped) { case 'u': if (this.pos + 4 > this.in.length()) { throw syntaxError("Unterminated escape sequence"); }
+private Object readLiteral() throws JSONException { String literal = nextToInternal("{}
+private String nextToInternal(String excluded) { int start = this.pos; for (; this.pos < this.in.length(); this.pos++) { char c = this.in.charAt(this.pos); if (c == '\r' || c == '\n' || excluded.indexOf(c) != -1) { return this.in.substring(start, this.pos); }
+private JSONObject readObject() throws JSONException { JSONObject result = new JSONObject(); /* Peek to see if this is the empty object. */ int first = nextCleanInternal(); if (first == '}
+private JSONArray readArray() throws JSONException { JSONArray result = new JSONArray(); /* to cover input that ends with ",]". */ boolean hasTrailingSeparator = false; while (true) { switch (nextCleanInternal()) { case -1: throw syntaxError("Unterminated array"); case ']': if (hasTrailingSeparator) { result.put(null); }
+public JSONException syntaxError(String message) { return new JSONException(message + this); }
+@Override public String toString() { // consistent with the original implementation return " at character " + this.pos + " of " + this.in; }
+public String getId() { return this.id; }
+public Map<String, ConfigurationMetadataSource> getSources() { return this.sources; }
+public Map<String, ConfigurationMetadataProperty> getProperties() { return this.properties; }
+String getSourceMethod() { return this.sourceMethod; }
+public String getName() { return this.name; }
+public String getType() { return this.type; }
+public String getDescription() { return this.description; }
+public String getShortDescription() { return this.shortDescription; }
+public Object getDefaultValue() { return this.defaultValue; }
+public Hints getHints() { return this.hints; }
+public Deprecation getDeprecation() { return this.deprecation; }
+public boolean isDeprecated() { return this.deprecation != null; }
+public interface ConfigurationMetadataRepository { /** * Defines the name of the "root" group, that is the group that gathers all the * properties that aren't attached to a specific group. */ String ROOT_GROUP = "_ROOT_GROUP_"; /** * Return the groups, indexed by id. * @return all configuration meta-data groups */ Map<String, ConfigurationMetadataGroup> getAllGroups(); /** * Return the properties, indexed by id. * @return all configuration meta-data properties */ Map<String, ConfigurationMetadataProperty> getAllProperties(); }
+public ConfigurationMetadataRepositoryJsonBuilder withJsonResource(InputStream inputStream) throws IOException { return withJsonResource(inputStream, this.defaultCharset); }
+public ConfigurationMetadataRepositoryJsonBuilder withJsonResource(InputStream inputStream, Charset charset) throws IOException { if (inputStream == null) { throw new IllegalArgumentException("InputStream must not be null."); }
+public ConfigurationMetadataRepository build() { SimpleConfigurationMetadataRepository result = new SimpleConfigurationMetadataRepository(); for (SimpleConfigurationMetadataRepository repository : this.repositories) { result.include(repository); }
+public static ConfigurationMetadataRepositoryJsonBuilder create(InputStream... inputStreams) throws IOException { ConfigurationMetadataRepositoryJsonBuilder builder = create(); for (InputStream inputStream : inputStreams) { builder = builder.withJsonResource(inputStream); }
+public static ConfigurationMetadataRepositoryJsonBuilder create() { return create(StandardCharsets.UTF_8); }
+public static ConfigurationMetadataRepositoryJsonBuilder create(Charset defaultCharset) { return new ConfigurationMetadataRepositoryJsonBuilder(defaultCharset); }
+public String getType() { return this.type; }
+public String getDescription() { return this.description; }
+public String getShortDescription() { return this.shortDescription; }
+public String getSourceType() { return this.sourceType; }
+public String getSourceMethod() { return this.sourceMethod; }
+public Map<String, ConfigurationMetadataProperty> getProperties() { return this.properties; }
+public String getReason() { return this.reason; }
+public String getShortReason() { return this.shortReason; }
+public String getReplacement() { return this.replacement; }
+public List<ValueProvider> getKeyProviders() { return this.keyProviders; }
+public List<ValueHint> getValueHints() { return this.valueHints; }
+public List<ValueProvider> getValueProviders() { return this.valueProviders; }
+private void resolveName(ConfigurationMetadataItem item) { item.setName(item.getId()); // fallback ConfigurationMetadataSource source = getSource(item); if (source != null) { String groupId = source.getGroupId(); String dottedPrefix = groupId + "."; String id = item.getId(); if (hasLength(groupId) && id.startsWith(dottedPrefix)) { String name = id.substring(dottedPrefix.length()); item.setName(name); }
+public void add(Collection<ConfigurationMetadataSource> sources) { for (ConfigurationMetadataSource source : sources) { String groupId = source.getGroupId(); ConfigurationMetadataGroup group = this.allGroups.computeIfAbsent(groupId, (key) -> new ConfigurationMetadataGroup(groupId)); String sourceType = source.getType(); if (sourceType != null) { addOrMergeSource(group.getSources(), sourceType, source); }
+public void add(ConfigurationMetadataProperty property, ConfigurationMetadataSource source) { if (source != null) { source.getProperties().putIfAbsent(property.getId(), property); }
+public void include(ConfigurationMetadataRepository repository) { for (ConfigurationMetadataGroup group : repository.getAllGroups().values()) { ConfigurationMetadataGroup existingGroup = this.allGroups.get(group.getId()); if (existingGroup == null) { this.allGroups.put(group.getId(), group); }
+public String getDescription() { return this.description; }
+public String getShortDescription() { return this.shortDescription; }
+public Map<String, Object> getParameters() { return this.parameters; }
+/* Accept a raw type for API compatibility */ @SuppressWarnings("rawtypes") public JSONArray(Collection copyFrom) { this(); if (copyFrom != null) { for (Iterator it = copyFrom.iterator(); it.hasNext();) { put(JSONObject.wrap(it.next())); }
+public JSONArray(JSONTokener readFrom) throws JSONException { /* * Getting the parser to populate this could get tricky. Instead, just parse to * temporary JSONArray and then steal the data from that. */ Object object = readFrom.nextValue(); if (object instanceof JSONArray) { this.values = ((JSONArray) object).values; }
+public JSONArray(String json) throws JSONException { this(new JSONTokener(json)); }
+public JSONArray(Object array) throws JSONException { if (!array.getClass().isArray()) { throw new JSONException("Not a primitive array: " + array.getClass()); }
+public int length() { return this.values.size(); }
+public JSONArray put(boolean value) { this.values.add(value); return this; }
+public JSONArray put(double value) throws JSONException { this.values.add(JSON.checkDouble(value)); return this; }
+public JSONArray put(int value) { this.values.add(value); return this; }
+public JSONArray put(long value) { this.values.add(value); return this; }
+public JSONArray put(Object value) { this.values.add(value); return this; }
+public JSONArray put(int index, boolean value) throws JSONException { return put(index, (Boolean) value); }
+public JSONArray put(int index, double value) throws JSONException { return put(index, (Double) value); }
+public JSONArray put(int index, int value) throws JSONException { return put(index, (Integer) value); }
+public JSONArray put(int index, long value) throws JSONException { return put(index, (Long) value); }
+public JSONArray put(int index, Object value) throws JSONException { if (value instanceof Number) { // deviate from the original by checking all Numbers, not just floats & // doubles JSON.checkDouble(((Number) value).doubleValue()); }
+public boolean isNull(int index) { Object value = opt(index); return value == null || value == JSONObject.NULL; }
+public Object get(int index) throws JSONException { try { Object value = this.values.get(index); if (value == null) { throw new JSONException("Value at " + index + " is null."); }
+public Object opt(int index) { if (index < 0 || index >= this.values.size()) { return null; }
+public Object remove(int index) { if (index < 0 || index >= this.values.size()) { return null; }
+public boolean getBoolean(int index) throws JSONException { Object object = get(index); Boolean result = JSON.toBoolean(object); if (result == null) { throw JSON.typeMismatch(index, object, "boolean"); }
+public boolean optBoolean(int index) { return optBoolean(index, false); }
+public boolean optBoolean(int index, boolean fallback) { Object object = opt(index); Boolean result = JSON.toBoolean(object); return result != null ? result : fallback; }
+public double getDouble(int index) throws JSONException { Object object = get(index); Double result = JSON.toDouble(object); if (result == null) { throw JSON.typeMismatch(index, object, "double"); }
+public double optDouble(int index) { return optDouble(index, Double.NaN); }
+public double optDouble(int index, double fallback) { Object object = opt(index); Double result = JSON.toDouble(object); return result != null ? result : fallback; }
+public int getInt(int index) throws JSONException { Object object = get(index); Integer result = JSON.toInteger(object); if (result == null) { throw JSON.typeMismatch(index, object, "int"); }
+public int optInt(int index) { return optInt(index, 0); }
+public int optInt(int index, int fallback) { Object object = opt(index); Integer result = JSON.toInteger(object); return result != null ? result : fallback; }
+public long getLong(int index) throws JSONException { Object object = get(index); Long result = JSON.toLong(object); if (result == null) { throw JSON.typeMismatch(index, object, "long"); }
+public long optLong(int index) { return optLong(index, 0L); }
+public long optLong(int index, long fallback) { Object object = opt(index); Long result = JSON.toLong(object); return result != null ? result : fallback; }
+public String getString(int index) throws JSONException { Object object = get(index); String result = JSON.toString(object); if (result == null) { throw JSON.typeMismatch(index, object, "String"); }
+public String optString(int index) { return optString(index, ""); }
+public String optString(int index, String fallback) { Object object = opt(index); String result = JSON.toString(object); return result != null ? result : fallback; }
+public JSONArray getJSONArray(int index) throws JSONException { Object object = get(index); if (object instanceof JSONArray) { return (JSONArray) object; }
+public JSONArray optJSONArray(int index) { Object object = opt(index); return object instanceof JSONArray ? (JSONArray) object : null; }
+public JSONObject getJSONObject(int index) throws JSONException { Object object = get(index); if (object instanceof JSONObject) { return (JSONObject) object; }
+public JSONObject optJSONObject(int index) { Object object = opt(index); return object instanceof JSONObject ? (JSONObject) object : null; }
+public JSONObject toJSONObject(JSONArray names) throws JSONException { JSONObject result = new JSONObject(); int length = Math.min(names.length(), this.values.size()); if (length == 0) { return null; }
+public String join(String separator) throws JSONException { JSONStringer stringer = new JSONStringer(); stringer.open(JSONStringer.Scope.NULL, ""); for (int i = 0, size = this.values.size(); i < size; i++) { if (i > 0) { stringer.out.append(separator); }
+@Override public String toString() { try { JSONStringer stringer = new JSONStringer(); writeTo(stringer); return stringer.toString(); }
+public String toString(int indentSpaces) throws JSONException { JSONStringer stringer = new JSONStringer(indentSpaces); writeTo(stringer); return stringer.toString(); }
+public JSONObject() { this.nameValuePairs = new LinkedHashMap<>(); }
+/* (accept a raw type for API compatibility) */ @SuppressWarnings("rawtypes") public JSONObject(Map copyFrom) { this(); Map<?, ?> contentsTyped = copyFrom; for (Map.Entry<?, ?> entry : contentsTyped.entrySet()) { /* * Deviate from the original by checking that keys are non-null and of the * proper type. (We still defer validating the values). */ String key = (String) entry.getKey(); if (key == null) { throw new NullPointerException("key == null"); }
+public JSONObject(JSONTokener readFrom) throws JSONException { /* * Getting the parser to populate this could get tricky. Instead, just parse to * temporary JSONObject and then steal the data from that. */ Object object = readFrom.nextValue(); if (object instanceof JSONObject) { this.nameValuePairs = ((JSONObject) object).nameValuePairs; }
+public JSONObject(String json) throws JSONException { this(new JSONTokener(json)); }
+public JSONObject(JSONObject copyFrom, String[] names) throws JSONException { this(); for (String name : names) { Object value = copyFrom.opt(name); if (value != null) { this.nameValuePairs.put(name, value); }
+public int length() { return this.nameValuePairs.size(); }
+public JSONObject put(String name, boolean value) throws JSONException { this.nameValuePairs.put(checkName(name), value); return this; }
+public JSONObject put(String name, double value) throws JSONException { this.nameValuePairs.put(checkName(name), JSON.checkDouble(value)); return this; }
+public JSONObject put(String name, int value) throws JSONException { this.nameValuePairs.put(checkName(name), value); return this; }
+public JSONObject put(String name, long value) throws JSONException { this.nameValuePairs.put(checkName(name), value); return this; }
+public JSONObject put(String name, Object value) throws JSONException { if (value == null) { this.nameValuePairs.remove(name); return this; }
+public JSONObject putOpt(String name, Object value) throws JSONException { if (name == null || value == null) { return this; }
+public JSONObject accumulate(String name, Object value) throws JSONException { Object current = this.nameValuePairs.get(checkName(name)); if (current == null) { return put(name, value); }
+public Object remove(String name) { return this.nameValuePairs.remove(name); }
+public boolean isNull(String name) { Object value = this.nameValuePairs.get(name); return value == null || value == NULL; }
+public boolean has(String name) { return this.nameValuePairs.containsKey(name); }
+public Object get(String name) throws JSONException { Object result = this.nameValuePairs.get(name); if (result == null) { throw new JSONException("No value for " + name); }
+public Object opt(String name) { return this.nameValuePairs.get(name); }
+public boolean getBoolean(String name) throws JSONException { Object object = get(name); Boolean result = JSON.toBoolean(object); if (result == null) { throw JSON.typeMismatch(name, object, "boolean"); }
+public boolean optBoolean(String name) { return optBoolean(name, false); }
+public boolean optBoolean(String name, boolean fallback) { Object object = opt(name); Boolean result = JSON.toBoolean(object); return result != null ? result : fallback; }
+public double getDouble(String name) throws JSONException { Object object = get(name); Double result = JSON.toDouble(object); if (result == null) { throw JSON.typeMismatch(name, object, "double"); }
+public double optDouble(String name) { return optDouble(name, Double.NaN); }
+public double optDouble(String name, double fallback) { Object object = opt(name); Double result = JSON.toDouble(object); return result != null ? result : fallback; }
+public int getInt(String name) throws JSONException { Object object = get(name); Integer result = JSON.toInteger(object); if (result == null) { throw JSON.typeMismatch(name, object, "int"); }
+public int optInt(String name) { return optInt(name, 0); }
+public int optInt(String name, int fallback) { Object object = opt(name); Integer result = JSON.toInteger(object); return result != null ? result : fallback; }
+public long getLong(String name) throws JSONException { Object object = get(name); Long result = JSON.toLong(object); if (result == null) { throw JSON.typeMismatch(name, object, "long"); }
+public long optLong(String name) { return optLong(name, 0L); }
+public long optLong(String name, long fallback) { Object object = opt(name); Long result = JSON.toLong(object); return result != null ? result : fallback; }
+public String getString(String name) throws JSONException { Object object = get(name); String result = JSON.toString(object); if (result == null) { throw JSON.typeMismatch(name, object, "String"); }
+public String optString(String name) { return optString(name, ""); }
+public String optString(String name, String fallback) { Object object = opt(name); String result = JSON.toString(object); return result != null ? result : fallback; }
+public JSONArray getJSONArray(String name) throws JSONException { Object object = get(name); if (object instanceof JSONArray) { return (JSONArray) object; }
+public JSONArray optJSONArray(String name) { Object object = opt(name); return object instanceof JSONArray ? (JSONArray) object : null; }
+public JSONObject getJSONObject(String name) throws JSONException { Object object = get(name); if (object instanceof JSONObject) { return (JSONObject) object; }
+public JSONObject optJSONObject(String name) { Object object = opt(name); return object instanceof JSONObject ? (JSONObject) object : null; }
+public JSONArray toJSONArray(JSONArray names) { JSONArray result = new JSONArray(); if (names == null) { return null; }
+/* Return a raw type for API compatibility */ @SuppressWarnings("rawtypes") public Iterator keys() { return this.nameValuePairs.keySet().iterator(); }
+public JSONArray names() { return this.nameValuePairs.isEmpty() ? null : new JSONArray(new ArrayList<>(this.nameValuePairs.keySet())); }
+@Override public String toString() { try { JSONStringer stringer = new JSONStringer(); writeTo(stringer); return stringer.toString(); }
+public String toString(int indentSpaces) throws JSONException { JSONStringer stringer = new JSONStringer(indentSpaces); writeTo(stringer); return stringer.toString(); }
+public static String numberToString(Number number) throws JSONException { if (number == null) { throw new JSONException("Number must be non-null"); }
+public static String quote(String data) { if (data == null) { return "\"\""; }
+@SuppressWarnings("rawtypes") public static Object wrap(Object o) { if (o == null) { return NULL; }
+private final List<Scope> stack = new ArrayList<>(); /** * A string containing a full set of spaces for a single level of indentation, or null * for no pretty printing. */ private final String indent; public JSONStringer() { this.indent = null; }
+public JSONStringer array() throws JSONException { return open(Scope.EMPTY_ARRAY, "["); }
+public JSONStringer endArray() throws JSONException { return close(Scope.EMPTY_ARRAY, Scope.NONEMPTY_ARRAY, "]"); }
+public JSONStringer object() throws JSONException { return open(Scope.EMPTY_OBJECT, "{"); }
+public JSONStringer endObject() throws JSONException { return close(Scope.EMPTY_OBJECT, Scope.NONEMPTY_OBJECT, "}
+JSONStringer open(Scope empty, String openBracket) throws JSONException { if (this.stack.isEmpty() && !this.out.isEmpty()) { throw new JSONException("Nesting problem: multiple top-level roots"); }
+JSONStringer close(Scope empty, Scope nonempty, String closeBracket) throws JSONException { Scope context = peek(); if (context != nonempty && context != empty) { throw new JSONException("Nesting problem"); }
+private Scope peek() throws JSONException { if (this.stack.isEmpty()) { throw new JSONException("Nesting problem"); }
+private void replaceTop(Scope topOfStack) { this.stack.set(this.stack.size() - 1, topOfStack); }
+public JSONStringer value(Object value) throws JSONException { if (this.stack.isEmpty()) { throw new JSONException("Nesting problem"); }
+public JSONStringer value(boolean value) throws JSONException { if (this.stack.isEmpty()) { throw new JSONException("Nesting problem"); }
+public JSONStringer value(double value) throws JSONException { if (this.stack.isEmpty()) { throw new JSONException("Nesting problem"); }
+public JSONStringer value(long value) throws JSONException { if (this.stack.isEmpty()) { throw new JSONException("Nesting problem"); }
+public JSONStringer key(String name) throws JSONException { if (name == null) { throw new JSONException("Names must be non-null"); }
+private void beforeKey() throws JSONException { Scope context = peek(); if (context == Scope.NONEMPTY_OBJECT) { // first in object this.out.append(','); }
+private void beforeValue() throws JSONException { if (this.stack.isEmpty()) { return; }
+@Override public String toString() { return this.out.isEmpty() ? null : this.out.toString(); }
+public JSONTokener(String in) { // consume an optional byte order mark (BOM) if it exists if (in != null && in.startsWith("\ufeff")) { in = in.substring(1); }
+public Object nextValue() throws JSONException { int c = nextCleanInternal(); switch (c) { case -1: throw syntaxError("End of input"); case '{': return readObject(); case '[': return readArray(); case '\'', '"': return nextString((char) c); default: this.pos--; return readLiteral(); }
+private void skipToEndOfLine() { for (; this.pos < this.in.length(); this.pos++) { char c = this.in.charAt(this.pos); if (c == '\r' || c == '\n') { this.pos++; break; }
+public String nextString(char quote) throws JSONException { /* * For strings that are free of escape sequences, we can just extract the result * as a substring of the input. But if we encounter an escape sequence, we need to * use a StringBuilder to compose the result. */ StringBuilder builder = null; /* the index of the first character not yet appended to the builder. */ int start = this.pos; while (this.pos < this.in.length()) { int c = this.in.charAt(this.pos++); if (c == quote) { if (builder == null) { // a new string avoids leaking memory return new String(this.in.substring(start, this.pos - 1)); }
+private char readEscapeCharacter() throws JSONException { char escaped = this.in.charAt(this.pos++); switch (escaped) { case 'u': if (this.pos + 4 > this.in.length()) { throw syntaxError("Unterminated escape sequence"); }
+private Object readLiteral() throws JSONException { String literal = nextToInternal("{}
+private String nextToInternal(String excluded) { int start = this.pos; for (; this.pos < this.in.length(); this.pos++) { char c = this.in.charAt(this.pos); if (c == '\r' || c == '\n' || excluded.indexOf(c) != -1) { return this.in.substring(start, this.pos); }
+private JSONObject readObject() throws JSONException { JSONObject result = new JSONObject(); /* Peek to see if this is the empty object. */ int first = nextCleanInternal(); if (first == '}
+private JSONArray readArray() throws JSONException { JSONArray result = new JSONArray(); /* to cover input that ends with ",]". */ boolean hasTrailingSeparator = false; while (true) { switch (nextCleanInternal()) { case -1: throw syntaxError("Unterminated array"); case ']': if (hasTrailingSeparator) { result.put(null); }
+public JSONException syntaxError(String message) { return new JSONException(message + this); }
+@Override public String toString() { // consistent with the original implementation return " at character " + this.pos + " of " + this.in; }
+SourceMetadata resolveSource(TypeElement typeElement) { ConfigurationMetadata configurationMetadata = resolveConfigurationMetadata(typeElement); return (configurationMetadata != null) ? new SourceMetadata(configurationMetadata.getItems(), configurationMetadata.getHints()) : SourceMetadata.EMPTY; }
+PropertyDescriptor createPropertyDescriptor(String name, PropertyDescriptor propertyDescriptor) { String key = ConventionUtils.toDashedCase(name); if (this.items.containsKey(key)) { ItemMetadata itemMetadata = this.items.get(key); ItemHint itemHint = this.hints.get(key); return new SourcePropertyDescriptor(propertyDescriptor, itemMetadata, itemHint); }
+PropertyDescriptor createPropertyDescriptor(String name, Function<String, PropertyDescriptor> regularDescriptor) { return createPropertyDescriptor(name, regularDescriptor.apply(name)); }
+private boolean hasLombokPublicAccessor(MetadataGenerationEnvironment env, boolean getter) { String annotation = (getter ? LOMBOK_GETTER_ANNOTATION : LOMBOK_SETTER_ANNOTATION); AnnotationMirror lombokMethodAnnotationOnField = env.getAnnotation(getField(), annotation); if (lombokMethodAnnotationOnField != null) { return isAccessLevelPublic(env, lombokMethodAnnotationOnField); }
+Object getFieldDefaultValue(TypeElement type, VariableElement field) { return (field != null) ? this.defaultValues.computeIfAbsent(type, this::resolveFieldValues) .get(field.getSimpleName().toString()) : null; }
+SourceMetadata resolveSourceMetadata(VariableElement field, ExecutableElement getter) { if (field != null && field.getEnclosingElement() instanceof TypeElement type) { return this.sources.computeIfAbsent(type, this.sourceResolver::resolveSource); }
+List<Element> getElementsAnnotatedOrMetaAnnotatedWith(Element element, TypeElement annotationType) { LinkedList<Element> stack = new LinkedList<>(); stack.push(element); collectElementsAnnotatedOrMetaAnnotatedWith(annotationType, stack); stack.removeFirst(); return Collections.unmodifiableList(stack); }
+ConfigurationMetadata readMetadata() { return readMetadata(METADATA_PATH); }
+ConfigurationMetadata readMetadata(TypeElement typeElement) { return readMetadata(SOURCE_METADATA_PATH.apply(typeElement, this.typeUtils)); }
+void writeMetadata(ConfigurationMetadata metadata) throws IOException { writeMetadata(metadata, () -> createMetadataResource(METADATA_PATH)); }
+void writeMetadata(ConfigurationMetadata metadata, TypeElement typeElement) throws IOException { writeMetadata(metadata, () -> createMetadataResource(SOURCE_METADATA_PATH.apply(typeElement, this.typeUtils))); }
+private void writeMetadata(ConfigurationMetadata metadata, FileObjectSupplier fileObjectProvider) throws IOException { if (!metadata.getItems().isEmpty()) { try (OutputStream outputStream = fileObjectProvider.get().openOutputStream()) { new JsonMarshaller().write(metadata, outputStream); }
+ConfigurationMetadata readAdditionalMetadata() { return readAdditionalMetadata(ADDITIONAL_METADATA_PATH); }
+ConfigurationMetadata readAdditionalMetadata(TypeElement typeElement) { return readAdditionalMetadata(ADDITIONAL_SOURCE_METADATA_PATH.apply(typeElement, this.typeUtils)); }
+private interface FileObjectSupplier { FileObject get() throws IOException; }
+String getName() { return this.name; }
+TypeMirror getType() { return this.type; }
+protected final TypeElement getDeclaringElement() { return this.declaringElement; }
+protected final ExecutableElement getGetter() { return this.getter; }
+final ItemMetadata resolveItemMetadata(String prefix, MetadataGenerationEnvironment environment) { if (isNested(environment)) { return resolveItemMetadataGroup(prefix, environment); }
+protected ItemHint resolveItemHint(String prefix, MetadataGenerationEnvironment environment) { return null; }
+boolean isNested(MetadataGenerationEnvironment environment) { Element typeElement = environment.getTypeUtils().asElement(getType()); if (!(typeElement instanceof TypeElement) || typeElement.getKind() == ElementKind.ENUM || environment.getConfigurationPropertiesAnnotation(getGetter()) != null) { return false; }
+protected abstract boolean isMarkedAsNested(MetadataGenerationEnvironment environment); private boolean isCyclePresent(Element returnType, Element element) { if (!(element.getEnclosingElement() instanceof TypeElement)) { return false; }
+protected abstract String resolveDescription(MetadataGenerationEnvironment environment); /** * Resolve the default value for this property. * @param environment the metadata generation environment * @return the default value or {@code null}
+Stream<PropertyDescriptor> resolve(TypeElement type, ExecutableElement factoryMethod) { TypeElementMembers members = new TypeElementMembers(this.environment, type); if (factoryMethod != null) { return resolveJavaBeanProperties(type, members, factoryMethod); }
+String getQualifiedName(Element element) { return this.typeExtractor.getQualifiedName(element); }
+String getType(TypeElement element, TypeMirror type) { if (type == null) { return null; }
+TypeMirror extractElementType(TypeMirror type) { if (!this.env.getTypeUtils().isAssignable(type, this.collectionType)) { return null; }
+PrimitiveType getPrimitiveType(TypeMirror typeMirror) { if (getPrimitiveFor(typeMirror) != null) { return this.types.unboxedType(typeMirror); }
+interface TreeVisitor { void visitVariable(VariableTree variable) throws Exception; }
+public void add(ItemMetadata itemMetadata) { add(this.items, itemMetadata.getName(), itemMetadata, false); }
+public void addIfMissing(ItemMetadata itemMetadata) { add(this.items, itemMetadata.getName(), itemMetadata, true); }
+public void add(ItemHint itemHint) { add(this.hints, itemHint.getName(), itemHint, false); }
+public void add(ItemIgnore itemIgnore) { add(this.ignored, itemIgnore.getName(), itemIgnore, false); }
+public void removeMetadata(ItemType itemType, String name) { List<ItemMetadata> metadata = this.items.get(name); if (metadata == null) { return; }
+public void merge(ConfigurationMetadata metadata) { for (ItemMetadata additionalItem : metadata.getItems()) { mergeItemMetadata(additionalItem); }
+public List<ItemMetadata> getItems() { return flattenValues(this.items); }
+public List<ItemHint> getHints() { return flattenValues(this.hints); }
+public List<ItemIgnore> getIgnored() { return flattenValues(this.ignored); }
+public ItemHint applyPrefix(String prefix) { return new ItemHint(ConventionUtils.toDashedCase(prefix) + "." + this.name, this.values, this.providers); }
+public static ItemIgnore forProperty(String name) { return new ItemIgnore(ItemType.PROPERTY, name); }
+public static String toDashedCase(String value) { StringBuilder dashed = new StringBuilder(); Character previous = null; for (int i = 0; i < value.length(); i++) { char current = value.charAt(i); if (SEPARATORS.contains(current)) { dashed.append("-"); }
+public void addSourceCode(Class<?> target, InputStream snippetStream) throws Exception { SourceFile sourceFile = SourceFile.forTestClass(target); String contents = sourceFile.getContent(); int insertAt = contents.lastIndexOf('}
+public void delete(Class<?> type) { SourceFile[] newSources = this.sources.stream() .filter((sourceFile) -> !sourceFile.getPath().equals(SourceFile.forTestClass(type).getPath())) .toArray(SourceFile[]::new); this.sources = SourceFiles.of(newSources); }
+public void revert(Class<?> type) { Assert.isTrue(this.sources.stream().anyMatch((sourceFile) -> sourceFile.getClassName().equals(type.getName())), "Source file for type '" + type + "' does not exist"); this.sources = this.sources.and(SourceFile.forTestClass(type)); }
+public void add(Class<?> type) { Assert.isTrue(this.sources.stream().noneMatch((sourceFile) -> sourceFile.getClassName().equals(type.getName())), "Source file for type '" + type + "' already exists"); this.sources = this.sources.and(SourceFile.forTestClass(type)); }
+public TypeElement getRootElement(Class<?> type) { return (TypeElement) this.roundEnvironment.getRootElements() .stream() .filter((element) -> element.toString().equals(type.getName())) .findFirst() .orElseThrow(() -> new IllegalStateException( "No element found for " + type + " make sure it is included in the list of classes to compile")); }
+@Target(ElementType.TYPE) @Retention(RetentionPolicy.RUNTIME) @Documented public @interface TestConfigurationPropertiesSource { }
+@Target(ElementType.TYPE) @Retention(RetentionPolicy.RUNTIME) @Documented public @interface TestControllerEndpoint { String id() default ""; @Deprecated boolean enableByDefault() default true; TestAccess defaultAccess() default TestAccess.UNRESTRICTED; }
+@Target(ElementType.METHOD) @Retention(RetentionPolicy.RUNTIME) @Documented public @interface TestDeprecatedConfigurationProperty { /** * The reason for the deprecation. * @return the deprecation reason */ String reason() default ""; /** * The field that should be used instead (if any). * @return the replacement field */ String replacement() default ""; /** * The version in which the property became deprecated. * @return the version */ String since() default ""; }
+@Target(ElementType.TYPE) @Retention(RetentionPolicy.RUNTIME) @Documented public @interface TestEndpoint { String id() default ""; TestAccess defaultAccess() default TestAccess.UNRESTRICTED; }
+@Target(ElementType.TYPE) @Retention(RetentionPolicy.RUNTIME) @Documented public @interface TestJmxEndpoint { String id() default ""; TestAccess defaultAccess() default TestAccess.UNRESTRICTED; }
+@Target(ElementType.METHOD) @Retention(RetentionPolicy.RUNTIME) @Documented public @interface TestReadOperation { String[] produces() default {}
+@Target(ElementType.TYPE) @Retention(RetentionPolicy.RUNTIME) @Documented public @interface TestRestControllerEndpoint { String id() default ""; TestAccess defaultAccess() default TestAccess.UNRESTRICTED; }
+@Target(ElementType.TYPE) @Retention(RetentionPolicy.RUNTIME) @Documented public @interface TestServletEndpoint { String id() default ""; TestAccess defaultAccess() default TestAccess.UNRESTRICTED; }
+@Target(ElementType.TYPE) @Retention(RetentionPolicy.RUNTIME) @Documented public @interface TestWebEndpoint { String id() default ""; TestAccess defaultAccess() default TestAccess.UNRESTRICTED; }
+private Integer counter = 0; public String getName() { return this.name; }
+private Integer counter = 0; public String getName() { return this.name; }
+private Integer counter = 0; public String getName() { return this.name; }
+@Data @TestConfigurationProperties("accesslevel.overwrite.data") @SuppressWarnings({ "unused", "deprecation" }
+@Getter(AccessLevel.PUBLIC) @Setter(AccessLevel.PUBLIC) @TestConfigurationProperties("accesslevel.overwrite.explicit") @SuppressWarnings({ "unused", "deprecation" }
+@TestConfigurationProperties("named") public record RecordComponentNameAnnotationProperties(@TestName("import") String imports, @TestName("default") @TestDefaultValue("true") boolean defaultValue) { }
+@TestConfigurationProperties("record.descriptions") public record ExampleRecord(String someString, Integer someInteger, Boolean someBoolean, Long someLong, @TestName("named.record.component") String namedComponent, Byte someByte) { }
+@TestConfigurationProperties("deprecated-record") public record DeprecatedRecord(String alpha, String bravo, @TestName("named.charlie") String charlie) { @Deprecated @TestDeprecatedConfigurationProperty(reason = "some-reason") public String alpha() { return this.alpha; }
+private boolean enabled; public boolean isEnabled() { return this.enabled; }
+private String name = "boot"; /** * Whether it is enabled. */ private boolean enabled; public String getName() { return this.name; }
+private boolean visible = true; public boolean isVisible() { return this.visible; }
+@SuppressWarnings("unused") private final String name; /** * Whether it is enabled. */ @SuppressWarnings("unused") private final boolean enabled; public ImmutablePropertiesSource(@TestDefaultValue("boot") String name, boolean enabled) { this.name = name; this.enabled = enabled; }
+private String name; public String getName() { return this.name; }
+@TestConfigurationPropertiesSource public record RecordPropertiesSources(@TestDefaultValue("boot") String name, boolean enabled) { }
+private String name = "boot"; /** * Whether it is enabled. */ private boolean enabled; public String getName() { return this.name; }
+@Target(ElementType.TYPE) @Retention(RetentionPolicy.RUNTIME) @Documented @TestAutoConfigureBefore @TestAutoConfigureAfter public @interface TestAutoConfiguration { @AliasFor(annotation = TestAutoConfigureBefore.class, attribute = "value") Class<?>[] before() default {}
+@Retention(RetentionPolicy.RUNTIME) @Target({ ElementType.TYPE }
+@Retention(RetentionPolicy.RUNTIME) @Target({ ElementType.TYPE }
+@Retention(RetentionPolicy.RUNTIME) @Target({ ElementType.TYPE, ElementType.METHOD, ElementType.FIELD }
+protected AbstractDependsOnBeanFactoryPostProcessor(Class<?> beanClass, @Nullable Class<? extends FactoryBean<?>> factoryBeanClass, Class<?>... dependencyTypes) { this.beanClass = beanClass; this.factoryBeanClass = factoryBeanClass; this.dependsOn = (beanFactory) -> Arrays.stream(dependencyTypes) .flatMap((dependencyType) -> getBeanNames(beanFactory, dependencyType).stream()) .collect(Collectors.toSet()); }
+protected AbstractDependsOnBeanFactoryPostProcessor(Class<?> beanClass, String... dependsOn) { this(beanClass, null, dependsOn); }
+protected AbstractDependsOnBeanFactoryPostProcessor(Class<?> beanClass, Class<?>... dependencyTypes) { this(beanClass, null, dependencyTypes); }
+@Target(ElementType.TYPE) @Retention(RetentionPolicy.RUNTIME) @Documented @Configuration(proxyBeanMethods = false) @AutoConfigureBefore @AutoConfigureAfter public @interface AutoConfiguration { /** * Explicitly specify the name of the Spring bean definition associated with the * {@code @AutoConfiguration}
+@AliasFor(annotation = AutoConfigureBefore.class, attribute = "value") Class<?>[] before() default {}
+@AliasFor(annotation = AutoConfigureBefore.class, attribute = "name") String[] beforeName() default {}
+@AliasFor(annotation = AutoConfigureAfter.class, attribute = "value") Class<?>[] after() default {}
+@AliasFor(annotation = AutoConfigureAfter.class, attribute = "name") String[] afterName() default {}
+public List<String> getCandidateConfigurations() { return this.candidateConfigurations; }
+public Set<String> getExclusions() { return this.exclusions; }
+@FunctionalInterface public interface AutoConfigurationImportListener extends EventListener { /** * Handle an auto-configuration import event. * @param event the event to respond to */ void onAutoConfigurationImportEvent(AutoConfigurationImportEvent event); }
+protected AutoConfigurationEntry getAutoConfigurationEntry(AnnotationMetadata annotationMetadata) { if (!isEnabled(annotationMetadata)) { return EMPTY_ENTRY; }
+protected @Nullable AnnotationAttributes getAttributes(AnnotationMetadata metadata) { String name = getAnnotationClass().getName(); AnnotationAttributes attributes = AnnotationAttributes.fromMap(metadata.getAnnotationAttributes(name, true)); Assert.state(attributes != null, () -> "No auto-configuration attributes found. Is " + metadata.getClassName() + " annotated with " + ClassUtils.getShortName(name) + "?"); return attributes; }
+protected Class<?> getAnnotationClass() { return EnableAutoConfiguration.class; }
+protected List<String> getCandidateConfigurations(AnnotationMetadata metadata, @Nullable AnnotationAttributes attributes) { ImportCandidates importCandidates = ImportCandidates.load(this.autoConfigurationAnnotation, getBeanClassLoader()); List<String> configurations = importCandidates.getCandidates(); Assert.state(!CollectionUtils.isEmpty(configurations), "No auto configuration classes found in " + "META-INF/spring/" + this.autoConfigurationAnnotation.getName() + ".imports. If you " + "are using a custom packaging, make sure that file is correct."); return configurations; }
+protected void handleInvalidExcludes(List<String> invalidExcludes) { StringBuilder message = new StringBuilder(); for (String exclude : invalidExcludes) { message.append("\t- ").append(exclude).append(String.format("%n")); }
+protected Set<String> getExclusions(AnnotationMetadata metadata, @Nullable AnnotationAttributes attributes) { Set<String> excluded = new LinkedHashSet<>(); if (attributes != null) { excluded.addAll(asList(attributes, "exclude")); excluded.addAll(asList(attributes, "excludeName")); }
+protected List<String> getExcludeAutoConfigurationsProperty() { Environment environment = getEnvironment(); if (environment == null) { return Collections.emptyList(); }
+AutoConfigurationEntry(Collection<String> configurations, Collection<String> exclusions) { this.configurations = new ArrayList<>(configurations); this.exclusions = new HashSet<>(exclusions); }
+@Nullable Integer getInteger(String className, String key); /** * Get an {@link Integer}
+@Nullable Set<String> getSet(String className, String key); /** * Get a {@link Set}
+@Nullable String get(String className, String key); /** * Get an {@link String}
+@Target(ElementType.TYPE) @Retention(RetentionPolicy.RUNTIME) @Documented @Inherited @Import(AutoConfigurationPackages.Registrar.class) public @interface AutoConfigurationPackage { /** * Base packages that should be registered with {@link AutoConfigurationPackages}
+Class<?>[] basePackageClasses() default {}
+public static List<String> get(BeanFactory beanFactory) { try { return beanFactory.getBean(BEAN, BasePackages.class).get(); }
+public static void register(BeanDefinitionRegistry registry, String... packageNames) { if (registry.containsBeanDefinition(BEAN)) { addBasePackages(registry.getBeanDefinition(BEAN), packageNames); }
+static AutoConfigurationReplacements load(Class<?> annotation, @Nullable ClassLoader classLoader) { Assert.notNull(annotation, "'annotation' must not be null"); ClassLoader classLoaderToUse = decideClassloader(classLoader); String location = String.format(LOCATION, annotation.getName()); Enumeration<URL> urls = findUrlsInClasspath(classLoaderToUse, location); Map<String, String> replacements = new HashMap<>(); while (urls.hasMoreElements()) { URL url = urls.nextElement(); replacements.putAll(readReplacements(url)); }
+@Retention(RetentionPolicy.RUNTIME) @Target({ ElementType.TYPE }
+Class<?>[] value() default {}
+String[] name() default {}
+@Retention(RetentionPolicy.RUNTIME) @Target({ ElementType.TYPE }
+Class<?>[] value() default {}
+String[] name() default {}
+@Retention(RetentionPolicy.RUNTIME) @Target({ ElementType.TYPE, ElementType.METHOD, ElementType.FIELD }
+String[] excludeName() default {}
+@Target(ElementType.TYPE) @Retention(RetentionPolicy.RUNTIME) @Documented @Inherited @Import(ImportAutoConfigurationImportSelector.class) public @interface ImportAutoConfiguration { /** * The auto-configuration classes that should be imported. This is an alias for * {@link #classes()}
+@AliasFor("value") Class<?>[] classes() default {}
+Class<?>[] exclude() default {}
+@Target(ElementType.TYPE) @Retention(RetentionPolicy.RUNTIME) @Documented @Inherited @SpringBootConfiguration @EnableAutoConfiguration @ComponentScan(excludeFilters = { @Filter(type = FilterType.CUSTOM, classes = TypeExcludeFilter.class), @Filter(type = FilterType.CUSTOM, classes = AutoConfigurationExcludeFilter.class) }
+@AliasFor(annotation = EnableAutoConfiguration.class) Class<?>[] exclude() default {}
+@AliasFor(annotation = EnableAutoConfiguration.class) String[] excludeName() default {}
+@AliasFor(annotation = ComponentScan.class, attribute = "basePackages") String[] scanBasePackages() default {}
+@AliasFor(annotation = ComponentScan.class, attribute = "basePackageClasses") Class<?>[] scanBasePackageClasses() default {}
+@AliasFor(annotation = ComponentScan.class, attribute = "nameGenerator") Class<? extends BeanNameGenerator> nameGenerator() default BeanNameGenerator.class; /** * Specify whether {@link Bean @Bean}
+private static final String DEFAULT_JMX_NAME = "org.springframework.boot:type=Admin,name=SpringApplication"; @Bean @ConditionalOnMissingBean SpringApplicationAdminMXBeanRegistrar springApplicationAdminRegistrar(ObjectProvider<MBeanExporter> mbeanExporters, Environment environment) throws MalformedObjectNameException { String jmxName = environment.getProperty(JMX_NAME_PROPERTY, DEFAULT_JMX_NAME); if (mbeanExporters != null) { // Make sure to not register that MBean twice for (MBeanExporter mbeanExporter : mbeanExporters) { mbeanExporter.addExcludedBean(jmxName); }
+public enum CacheType { /** * Generic caching using 'Cache' beans from the context. */ GENERIC, /** * JCache (JSR-107) backed caching. */ JCACHE, /** * Hazelcast backed caching. */ HAZELCAST, /** * Couchbase backed caching. */ COUCHBASE, /** * Infinispan backed caching. */ INFINISPAN, /** * Redis backed caching. */ REDIS, /** * Cache2k backed caching. */ CACHE2K, /** * Caffeine backed caching. */ CAFFEINE, /** * Simple in-memory caching. */ SIMPLE, /** * No caching. */ NONE }
+public void recordConditionEvaluation(String source, Condition condition, ConditionOutcome outcome) { Assert.notNull(source, "'source' must not be null"); Assert.notNull(condition, "'condition' must not be null"); Assert.notNull(outcome, "'outcome' must not be null"); this.unconditionalClasses.remove(source); this.outcomes.computeIfAbsent(source, (key) -> new ConditionAndOutcomes()).add(condition, outcome); this.addedAncestorOutcomes = false; }
+public void recordExclusions(Collection<String> exclusions) { Assert.notNull(exclusions, "'exclusions' must not be null"); this.exclusions.addAll(exclusions); }
+public void recordEvaluationCandidates(List<String> evaluationCandidates) { Assert.notNull(evaluationCandidates, "'evaluationCandidates' must not be null"); this.unconditionalClasses.addAll(evaluationCandidates); }
+public Map<String, ConditionAndOutcomes> getConditionAndOutcomesBySource() { if (!this.addedAncestorOutcomes) { this.outcomes.forEach((source, sourceOutcomes) -> { if (!sourceOutcomes.isFullMatch()) { addNoMatchOutcomeToAncestors(source); }
+public List<String> getExclusions() { return Collections.unmodifiableList(this.exclusions); }
+public Set<String> getUnconditionalClasses() { Set<String> filtered = new HashSet<>(this.unconditionalClasses); this.exclusions.forEach(filtered::remove); return Collections.unmodifiableSet(filtered); }
+public @Nullable ConditionEvaluationReport getParent() { return this.parent; }
+public static @Nullable ConditionEvaluationReport find(BeanFactory beanFactory) { if (beanFactory instanceof ConfigurableListableBeanFactory) { return ConditionEvaluationReport.get((ConfigurableListableBeanFactory) beanFactory); }
+public static ConditionEvaluationReport get(ConfigurableListableBeanFactory beanFactory) { synchronized (beanFactory) { ConditionEvaluationReport report; if (beanFactory.containsSingleton(BEAN_NAME)) { report = beanFactory.getBean(BEAN_NAME, ConditionEvaluationReport.class); }
+public boolean isFullMatch() { for (ConditionAndOutcome conditionAndOutcomes : this) { if (!conditionAndOutcomes.getOutcome().isMatch()) { return false; }
+public Stream<ConditionAndOutcome> stream() { return StreamSupport.stream(spliterator(), false); }
+public boolean isEmpty() { return !StringUtils.hasLength(this.message); }
+public ConditionMessage append(@Nullable String message) { if (!StringUtils.hasLength(message)) { return this; }
+public Builder andCondition(Class<? extends Annotation> condition, Object... details) { Assert.notNull(condition, "'condition' must not be null"); return andCondition("@" + ClassUtils.getShortName(condition), details); }
+public Builder andCondition(String condition, Object... details) { Assert.notNull(condition, "'condition' must not be null"); String detail = StringUtils.arrayToDelimitedString(details, " "); if (StringUtils.hasLength(detail)) { return new Builder(condition + " " + detail); }
+public static ConditionMessage empty() { return new ConditionMessage(); }
+public static ConditionMessage of(String message, Object... args) { if (ObjectUtils.isEmpty(args)) { return new ConditionMessage(message); }
+public static ConditionMessage of(@Nullable Collection<? extends ConditionMessage> messages) { ConditionMessage result = new ConditionMessage(); if (messages != null) { for (ConditionMessage message : messages) { result = new ConditionMessage(result, message.toString()); }
+public static Builder forCondition(Class<? extends Annotation> condition, Object... details) { return new ConditionMessage().andCondition(condition, details); }
+public static Builder forCondition(String condition, Object... details) { return new ConditionMessage().andCondition(condition, details); }
+public ConditionMessage foundExactly(Object result) { return found("").items(result); }
+public ItemsBuilder found(String article) { return found(article, article); }
+public ItemsBuilder found(String singular, String plural) { return new ItemsBuilder(this, "found", singular, plural); }
+public ItemsBuilder didNotFind(String article) { return didNotFind(article, article); }
+public ItemsBuilder didNotFind(String singular, String plural) { return new ItemsBuilder(this, "did not find", singular, plural); }
+public ConditionMessage resultedIn(Object result) { return because("resulted in " + result); }
+public ConditionMessage available(String item) { return because(item + " is available"); }
+public ConditionMessage notAvailable(String item) { return because(item + " is not available"); }
+public ConditionMessage because(@Nullable String reason) { if (StringUtils.hasLength(reason)) { return new ConditionMessage(ConditionMessage.this, StringUtils.hasLength(this.condition) ? this.condition + " " + reason : reason); }
+public ConditionMessage atAll() { return items(Collections.emptyList()); }
+public ConditionMessage items(Object @Nullable ... items) { return items(Style.NORMAL, items); }
+public ConditionMessage items(Style style, Object @Nullable ... items) { return items(style, (items != null) ? Arrays.asList(items) : null); }
+public ConditionMessage items(@Nullable Collection<?> items) { return items(Style.NORMAL, items); }
+public ConditionMessage items(Style style, @Nullable Collection<?> items) { Assert.notNull(style, "'style' must not be null"); StringBuilder message = new StringBuilder(this.reason); items = style.applyTo(items); if ((this.condition == null || items == null || items.size() <= 1) && StringUtils.hasLength(this.singular)) { message.append(" ").append(this.singular); }
+public enum Style { /** * Render with normal styling. */ NORMAL { @Override protected @Nullable Object applyToItem(@Nullable Object item) { return item; }
+QUOTE { @Override protected @Nullable String applyToItem(@Nullable Object item) { return (item != null) ? "'" + item + "'" : null; }
+public ConditionOutcome(boolean match, ConditionMessage message) { Assert.notNull(message, "'message' must not be null"); this.match = match; this.message = message; }
+public static ConditionOutcome match() { return match(ConditionMessage.empty()); }
+public static ConditionOutcome match(String message) { return new ConditionOutcome(true, message); }
+public static ConditionOutcome match(ConditionMessage message) { return new ConditionOutcome(true, message); }
+public static ConditionOutcome noMatch(String message) { return new ConditionOutcome(false, message); }
+public static ConditionOutcome noMatch(ConditionMessage message) { return new ConditionOutcome(false, message); }
+public boolean isMatch() { return this.match; }
+public @Nullable String getMessage() { return this.message.isEmpty() ? null : this.message.toString(); }
+public ConditionMessage getConditionMessage() { return this.message; }
+Class<?>[] value() default {}
+String[] type() default {}
+Class<? extends Annotation>[] annotation() default {}
+String[] name() default {}
+SearchStrategy search() default SearchStrategy.ALL; /** * Additional classes that may contain the specified bean types within their generic * parameters. For example, an annotation declaring {@code value=Name.class}
+@Retention(RetentionPolicy.RUNTIME) @Target({ ElementType.TYPE, ElementType.METHOD }
+@Retention(RetentionPolicy.RUNTIME) @Target({ ElementType.TYPE, ElementType.METHOD }
+String[] value() default {}
+String prefix() default ""; /** * The name of the properties to test. If a prefix has been defined, it is applied to * compute the full key of each property. For instance if the prefix is * {@code app.config}
+boolean havingValue() default true; /** * Specify if the condition should match if the property is not set. Defaults to * {@code false}
+Class<?>[] value() default {}
+String[] name() default {}
+@Retention(RetentionPolicy.RUNTIME) @Target({ ElementType.TYPE, ElementType.METHOD }
+Range range() default Range.EQUAL_OR_NEWER; /** * The {@link JavaVersion}
+String[] value() default {}
+Class<?>[] value() default {}
+String[] type() default {}
+Class<?>[] ignored() default {}
+String[] ignoredType() default {}
+Class<? extends Annotation>[] annotation() default {}
+String[] name() default {}
+SearchStrategy search() default SearchStrategy.ALL; /** * Additional classes that may contain the specified bean types within their generic * parameters. For example, an annotation declaring {@code value=Name.class}
+String[] value() default {}
+@AliasFor(annotation = ConditionalOnMissingBean.class) Class<? extends Filter>[] value() default {}
+@Retention(RetentionPolicy.RUNTIME) @Target({ ElementType.TYPE, ElementType.METHOD }
+@Retention(RetentionPolicy.RUNTIME) @Target({ ElementType.TYPE, ElementType.METHOD }
+String[] value() default {}
+String prefix() default ""; /** * The name of the properties to test. If a prefix has been defined, it is applied to * compute the full key of each property. For instance if the prefix is * {@code app.config}
+String havingValue() default ""; /** * Specify if the condition should match if the property is not set. Defaults to * {@code false}
+String[] resources() default {}
+Type type() default Type.ANY; /** * Available application types. */ enum Type { /** * Any web application will match. */ ANY, /** * Only servlet-based web application will match. */ SERVLET, /** * Only reactive-based web application will match. */ REACTIVE }
+protected static Class<?> resolve(String className, @Nullable ClassLoader classLoader) throws ClassNotFoundException { if (classLoader != null) { return Class.forName(className, false, classLoader); }
+private String wrapIfNecessary(String expression) { if (!expression.startsWith("#{")) { return "#{" + expression + "}
+private boolean isWithin(JavaVersion runningVersion, Range range, JavaVersion version) { if (range == Range.EQUAL_OR_NEWER) { return runningVersion.isEqualOrNewerThan(version); }
+protected ConditionOutcome getResourceOutcome(ConditionContext context, AnnotatedTypeMetadata metadata) { List<String> found = new ArrayList<>(); for (String location : this.resourceLocations) { Resource resource = context.getResourceLoader().getResource(location); if (resource != null && resource.exists()) { found.add(location); }
+public abstract ConditionOutcome getMatchOutcome(ConditionContext context, AnnotatedTypeMetadata metadata); /** * Return true if any of the specified conditions match. * @param context the context * @param metadata the annotation meta-data * @param conditions conditions to test * @return {@code true}
+protected final boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata, Condition condition) { if (condition instanceof SpringBootCondition springBootCondition) { return springBootCondition.getMatchOutcome(context, metadata).isMatch(); }
+public record ContainerImageMetadata(@Nullable String imageName) { static final String NAME = ContainerImageMetadata.class.getName(); /** * Add this container image metadata to the given attributes. * @param attributes the attributes to add the metadata to */ public void addTo(@Nullable AttributeAccessor attributes) { if (attributes != null) { attributes.setAttribute(NAME, this); }
+public static boolean isPresent(@Nullable AttributeAccessor attributes) { return getFrom(attributes) != null; }
+public static @Nullable ContainerImageMetadata getFrom(@Nullable AttributeAccessor attributes) { return (attributes != null) ? (ContainerImageMetadata) attributes.getAttribute(NAME) : null; }
+protected BootstrapMode getBootstrapMode() { return BootstrapMode.DEFAULT; }
+@Retention(RetentionPolicy.RUNTIME) @Target({ ElementType.TYPE, ElementType.METHOD }
+@AutoConfiguration @EnableConfigurationProperties(JmxProperties.class) @ConditionalOnClass({ MBeanExporter.class }
+public void setEnsureUniqueRuntimeObjectNames(boolean ensureUniqueRuntimeObjectNames) { this.ensureUniqueRuntimeObjectNames = ensureUniqueRuntimeObjectNames; }
+public static ConditionEvaluationReportLoggingListener forLogLevel(LogLevel logLevelForReport) { return new ConditionEvaluationReportLoggingListener(logLevelForReport); }
+@FunctionalInterface public interface BackgroundPreinitializer { /** * Perform any require preinitialization. * @throws Exception on any initialization error */ void preinitialize() throws Exception; }
+record Runner(List<BackgroundPreinitializer> preinitializers) implements Runnable { @Override public void run() { for (BackgroundPreinitializer preinitializer : this.preinitializers) { try { preinitializer.preinitialize(); }
+public <S> Map<Class<?>, ConnectionDetails> getConnectionDetails(S source, boolean required) throws ConnectionDetailsFactoryNotFoundException, ConnectionDetailsNotFoundException { List<Registration<S, ?>> registrations = getRegistrations(source, required); Map<Class<?>, ConnectionDetails> result = new LinkedHashMap<>(); for (Registration<S, ?> registration : registrations) { ConnectionDetails connectionDetails = registration.factory().getConnectionDetails(source); if (connectionDetails != null) { Class<?> connectionDetailsType = registration.connectionDetailsType(); ConnectionDetails previous = result.put(connectionDetailsType, connectionDetails); Assert.state(previous == null, () -> "Duplicate connection details supplied for %s" .formatted(connectionDetailsType.getName())); }
+record Registration<S, D extends ConnectionDetails>(Class<S> sourceType, Class<D> connectionDetailsType, ConnectionDetailsFactory<S, D> factory) { @SuppressWarnings("unchecked") private static <S, D extends ConnectionDetails> @Nullable Registration<S, D> get( ConnectionDetailsFactory<S, D> factory) { ResolvableType type = ResolvableType.forClass(ConnectionDetailsFactory.class, factory.getClass()); @Nullable Class<?>[] generics = type.resolveGenerics(); Class<S> sourceType = (Class<S>) generics[0]; Class<D> connectionDetailsType = (Class<D>) generics[1]; return (sourceType != null && connectionDetailsType != null) ? new Registration<>(sourceType, connectionDetailsType, factory) : null; }
+record BundleContentProperty(String name, @Nullable String value) { /** * Return if the property value is PEM content. * @return if the value is PEM content */ boolean isPemContent() { return PemContent.isPresentInText(this.value); }
+boolean hasValue() { return StringUtils.hasText(this.value); }
+void watch(Set<Path> paths, Runnable action) { Assert.notNull(paths, "'paths' must not be null"); Assert.notNull(action, "'action' must not be null"); if (paths.isEmpty()) { return; }
+private Set<Path> getRegistrationPaths(Set<Path> paths) throws IOException { Set<Path> result = new HashSet<>(); for (Path path : paths) { collectRegistrationPaths(path, result); }
+private record Registration(Set<Path> paths, Runnable action) { boolean manages(Path file) { Path absolutePath = file.toAbsolutePath(); return this.paths.contains(absolutePath) || isInDirectories(absolutePath); }
+public static SslBundle get(PemSslBundleProperties properties) { return get(properties, ApplicationResourceLoader.get()); }
+public static SslBundle get(PemSslBundleProperties properties, ResourceLoader resourceLoader) { PemSslStore keyStore = getPemSslStore("keystore", properties.getKeystore(), resourceLoader); if (keyStore != null) { keyStore = keyStore.withAlias(properties.getKey().getAlias()) .withPassword(properties.getKey().getPassword()); }
+public static SslBundle get(JksSslBundleProperties properties) { return get(properties, ApplicationResourceLoader.get()); }
+public static SslBundle get(JksSslBundleProperties properties, ResourceLoader resourceLoader) { SslStoreBundle storeBundle = asSslStoreBundle(properties, resourceLoader); return new PropertiesSslBundle(storeBundle, properties); }
+private @Nullable Set<String> ciphers; /** * Enabled SSL protocols. */ private @Nullable Set<String> enabledProtocols; public @Nullable Set<String> getCiphers() { return this.ciphers; }
+private @Nullable String password; /** * The alias that identifies the key in the key store. */ private @Nullable String alias; public @Nullable String getPassword() { return this.password; }
+private final File file = new File(); public File getFile() { return this.file; }
+private Duration quietPeriod = Duration.ofSeconds(10); public Duration getQuietPeriod() { return this.quietPeriod; }
+@ConditionalOnClass(ThreadPoolTaskExecutor.class) @AutoConfiguration @EnableConfigurationProperties(TaskExecutionProperties.class) @Import({ TaskExecutorConfigurations.TaskExecutorContextPropagationConfiguration.class, TaskExecutorConfigurations.ThreadPoolTaskExecutorBuilderConfiguration.class, TaskExecutorConfigurations.SimpleAsyncTaskExecutorBuilderConfiguration.class, TaskExecutorConfigurations.TaskExecutorConfiguration.class, TaskExecutorConfigurations.BootstrapExecutorConfiguration.class }
