@@ -36,7 +36,7 @@ The notebook expects these resources at the path:
 /content/drive/MyDrive/Assignment-2/
 ```
 2. Working Directory
-Create an empty folder in Google Drive named: genai_assignment2_alice
+** **ACTION** Create an empty folder in Google Drive named: genai_assignment2_alice
 This folder will be used to store all generated outputs, including:
 - tokenized datasets
 - model checkpoints
@@ -93,20 +93,20 @@ All generated data and intermediate files are written to the working directory:
 /content/drive/MyDrive/genai_assignment2_alice/
 ```
 The notebook writes several intermediate and final outputs during execution.
-1. Cloned GitHub Repositories
+1. Cloned GitHub Repositories:
    When mining Java repositories, the notebook clones repositories into:
    ```
    genai_assignment2_alice/repos/
    ```
    These repositories are used to extract Java source files.
 
-2. List of Java Files
+2. List of Java Files:
    After scanning repositories, a JSON file containing all discovered Java files is saved to:
    ```
    genai_assignment2_alice/java_files.json
    ```
    This allows the notebook to reload the file list without rescanning repositories.
-3. Extracted Code–Summary Pairs
+3. Extracted Code–Summary Pairs:
    During extraction of (method, summary) pairs, checkpoint files are periodically written to avoid losing progress:
    ```
    genai_assignment2_alice/code_summary_pairs_partial.json
@@ -115,7 +115,7 @@ The notebook writes several intermediate and final outputs during execution.
    ```
    genai_assignment2_alice/code_summary_pairs.json
    ```
-4. Train / Validation Dataset Files
+4. Train / Validation Dataset Files:
    After preprocessing and filtering, the dataset is split into training and validation sets. The following files are written to the working directory:
    ```
    genai_assignment2_alice/train_code.txt
@@ -123,7 +123,7 @@ The notebook writes several intermediate and final outputs during execution.
    genai_assignment2_alice/val_code.txt
    genai_assignment2_alice/val_summary.txt
    ```
-5. Tokenized Dataset and Embeddings
+5. Tokenized Dataset and Embeddings:
    The script get_codet5_embeddings.py converts the dataset into token IDs and generates a pretrained embedding matrix. The resulting files are saved as:
    ```
    genai_assignment2_alice/train_code.pt
@@ -132,13 +132,13 @@ The notebook writes several intermediate and final outputs during execution.
    genai_assignment2_alice/val_summary.pt
    ```
    These .pt files are loaded by the LSTM model during training.
-6. Model Checkpoint
+6. Model Checkpoint:
    During training, the model checkpoint is saved to:
    ```
    genai_assignment2_alice/lstm_checkpoint.pt
    ```
    This file contains the trained model weights and is used for evaluation and summary generation.
-7. Generated Summaries and Evaluation Inputs
+7. Generated Summaries and Evaluation Inputs:
    After generating summaries for the test dataset, the notebook writes the following files:
    ```
    predictions.txt
@@ -148,7 +148,7 @@ The notebook writes several intermediate and final outputs during execution.
 
    They are used as input for the evaluation metrics.
 
-8. Evaluation Metrics
+8. Evaluation Metrics:
    The notebook prints the final evaluation scores directly in the notebook output, including:
    - BLEU-1, BLEU-2, BLEU-3, BLEU-4
    - METEOR
@@ -156,4 +156,7 @@ The notebook writes several intermediate and final outputs during execution.
    - SIDE score
 
   These summary statistics appear in the final cells of the notebook.
+
+  ### Outputs
+  The repository has an outputs folder where I've placed the output files from the most recent local run for reference.
    
