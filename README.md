@@ -139,7 +139,7 @@ The notebook writes several intermediate and final outputs during execution.
    ```
    This file contains the trained model weights and is used for evaluation and summary generation.
 7. Generated Summaries and Evaluation Inputs
-   After generating summaries for the validation dataset, the notebook writes the following files:
+   After generating summaries for the test dataset, the notebook writes the following files:
    ```
    predictions.txt
    references.txt
